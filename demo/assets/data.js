@@ -26,25 +26,25 @@ window.MP_DATA = {
 
   // Purpose routes: Print / Pack / Promote
   routes: [
-    { id: "print",   title: "Print",   ink: "bright",
+    { id: "print", img: "assets/img/photos/cmyk-ink.jpg",   title: "Print",   ink: "bright",
       text: "Business cards, brochures, labels, calendars and everything your business hands out.",
       items: ["Business cards", "Flyers & brochures", "Letterheads", "Calendars"] },
-    { id: "pack",    title: "Pack",    ink: "gold",
+    { id: "pack", img: "assets/img/photos/boxes.jpg",    title: "Pack",    ink: "gold",
       text: "Boxes, bags, sleeves and stickers that make your product look ready for the shelf.",
       items: ["Custom boxes", "Paper bags", "Sleeves & tags", "Product labels"] },
-    { id: "promote", title: "Promote", ink: "magenta",
+    { id: "promote", img: "assets/img/photos/signage.jpg", title: "Promote", ink: "magenta",
       text: "Signs, vehicle graphics, branded merchandise and gifts people actually keep.",
       items: ["Shop signs", "Vehicle wraps", "Corporate gifts", "Printed apparel"] }
   ],
 
   // Representative launch products. Prices pending the approved rate card.
   products: [
-    { name: "Business cards",     art: "cards",   route: "Print",   options: "Matt, gloss or textured · spot UV · 100+",  service: "Offset Printing" },
-    { name: "Flyers & brochures", art: "flyers",  route: "Print",   options: "A6 to A4 · folded or flat · 50+",            service: "Digital Printing" },
-    { name: "Product labels",     art: "labels",  route: "Pack",    options: "Paper or PVC · any shape · on rolls",        service: "Packaging & Branding" },
-    { name: "Custom boxes",       art: "box",     route: "Pack",    options: "Mailer, tuck-end or rigid · your dieline",   service: "Packaging & Branding" },
-    { name: "Personalised mugs",  art: "mug",     route: "Promote", options: "Photo or logo · single or in bulk",          service: "Sublimation Printing" },
-    { name: "Printed T-shirts",   art: "tshirt",  route: "Promote", options: "Team, event or one-off · S to XXL",          service: "Sublimation Printing" }
+    { name: "Business cards",     art: "cards", img: "assets/img/photos/business-cards.jpg",   route: "Print",   options: "Matt, gloss or textured · spot UV · 100+",  service: "Offset Printing" },
+    { name: "Flyers & brochures", art: "flyers", img: "assets/img/photos/flyers.jpg",  route: "Print",   options: "A6 to A4 · folded or flat · 50+",            service: "Digital Printing" },
+    { name: "Product labels",     art: "labels", img: "assets/img/photos/labels.jpg",  route: "Pack",    options: "Paper or PVC · any shape · on rolls",        service: "Packaging & Branding" },
+    { name: "Custom boxes",       art: "box", img: "assets/img/photos/boxes.jpg",     route: "Pack",    options: "Mailer, tuck-end or rigid · your dieline",   service: "Packaging & Branding" },
+    { name: "Personalised mugs",  art: "mug", img: "assets/img/photos/mug.jpg",     route: "Promote", options: "Photo or logo · single or in bulk",          service: "Sublimation Printing" },
+    { name: "Printed T-shirts",   art: "tshirt", img: "assets/img/photos/tshirt.jpg",  route: "Promote", options: "Team, event or one-off · S to XXL",          service: "Sublimation Printing" }
   ],
 
   // All 12 service families from the brand guide
@@ -61,6 +61,13 @@ window.MP_DATA = {
     { name: "Vehicle Branding",           ink: "gold",    tint: 70,  text: "Full or partial wraps that turn every trip into advertising.", examples: ["Full wraps", "Door graphics", "Fleet stickers"] },
     { name: "Packaging & Branding",       ink: "deep",    tint: 40,  text: "Boxes, bags and labels designed around your product.", examples: ["Boxes", "Paper bags", "Sleeves"] },
     { name: "Promotional & Corporate Gifts", ink: "magenta", tint: 40, text: "Branded diaries, pens, umbrellas and gift sets, in any quantity.", examples: ["Diaries", "Pens", "Gift sets"] }
+  ],
+
+  // Showcase — SAMPLE stock images until real, customer-approved projects are supplied
+  showcase: [
+    { title: "Fleet vehicle graphics", service: "Vehicle Branding",              img: "assets/img/photos/vehicle.jpg", size: "large" },
+    { title: "Engraved keepsakes",     service: "Laser Cutting & Engraving",     img: "assets/img/photos/laser.jpg" },
+    { title: "Corporate gift sets",    service: "Promotional & Corporate Gifts", img: "assets/img/photos/gifts.jpg" }
   ],
 
   // Gift and seasonal ideas — local occasions

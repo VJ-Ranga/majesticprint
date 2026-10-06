@@ -26,15 +26,6 @@
     return "https://wa.me/" + D.contact.whatsapp + (text ? "?text=" + encodeURIComponent(text) : "");
   }
 
-  /* ---------- Illustrated product art (stand-ins until photography arrives) ---------- */
-  var ART = {
-    cards: '<svg viewBox="0 0 200 150"><rect x="30" y="40" width="120" height="72" rx="6" fill="#fff" stroke="#D5DDE6" transform="rotate(-10 90 76)"/><rect x="50" y="34" width="120" height="72" rx="6" fill="#13477A"/><rect x="64" y="52" width="44" height="6" rx="3" fill="#EAA123"/><rect x="64" y="66" width="70" height="4" rx="2" fill="#fff" opacity=".7"/><rect x="64" y="76" width="52" height="4" rx="2" fill="#fff" opacity=".5"/></svg>',
-    flyers: '<svg viewBox="0 0 200 150"><rect x="52" y="22" width="80" height="112" rx="3" fill="#fff" stroke="#D5DDE6" transform="rotate(-8 92 78)"/><rect x="70" y="16" width="80" height="112" rx="3" fill="#fff" stroke="#D5DDE6"/><rect x="70" y="16" width="80" height="50" fill="#D01C60"/><circle cx="128" cy="40" r="12" fill="#EAA123"/><rect x="80" y="76" width="56" height="6" rx="3" fill="#13477A"/><rect x="80" y="88" width="44" height="4" rx="2" fill="#50627A" opacity=".5"/><rect x="80" y="97" width="50" height="4" rx="2" fill="#50627A" opacity=".5"/></svg>',
-    labels: '<svg viewBox="0 0 200 150"><circle cx="78" cy="78" r="46" fill="#fff" stroke="#D5DDE6" stroke-width="2"/><circle cx="78" cy="78" r="16" fill="#F4F7FA" stroke="#D5DDE6"/><path d="M118 98 L176 98 L176 126 L118 126" fill="#fff" stroke="#D5DDE6"/><rect x="126" y="102" width="40" height="20" rx="10" fill="#007CAC"/><rect x="40" y="56" width="34" height="20" rx="10" fill="#007CAC" transform="rotate(-30 57 66)"/><rect x="82" y="100" width="34" height="20" rx="10" fill="#EAA123" transform="rotate(35 99 110)"/></svg>',
-    box: '<svg viewBox="0 0 200 150"><polygon points="100,26 160,54 100,82 40,54" fill="#EAA123"/><polygon points="40,54 100,82 100,140 40,112" fill="#CF6428"/><polygon points="160,54 100,82 100,140 160,112" fill="#B8541F"/><polygon points="70,40 130,68 124,71 64,43" fill="#fff" opacity=".55"/></svg>',
-    mug: '<svg viewBox="0 0 200 150"><ellipse cx="96" cy="132" rx="52" ry="7" fill="#13477A" opacity=".08"/><path d="M58 30h76v86a16 16 0 0 1-16 16H74a16 16 0 0 1-16-16z" fill="#fff" stroke="#D5DDE6" stroke-width="2"/><path d="M134 52h10a17 17 0 0 1 0 34h-10" fill="none" stroke="#D5DDE6" stroke-width="8"/><rect x="58" y="58" width="76" height="40" fill="#D01C60"/><path d="M84 78l8 8 16-16" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-    tshirt: '<svg viewBox="0 0 200 150"><path d="M72 18 L52 26 L24 48 L38 70 L56 60 L56 134 L144 134 L144 60 L162 70 L176 48 L148 26 L128 18 C124 30 112 36 100 36 C88 36 76 30 72 18 Z" fill="#007CAC"/><path d="M72 18 C76 30 88 36 100 36 C112 36 124 30 128 18" fill="none" stroke="#13477A" stroke-width="3"/><rect x="80" y="66" width="40" height="26" rx="4" fill="#fff"/><rect x="86" y="72" width="28" height="5" rx="2.5" fill="#D01C60"/><rect x="86" y="81" width="18" height="5" rx="2.5" fill="#EAA123"/></svg>'
-  };
   var IDEA_ICONS = ["fa-gift", "fa-pen-nib", "fa-box-open", "fa-shirt"];
 
   /* ---------- Routes ---------- */
@@ -44,20 +35,43 @@
     var link = el("a", { href: r.id === "print" ? "#products" : "#solutions", html: 'Explore ' + r.title + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>' });
     link.addEventListener("click", function () { if (r.id === "print") setFilter("Print"); });
     var h3 = el("h3", null, [document.createTextNode(r.title), el("span", { text: "." })]);
-    var card = el("article", { class: "route-card", style: "--ink:" + ink(r.ink) }, [h3, el("p", { text: r.text }), list, link]);
+    var media = el("div", { class: "route-media" }, [el("img", { src: r.img, alt: "", loading: "lazy", width: "800", height: "500" })]);
+    var card = el("article", { class: "route-card", style: "--ink:" + ink(r.ink) }, [media, el("div", { class: "route-body" }, [h3, el("p", { text: r.text }), list, link])]);
     routeGrid.appendChild(el("div", { class: "col-md-4 reveal" }, [card]));
+  });
+
+  /* ---------- Ticker ---------- */
+  var track = $("#tickerTrack"), tickInks = ["bright", "magenta", "gold", "orange"];
+  [0, 1].forEach(function (pass) {
+    D.services.forEach(function (s, i) {
+      var li = el("li", { text: s.name, style: "--tick:" + ink(tickInks[i % tickInks.length]) });
+      if (pass) li.setAttribute("aria-hidden", "true");
+      track.appendChild(li);
+    });
+  });
+
+  /* ---------- Showcase ---------- */
+  var showcase = $("#showcase");
+  D.showcase.forEach(function (w) {
+    showcase.appendChild(el("article", { class: "work-card reveal" + (w.size === "large" ? " is-large" : "") }, [
+      el("img", { src: w.img, alt: w.title + " (sample image)", loading: "lazy" }),
+      el("div", { class: "work-info" }, [el("p", { class: "slug", text: w.service }), el("h3", { text: w.title })])
+    ]));
   });
 
   /* ---------- Products + filter ---------- */
   var productGrid = $("#productGrid");
+  var routeInk = {}; D.routes.forEach(function (r) { routeInk[r.title] = r.ink; });
   D.products.forEach(function (p) {
     var btn = el("a", { class: "btn-mp btn-mp-outline", href: "#quote", html: 'Customise <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>' });
     btn.setAttribute("aria-label", "Customise " + p.name);
     btn.addEventListener("click", function () { prefillQuote(p.service, p.name); });
     var card = el("article", { class: "product-card" }, [
-      el("div", { class: "product-art", "aria-hidden": "true", html: ART[p.art] || "" }),
+      el("div", { class: "product-art" }, [
+        el("span", { class: "product-tag", style: "--ink:" + ink(routeInk[p.route]), text: p.route }),
+        el("img", { src: p.img, alt: p.name, loading: "lazy", width: "800", height: "600" })
+      ]),
       el("div", { class: "product-body" }, [
-        el("p", { class: "slug", text: p.route }),
         el("h3", { text: p.name }),
         el("p", { text: p.options }),
         btn
@@ -242,6 +256,23 @@
     brief.hidden = true; form.hidden = false; $("#qName").focus();
   });
 
+  /* ---------- Demo view switcher (demo only) ---------- */
+  var root = document.documentElement;
+  function syncDemo() {
+    $$(".seg button").forEach(function (b) {
+      b.setAttribute("aria-pressed", root.getAttribute("data-" + b.getAttribute("data-set")) === b.getAttribute("data-value") ? "true" : "false");
+    });
+  }
+  $$(".seg button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      root.setAttribute("data-" + b.getAttribute("data-set"), b.getAttribute("data-value"));
+      try { localStorage.setItem("mp-demo-view", JSON.stringify({ layout: root.getAttribute("data-layout"), media: root.getAttribute("data-media") })); } catch (e) {}
+      syncDemo();
+    });
+  });
+  syncDemo();
+  $("#demoClose").addEventListener("click", function () { $("#demoBar").hidden = true; });
+
   /* ---------- Header state + current section ---------- */
   var header = $(".site-header");
   function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
@@ -274,7 +305,7 @@
         navLinks.forEach(function (a) { a.classList.toggle("is-current", a.getAttribute("href") === "#" + en.target.id); });
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    ["products", "solutions", "gifts", "process", "contact"].forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
+    ["products", "solutions", "work", "gifts", "process", "contact"].forEach(function (id) { var s = document.getElementById(id); if (s) spy.observe(s); });
   } else {
     targets.forEach(function (t) { t.classList.add("is-in"); });
   }
