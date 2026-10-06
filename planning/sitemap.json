@@ -1,0 +1,833 @@
+{
+  "brand_source": "BRAND GUIDELINES copy.pdf",
+  "updated_on": "2026-10-05",
+  "status": "Review sitemap — not approved redirects",
+  "brand_colors": {
+    "magenta": "#D01C60",
+    "orange": "#CF6428",
+    "gold": "#EAA123",
+    "deep_blue": "#13477A",
+    "bright_blue": "#007CAC"
+  },
+  "tagline": "Print. Pack. Promote.",
+  "service_family_count": 12,
+  "root": {
+    "name": "Home",
+    "path": "/",
+    "purpose": "Introduce the complete Print. Pack. Promote. business",
+    "primary_action": "Shop products / plan a custom project",
+    "kind": "Homepage",
+    "sections": [
+      "H01 Header",
+      "H02 Brand hero",
+      "H03 Print / Pack / Promote routes",
+      "H04 Selected products",
+      "H05 Specialist capabilities",
+      "H06 Ordering paths",
+      "H07 Selected work",
+      "H08 Company evidence",
+      "H09 Quote invitation",
+      "H10 Footer"
+    ],
+    "status": "Proposed route / structure",
+    "children": [
+      {
+        "name": "Shop",
+        "path": "/shop/",
+        "purpose": "Browse by product need",
+        "primary_action": "Browse products",
+        "kind": "Hub",
+        "sections": [
+          "Category introduction",
+          "Seven product collections",
+          "Selected products",
+          "Custom/bulk alternative",
+          "Artwork/delivery help"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Business stationery",
+            "path": "/product-category/business-stationery/",
+            "purpose": "Find business stationery by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Marketing & publications",
+            "path": "/product-category/marketing-publications/",
+            "purpose": "Find marketing & publications by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Labels & tags",
+            "path": "/product-category/labels-tags/",
+            "purpose": "Find labels & tags by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Packaging",
+            "path": "/product-category/packaging/",
+            "purpose": "Find packaging by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Gifts & apparel",
+            "path": "/product-category/gifts-apparel/",
+            "purpose": "Find gifts & apparel by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Weddings & events",
+            "path": "/product-category/weddings-events/",
+            "purpose": "Find weddings & events by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Signs & displays",
+            "path": "/product-category/signs-displays/",
+            "purpose": "Find signs & displays by intended use",
+            "primary_action": "Choose a product",
+            "kind": "Category",
+            "sections": [
+              "Breadcrumb + title + application",
+              "Relevant filters + sort + result count",
+              "Product grid: configure / buy / quote",
+              "Materials/size comparison",
+              "Artwork and delivery help",
+              "Related solution / bulk quote"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Standard product",
+            "path": "/product/{approved-product-slug}/",
+            "purpose": "Order a validated standard configuration",
+            "primary_action": "Configure / add to cart",
+            "kind": "Template",
+            "sections": [
+              "Breadcrumb + gallery + benefit",
+              "Size → stock → print/finish → quantity",
+              "Price basis + total + delivery information",
+              "Artwork or approved design-help route",
+              "Review selection + cart action",
+              "Specifications/template + proof guidance",
+              "FAQs + related solution"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Personalised product",
+            "path": "/product/{approved-gift-slug}/",
+            "purpose": "Personalise an approved gift/apparel SKU",
+            "primary_action": "Personalise / add to cart",
+            "kind": "Template",
+            "sections": [
+              "Gallery + item options",
+              "Size/colour + supported personalisation",
+              "Illustrative preview + limitations",
+              "Quantity + total + fulfilment",
+              "Artwork review + cart action",
+              "Specifications + FAQs"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      },
+      {
+        "name": "Solutions",
+        "path": "/solutions/",
+        "purpose": "Discover all 12 guide service families",
+        "primary_action": "Choose a solution",
+        "kind": "Hub",
+        "sections": [
+          "One-partner introduction",
+          "Print / Pack / Promote context",
+          "Twelve families",
+          "Application/material guidance",
+          "Relevant work",
+          "Project quote"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Offset Printing",
+            "path": "/solutions/offset-printing/",
+            "purpose": "Business stationery and bulk print",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Size → stock → sides/finish → quantity → artwork"
+          },
+          {
+            "name": "Digital Offset Printing",
+            "path": "/solutions/digital-offset-printing/",
+            "purpose": "Short-run stationery, invitations and publications",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Size → stock → quantity/pages → finish → artwork"
+          },
+          {
+            "name": "Digital Printing",
+            "path": "/solutions/digital-printing/",
+            "purpose": "Posters, labels, PVC prints and custom print",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Dimensions → substrate/application → quantity → artwork"
+          },
+          {
+            "name": "UV Printing",
+            "path": "/solutions/uv-printing/",
+            "purpose": "Direct-to-surface printing",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Surface → print area → object/dimensions → use → artwork"
+          },
+          {
+            "name": "Large Format Printing",
+            "path": "/solutions/large-format-printing/",
+            "purpose": "Banners, backdrops, walls and event displays",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Width/height → material → finishing → installation → artwork"
+          },
+          {
+            "name": "Signage & 3D Signage",
+            "path": "/solutions/signage-and-3d-signage/",
+            "purpose": "Shop signs, 3D letters, LED and light boxes",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Site/location → dimensions → material/lighting → mounting → survey"
+          },
+          {
+            "name": "CNC Cutting & Engraving",
+            "path": "/solutions/cnc-cutting-and-engraving/",
+            "purpose": "Panels, shapes, letters and architectural elements",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Material/thickness → dimensions → drawing → finish → quantity"
+          },
+          {
+            "name": "Laser Cutting & Engraving",
+            "path": "/solutions/laser-cutting-and-engraving/",
+            "purpose": "Personalised gifts, acrylic, wood and event items",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Material/thickness → dimensions → vector file → engraving → quantity"
+          },
+          {
+            "name": "Sublimation Printing",
+            "path": "/solutions/sublimation-printing/",
+            "purpose": "Mugs, shirts, crystals and personalised merchandise",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Item → size/colour → artwork area → quantity"
+          },
+          {
+            "name": "Vehicle Branding",
+            "path": "/solutions/vehicle-branding/",
+            "purpose": "Full/partial vehicle wraps and graphics",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Vehicle type/photos → coverage → condition → installation → artwork"
+          },
+          {
+            "name": "Packaging & Branding",
+            "path": "/solutions/packaging-and-branding/",
+            "purpose": "Boxes, bags, sleeves, labels and tags",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Style → internal dimensions → stock → print sides → dieline → quantity"
+          },
+          {
+            "name": "Promotional & Corporate Gifts",
+            "path": "/solutions/promotional-and-corporate-gifts/",
+            "purpose": "Gift sets, pens, umbrellas, mugs and branded merchandise",
+            "primary_action": "Request this service",
+            "kind": "Solution",
+            "sections": [
+              "Breadcrumb + guide-family heading",
+              "Outcome introduction + real image",
+              "Outputs/applications",
+              "Approved materials + limits",
+              "Relevant shop products",
+              "Real project + process",
+              "Specific FAQs/artwork requirements",
+              "Family-preselected quote"
+            ],
+            "status": "Proposed route / structure",
+            "inputs": "Item → quantity → branding method → personalisation → desired date"
+          }
+        ]
+      },
+      {
+        "name": "Our work",
+        "path": "/our-work/",
+        "purpose": "Show verified physical outcomes",
+        "primary_action": "Explore a project",
+        "kind": "Information",
+        "sections": [
+          "Intro",
+          "Output/service filters",
+          "Real project grid",
+          "Project quote"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Project detail",
+            "path": "/our-work/{project-slug}/",
+            "purpose": "Show a real brief, process and result",
+            "primary_action": "Discuss similar work",
+            "kind": "Template",
+            "sections": [
+              "Customer-approved brief",
+              "Real project images",
+              "Materials/process/scope",
+              "Verified result",
+              "Related product/solution",
+              "Quote"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      },
+      {
+        "name": "Help",
+        "path": "/help/",
+        "purpose": "Explain ordering and preparation",
+        "primary_action": "Choose a help topic",
+        "kind": "Hub",
+        "sections": [
+          "Choose buy/quote/artwork question",
+          "Topic routes",
+          "Contact fallback"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "How to order",
+            "path": "/how-to-order/",
+            "purpose": "Help customers understand how to order",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Standard order path",
+              "Quote path",
+              "Payment/artwork/production gates",
+              "Support and FAQs"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Artwork preparation",
+            "path": "/artwork/",
+            "purpose": "Help customers understand artwork preparation",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Choose product/family",
+              "Dimensions/templates",
+              "Preparation and upload limits",
+              "Design help"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Design help",
+            "path": "/design-help/",
+            "purpose": "Help customers understand design help",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Brief inputs",
+              "Approved fee/revision policy",
+              "Proof responsibilities",
+              "Quote/contact"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Materials & finishes",
+            "path": "/materials-finishes/",
+            "purpose": "Help customers understand materials & finishes",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Material comparison",
+              "Use cases and limits",
+              "Real detail images",
+              "Related products"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Delivery & pickup",
+            "path": "/delivery/",
+            "purpose": "Help customers understand delivery & pickup",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Pickup location/hours",
+              "Courier coverage/cost",
+              "Oversized/install route",
+              "Production versus transit time"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Payments",
+            "path": "/payments/",
+            "purpose": "Help customers understand payments",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Confirmed payment methods",
+              "Pending/failure/retry states",
+              "Receipts/refund guidance",
+              "Support"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "FAQ",
+            "path": "/faq/",
+            "purpose": "Help customers understand faq",
+            "primary_action": "Find guidance / get help",
+            "kind": "Information",
+            "sections": [
+              "Grouped specific questions",
+              "Relevant guide links",
+              "Contact fallback"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      },
+      {
+        "name": "About",
+        "path": "/about/",
+        "purpose": "Introduce the guide-led company identity",
+        "primary_action": "Explore work / contact",
+        "kind": "Information",
+        "sections": [
+          "Guide positioning",
+          "Verified story",
+          "12 capabilities",
+          "Facility/team evidence",
+          "Documented awards if supplied",
+          "Work/contact"
+        ],
+        "status": "Proposed route / structure"
+      },
+      {
+        "name": "Contact",
+        "path": "/contact/",
+        "purpose": "Reach the appropriate team",
+        "primary_action": "Enquire / request quote",
+        "kind": "Information",
+        "sections": [
+          "Reason for enquiry",
+          "Verified contacts/address/hours",
+          "On-demand location map",
+          "Accessible enquiry form",
+          "Help alternatives"
+        ],
+        "status": "Proposed route / structure"
+      },
+      {
+        "name": "Request a quote",
+        "path": "/request-a-quote/",
+        "purpose": "Specify a complex/custom project",
+        "primary_action": "Submit reviewed brief",
+        "kind": "Information",
+        "sections": [
+          "Choose family / help me choose",
+          "Application + conditional specification",
+          "Quantity + desired date + destination",
+          "Artwork/reference inputs",
+          "Contact preference",
+          "Review + privacy",
+          "Submission reference / recoverable error"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Quote result / acceptance",
+            "path": "/quote/{authorised-reference}/",
+            "purpose": "Review a versioned quote",
+            "primary_action": "Accept / request revision",
+            "kind": "System template",
+            "sections": [
+              "Reference + status",
+              "Agreed specification/version",
+              "Price/expiry/exclusions",
+              "Accept/revise",
+              "Agreed payable-order path"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      },
+      {
+        "name": "Utilities",
+        "path": "System templates",
+        "purpose": "Customer transaction/status functions",
+        "primary_action": "Use relevant function",
+        "kind": "Group",
+        "sections": [
+          "Shared shell and accessible states"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Search",
+            "path": "/?s={query}",
+            "purpose": "Functional template for search",
+            "primary_action": "Find a result",
+            "kind": "System template",
+            "sections": [
+              "Search field + query",
+              "Relevant products/solutions",
+              "No-results guidance"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Cart",
+            "path": "/cart/",
+            "purpose": "Functional template for cart",
+            "primary_action": "Proceed to checkout",
+            "kind": "System template",
+            "sections": [
+              "Configured/artwork-linked lines",
+              "Edit/remove",
+              "Total and fees",
+              "Checkout"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Checkout",
+            "path": "/checkout/",
+            "purpose": "Functional template for checkout",
+            "primary_action": "Pay for reviewed order",
+            "kind": "System template",
+            "sections": [
+              "Guest/contact details",
+              "Destination",
+              "Eligible fulfilment",
+              "Order total",
+              "Approved gateway"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Payment result",
+            "path": "/order-result/{authorised-reference}/",
+            "purpose": "Functional template for payment result",
+            "primary_action": "Continue / resolve payment",
+            "kind": "System template",
+            "sections": [
+              "Verified payment state",
+              "Order reference",
+              "Next action / retry",
+              "Support"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "My account",
+            "path": "/my-account/",
+            "purpose": "Functional template for my account",
+            "primary_action": "Manage order",
+            "kind": "System template",
+            "sections": [
+              "Sign-in/profile",
+              "Orders/quotes",
+              "Proof actions",
+              "Reorder with revalidation"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Track order",
+            "path": "/track-order/",
+            "purpose": "Functional template for track order",
+            "primary_action": "View authorised job",
+            "kind": "System template",
+            "sections": [
+              "Authorised lookup",
+              "Payment/artwork/production/dispatch",
+              "Next customer action",
+              "Support"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Proof review",
+            "path": "/proof/{authorised-reference}/",
+            "purpose": "Functional template for proof review",
+            "primary_action": "Approve version / request change",
+            "kind": "System template",
+            "sections": [
+              "Authorised version",
+              "Review and comments",
+              "Explicit approval/revision",
+              "Action receipt"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      },
+      {
+        "name": "Footer policies",
+        "path": "Policy pages",
+        "purpose": "Approved commercial/privacy obligations",
+        "primary_action": "Read applicable policy",
+        "kind": "Group",
+        "sections": [
+          "Clear shared legal/help navigation"
+        ],
+        "status": "Proposed route / structure",
+        "children": [
+          {
+            "name": "Privacy",
+            "path": "/privacy-policy/",
+            "purpose": "Explain approved privacy terms",
+            "primary_action": "Read policy",
+            "kind": "Information",
+            "sections": [
+              "Title + effective date",
+              "Readable policy sections",
+              "Relevant responsibilities",
+              "Contact / related policy"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Terms",
+            "path": "/terms/",
+            "purpose": "Explain approved terms terms",
+            "primary_action": "Read policy",
+            "kind": "Information",
+            "sections": [
+              "Title + effective date",
+              "Readable policy sections",
+              "Relevant responsibilities",
+              "Contact / related policy"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Returns & cancellation",
+            "path": "/returns-cancellations/",
+            "purpose": "Explain approved returns & cancellation terms",
+            "primary_action": "Read policy",
+            "kind": "Information",
+            "sections": [
+              "Title + effective date",
+              "Readable policy sections",
+              "Relevant responsibilities",
+              "Contact / related policy"
+            ],
+            "status": "Proposed route / structure"
+          },
+          {
+            "name": "Artwork & proof policy",
+            "path": "/artwork-proof-policy/",
+            "purpose": "Explain approved artwork & proof policy terms",
+            "primary_action": "Read policy",
+            "kind": "Information",
+            "sections": [
+              "Title + effective date",
+              "Readable policy sections",
+              "Relevant responsibilities",
+              "Contact / related policy"
+            ],
+            "status": "Proposed route / structure"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,725 @@
+{
+  "scope": "Linked static wireframes, not a functional prototype",
+  "registry_nodes": 51,
+  "registry_pages": 51,
+  "extra_state_pages": 15,
+  "pages": [
+    {
+      "file": "home.html",
+      "name": "Home",
+      "planned_route": "/",
+      "section_order": [
+        "H01 Header",
+        "H02 Brand hero",
+        "H03 Print / Pack / Promote routes",
+        "H04 Selected products",
+        "H05 Specialist capabilities",
+        "H06 Ordering paths",
+        "H07 Selected work",
+        "H08 Company evidence",
+        "H09 Quote invitation",
+        "H10 Footer"
+      ]
+    },
+    {
+      "file": "shop.html",
+      "name": "Shop",
+      "planned_route": "/shop/",
+      "section_order": [
+        "Category introduction",
+        "Seven product collections",
+        "Selected products",
+        "Custom/bulk alternative",
+        "Artwork/delivery help"
+      ]
+    },
+    {
+      "file": "business-stationery.html",
+      "name": "Business stationery",
+      "planned_route": "/product-category/business-stationery/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "marketing-publications.html",
+      "name": "Marketing & publications",
+      "planned_route": "/product-category/marketing-publications/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "labels-tags.html",
+      "name": "Labels & tags",
+      "planned_route": "/product-category/labels-tags/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "packaging.html",
+      "name": "Packaging",
+      "planned_route": "/product-category/packaging/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "gifts-apparel.html",
+      "name": "Gifts & apparel",
+      "planned_route": "/product-category/gifts-apparel/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "weddings-events.html",
+      "name": "Weddings & events",
+      "planned_route": "/product-category/weddings-events/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "signs-displays.html",
+      "name": "Signs & displays",
+      "planned_route": "/product-category/signs-displays/",
+      "section_order": [
+        "Breadcrumb + title + application",
+        "Relevant filters + sort + result count",
+        "Product grid: configure / buy / quote",
+        "Materials/size comparison",
+        "Artwork and delivery help",
+        "Related solution / bulk quote"
+      ]
+    },
+    {
+      "file": "standard-product.html",
+      "name": "Standard product",
+      "planned_route": "/product/{approved-product-slug}/",
+      "section_order": [
+        "Breadcrumb + gallery + benefit",
+        "Size \u2192 stock \u2192 print/finish \u2192 quantity",
+        "Price basis + total + delivery information",
+        "Artwork or approved design-help route",
+        "Review selection + cart action",
+        "Specifications/template + proof guidance",
+        "FAQs + related solution"
+      ]
+    },
+    {
+      "file": "personalised-product.html",
+      "name": "Personalised product",
+      "planned_route": "/product/{approved-gift-slug}/",
+      "section_order": [
+        "Gallery + item options",
+        "Size/colour + supported personalisation",
+        "Illustrative preview + limitations",
+        "Quantity + total + fulfilment",
+        "Artwork review + cart action",
+        "Specifications + FAQs"
+      ]
+    },
+    {
+      "file": "solutions.html",
+      "name": "Solutions",
+      "planned_route": "/solutions/",
+      "section_order": [
+        "One-partner introduction",
+        "Print / Pack / Promote context",
+        "Twelve families",
+        "Application/material guidance",
+        "Relevant work",
+        "Project quote"
+      ]
+    },
+    {
+      "file": "offset-printing.html",
+      "name": "Offset Printing",
+      "planned_route": "/solutions/offset-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "digital-offset-printing.html",
+      "name": "Digital Offset Printing",
+      "planned_route": "/solutions/digital-offset-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "digital-printing.html",
+      "name": "Digital Printing",
+      "planned_route": "/solutions/digital-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "uv-printing.html",
+      "name": "UV Printing",
+      "planned_route": "/solutions/uv-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "large-format-printing.html",
+      "name": "Large Format Printing",
+      "planned_route": "/solutions/large-format-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "signage-and-3d-signage.html",
+      "name": "Signage & 3D Signage",
+      "planned_route": "/solutions/signage-and-3d-signage/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "cnc-cutting-and-engraving.html",
+      "name": "CNC Cutting & Engraving",
+      "planned_route": "/solutions/cnc-cutting-and-engraving/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "laser-cutting-and-engraving.html",
+      "name": "Laser Cutting & Engraving",
+      "planned_route": "/solutions/laser-cutting-and-engraving/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "sublimation-printing.html",
+      "name": "Sublimation Printing",
+      "planned_route": "/solutions/sublimation-printing/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "vehicle-branding.html",
+      "name": "Vehicle Branding",
+      "planned_route": "/solutions/vehicle-branding/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "packaging-and-branding.html",
+      "name": "Packaging & Branding",
+      "planned_route": "/solutions/packaging-and-branding/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "promotional-and-corporate-gifts.html",
+      "name": "Promotional & Corporate Gifts",
+      "planned_route": "/solutions/promotional-and-corporate-gifts/",
+      "section_order": [
+        "Breadcrumb + guide-family heading",
+        "Outcome introduction + real image",
+        "Outputs/applications",
+        "Approved materials + limits",
+        "Relevant shop products",
+        "Real project + process",
+        "Specific FAQs/artwork requirements",
+        "Family-preselected quote"
+      ]
+    },
+    {
+      "file": "our-work.html",
+      "name": "Our work",
+      "planned_route": "/our-work/",
+      "section_order": [
+        "Intro",
+        "Output/service filters",
+        "Real project grid",
+        "Project quote"
+      ]
+    },
+    {
+      "file": "project-detail.html",
+      "name": "Project detail",
+      "planned_route": "/our-work/{project-slug}/",
+      "section_order": [
+        "Customer-approved brief",
+        "Real project images",
+        "Materials/process/scope",
+        "Verified result",
+        "Related product/solution",
+        "Quote"
+      ]
+    },
+    {
+      "file": "help.html",
+      "name": "Help",
+      "planned_route": "/help/",
+      "section_order": [
+        "Choose buy/quote/artwork question",
+        "Topic routes",
+        "Contact fallback"
+      ]
+    },
+    {
+      "file": "how-to-order.html",
+      "name": "How to order",
+      "planned_route": "/how-to-order/",
+      "section_order": [
+        "Standard order path",
+        "Quote path",
+        "Payment/artwork/production gates",
+        "Support and FAQs"
+      ]
+    },
+    {
+      "file": "artwork.html",
+      "name": "Artwork preparation",
+      "planned_route": "/artwork/",
+      "section_order": [
+        "Choose product/family",
+        "Dimensions/templates",
+        "Preparation and upload limits",
+        "Design help"
+      ]
+    },
+    {
+      "file": "design-help.html",
+      "name": "Design help",
+      "planned_route": "/design-help/",
+      "section_order": [
+        "Brief inputs",
+        "Approved fee/revision policy",
+        "Proof responsibilities",
+        "Quote/contact"
+      ]
+    },
+    {
+      "file": "materials-finishes.html",
+      "name": "Materials & finishes",
+      "planned_route": "/materials-finishes/",
+      "section_order": [
+        "Material comparison",
+        "Use cases and limits",
+        "Real detail images",
+        "Related products"
+      ]
+    },
+    {
+      "file": "delivery.html",
+      "name": "Delivery & pickup",
+      "planned_route": "/delivery/",
+      "section_order": [
+        "Pickup location/hours",
+        "Courier coverage/cost",
+        "Oversized/install route",
+        "Production versus transit time"
+      ]
+    },
+    {
+      "file": "payments.html",
+      "name": "Payments",
+      "planned_route": "/payments/",
+      "section_order": [
+        "Confirmed payment methods",
+        "Pending/failure/retry states",
+        "Receipts/refund guidance",
+        "Support"
+      ]
+    },
+    {
+      "file": "faq.html",
+      "name": "FAQ",
+      "planned_route": "/faq/",
+      "section_order": [
+        "Grouped specific questions",
+        "Relevant guide links",
+        "Contact fallback"
+      ]
+    },
+    {
+      "file": "about.html",
+      "name": "About",
+      "planned_route": "/about/",
+      "section_order": [
+        "Guide positioning",
+        "Verified story",
+        "12 capabilities",
+        "Facility/team evidence",
+        "Documented awards if supplied",
+        "Work/contact"
+      ]
+    },
+    {
+      "file": "contact.html",
+      "name": "Contact",
+      "planned_route": "/contact/",
+      "section_order": [
+        "Reason for enquiry",
+        "Verified contacts/address/hours",
+        "On-demand location map",
+        "Accessible enquiry form",
+        "Help alternatives"
+      ]
+    },
+    {
+      "file": "request-a-quote.html",
+      "name": "Request a quote",
+      "planned_route": "/request-a-quote/",
+      "section_order": [
+        "Choose family / help me choose",
+        "Application + conditional specification",
+        "Quantity + desired date + destination",
+        "Artwork/reference inputs",
+        "Contact preference",
+        "Review + privacy",
+        "Submission reference / recoverable error"
+      ]
+    },
+    {
+      "file": "quote-result-acceptance.html",
+      "name": "Quote result / acceptance",
+      "planned_route": "/quote/{authorised-reference}/",
+      "section_order": [
+        "Reference + status",
+        "Agreed specification/version",
+        "Price/expiry/exclusions",
+        "Accept/revise",
+        "Agreed payable-order path"
+      ]
+    },
+    {
+      "file": "utilities.html",
+      "name": "Utilities",
+      "planned_route": "System templates",
+      "section_order": [
+        "Shared shell and accessible states"
+      ]
+    },
+    {
+      "file": "search.html",
+      "name": "Search",
+      "planned_route": "/?s={query}",
+      "section_order": [
+        "Search field + query",
+        "Relevant products/solutions",
+        "No-results guidance"
+      ]
+    },
+    {
+      "file": "cart.html",
+      "name": "Cart",
+      "planned_route": "/cart/",
+      "section_order": [
+        "Configured/artwork-linked lines",
+        "Edit/remove",
+        "Total and fees",
+        "Checkout"
+      ]
+    },
+    {
+      "file": "checkout.html",
+      "name": "Checkout",
+      "planned_route": "/checkout/",
+      "section_order": [
+        "Guest/contact details",
+        "Destination",
+        "Eligible fulfilment",
+        "Order total",
+        "Approved gateway"
+      ]
+    },
+    {
+      "file": "payment-result.html",
+      "name": "Payment result",
+      "planned_route": "/order-result/{authorised-reference}/",
+      "section_order": [
+        "Verified payment state",
+        "Order reference",
+        "Next action / retry",
+        "Support"
+      ]
+    },
+    {
+      "file": "my-account.html",
+      "name": "My account",
+      "planned_route": "/my-account/",
+      "section_order": [
+        "Sign-in/profile",
+        "Orders/quotes",
+        "Proof actions",
+        "Reorder with revalidation"
+      ]
+    },
+    {
+      "file": "track-order.html",
+      "name": "Track order",
+      "planned_route": "/track-order/",
+      "section_order": [
+        "Authorised lookup",
+        "Payment/artwork/production/dispatch",
+        "Next customer action",
+        "Support"
+      ]
+    },
+    {
+      "file": "proof-review.html",
+      "name": "Proof review",
+      "planned_route": "/proof/{authorised-reference}/",
+      "section_order": [
+        "Authorised version",
+        "Review and comments",
+        "Explicit approval/revision",
+        "Action receipt"
+      ]
+    },
+    {
+      "file": "footer-policies.html",
+      "name": "Footer policies",
+      "planned_route": "Policy pages",
+      "section_order": [
+        "Clear shared legal/help navigation"
+      ]
+    },
+    {
+      "file": "privacy-policy.html",
+      "name": "Privacy",
+      "planned_route": "/privacy-policy/",
+      "section_order": [
+        "Title + effective date",
+        "Readable policy sections",
+        "Relevant responsibilities",
+        "Contact / related policy"
+      ]
+    },
+    {
+      "file": "terms.html",
+      "name": "Terms",
+      "planned_route": "/terms/",
+      "section_order": [
+        "Title + effective date",
+        "Readable policy sections",
+        "Relevant responsibilities",
+        "Contact / related policy"
+      ]
+    },
+    {
+      "file": "returns-cancellations.html",
+      "name": "Returns & cancellation",
+      "planned_route": "/returns-cancellations/",
+      "section_order": [
+        "Title + effective date",
+        "Readable policy sections",
+        "Relevant responsibilities",
+        "Contact / related policy"
+      ]
+    },
+    {
+      "file": "artwork-proof-policy.html",
+      "name": "Artwork & proof policy",
+      "planned_route": "/artwork-proof-policy/",
+      "section_order": [
+        "Title + effective date",
+        "Readable policy sections",
+        "Relevant responsibilities",
+        "Contact / related policy"
+      ]
+    },
+    {
+      "file": "cart-empty.html",
+      "name": "Empty cart",
+      "state": true
+    },
+    {
+      "file": "product-required-input.html",
+      "name": "Product \u2014 required input",
+      "state": true
+    },
+    {
+      "file": "quote-required-input.html",
+      "name": "Quote \u2014 incomplete brief",
+      "state": true
+    },
+    {
+      "file": "quote-submission.html",
+      "name": "Brief received \u2014 example",
+      "state": true
+    },
+    {
+      "file": "quote-accepted.html",
+      "name": "Quote acceptance receipt",
+      "state": true
+    },
+    {
+      "file": "quote-revision.html",
+      "name": "Quote revision request",
+      "state": true
+    },
+    {
+      "file": "checkout-required-input.html",
+      "name": "Checkout \u2014 required fields",
+      "state": true
+    },
+    {
+      "file": "payment-success.html",
+      "name": "Payment success \u2014 example",
+      "state": true
+    },
+    {
+      "file": "payment-failed.html",
+      "name": "Payment failed \u2014 example",
+      "state": true
+    },
+    {
+      "file": "payment-cancelled.html",
+      "name": "Payment cancelled \u2014 example",
+      "state": true
+    },
+    {
+      "file": "proof-approved.html",
+      "name": "Proof approval receipt",
+      "state": true
+    },
+    {
+      "file": "proof-revision.html",
+      "name": "Proof \u2014 changes requested",
+      "state": true
+    },
+    {
+      "file": "enquiry-receipt.html",
+      "name": "Enquiry receipt \u2014 example",
+      "state": true
+    },
+    {
+      "file": "search-empty.html",
+      "name": "Search \u2014 no results",
+      "state": true
+    },
+    {
+      "file": "not-found.html",
+      "name": "Page not found",
+      "state": true
+    },
+    {
+      "file": "index.html",
+      "name": "All wireframe pages"
+    }
+  ]
+}

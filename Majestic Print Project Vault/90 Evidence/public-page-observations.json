@@ -1,0 +1,159 @@
+{
+  "research_date": "2026-10-05",
+  "timezone": "Asia/Colombo",
+  "limitations": "No authenticated configuration audit, completed transaction or form submission. These records summarise sampled responses; raw third-party HTML is not packaged in the vault.",
+  "pages": [
+    {
+      "page": "home",
+      "requested_url": "https://majesticprint.lk/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 792356,
+      "sha256_of_observed_response": "4c7157e11f8e65d5b638a842601edf96aa2e5d0283139b76cb750b654ed55251",
+      "findings": [
+        "WordPress/WooCommerce and builder asset references present.",
+        "Header SVG reference identified.",
+        "Order tracking and Return Policy destinations are # in sampled markup."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "about",
+      "requested_url": "https://majesticprint.lk/about/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 209417,
+      "sha256_of_observed_response": "9338c802656e0ac827b271eb2a7ae92ff08a0242e0670577fbd24253f9ca5385",
+      "findings": [
+        "Claims over 21 years experience.",
+        "Claims regional awards in 2015, 2017 and 2019; not independently verified."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "contact",
+      "requested_url": "https://majesticprint.lk/contact/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 204189,
+      "sha256_of_observed_response": "75f40cd5d20bf7e6c5b789c165751d4156954487afa6cffe60c324259e815807",
+      "findings": [
+        "Unrelated Pharmavo medication/equipment copy appears.",
+        "Pannala address and public business contacts appear."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "faq",
+      "requested_url": "https://majesticprint.lk/faq/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 206454,
+      "sha256_of_observed_response": "661f1149d9487401908af4d327aa3eee0297f412fae32281efe765993aaf1216",
+      "findings": [
+        "Order instructions refer to majesticprintsl.com and info@majesticprintsl.com."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "all-products",
+      "requested_url": "https://majesticprint.lk/all-products/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 286825,
+      "sha256_of_observed_response": "49065c1b07675ca394a05626cd982200653b6598a8d7c1209f489b452bb9052d",
+      "findings": [
+        "Service-type categories and starting prices shown."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "shop",
+      "requested_url": "https://majesticprint.lk/shop/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 230768,
+      "sha256_of_observed_response": "c6522a8e2bc72f0c728c0467853a0efe45bf96f6dd9d7967f253474aaf95f66e",
+      "findings": [
+        "Seven product types displayed in sampled response."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "business-cards",
+      "requested_url": "https://majesticprint.lk/product/business-cards/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 258376,
+      "sha256_of_observed_response": "14ea9997118f7277b32d5aa2584d7a9f9e3043ad0d6484b42a5b20a41a7f3fbb",
+      "findings": [
+        "Observed price LKR 2.00; quantity min=1.",
+        "Add to Cart and a separate enquiry/artwork form are present.",
+        "Artwork form suggests external Sendspace URL for files over 5 MB."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "tag-cards",
+      "requested_url": "https://majesticprint.lk/product/tag-cards/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 276245,
+      "sha256_of_observed_response": "5eb5bd1dfeb9ff0c113b59ce0eacb7bb528b5446b97a449730a55ba1a150cca6",
+      "findings": [
+        "Observed price range LKR 15\u201325.",
+        "Sizes Large/Medium/Small; placeholder descriptions.",
+        "Assigned to multiple broad unrelated categories."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "book-printing",
+      "requested_url": "https://majesticprint.lk/services/book-printing/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 202711,
+      "sha256_of_observed_response": "7420250f76caa1e04483301824b0d4a2f8d741bd89f2d8cea205ec520aa6bbb3",
+      "findings": [
+        "Placeholder description; start-price label Rs.10."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "mugs",
+      "requested_url": "https://majesticprint.lk/services/mugs/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 202687,
+      "sha256_of_observed_response": "e23ed6d551ff04004f477128e76937961b30a940804303a26bec9114f1fe8a9b",
+      "findings": [
+        "Placeholder description; start-price label Rs.30."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "vehicle-branding",
+      "requested_url": "https://majesticprint.lk/services/vehicle-branding/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 202447,
+      "sha256_of_observed_response": "dc82a3ababfc23fe00552261dc0943356157ce58a42b0a7cf5696c0a63c901e4",
+      "findings": [
+        "Placeholder description; start-price label Rs.20."
+      ],
+      "transaction_tested": false
+    },
+    {
+      "page": "checkout",
+      "requested_url": "https://majesticprint.lk/checkout/",
+      "method": "read-only direct HTTP response inspection",
+      "retrieved_on": "2026-10-05",
+      "response_bytes": 182686,
+      "sha256_of_observed_response": "8531b47cc2d381224ccafd79817b73e06fcf8d3eaf0252819fc281ed1d2228d3",
+      "findings": [
+        "Empty-cart response; active gateway not revealed."
+      ],
+      "transaction_tested": false
+    }
+  ]
+}

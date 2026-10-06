@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Majestic Print — Homepage wireframe</title>
+  <link rel="stylesheet" href="styles.css?v=wireframes-2">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="review-bar">
+    <div class="wrap">
+      <div><strong>Majestic Print · Homepage wireframe</strong><br>Layout review · guide colours · system-font fallback</div>
+      <div class="review-controls">
+        <a href="wireframes/index.html">All wireframe pages</a><a href="sitemap.html">View sitemap & page plans</a>
+        <label class="toggle"><input id="annotations" type="checkbox" checked> Show design notes</label>
+      </div>
+    </div>
+  </div>
+  <header class="site-header" id="header">
+    <div class="wrap">
+      <div class="header-row">
+        <a class="brand-ref" href="#main" aria-label="Majestic Print Solutions homepage"><img src="assets/header-logo-reference.svg" width="90" height="90" alt="Majestic Print Solutions"></a>
+        <nav class="header-nav" aria-label="Primary">
+          <a href="#products">Shop</a><a href="#solutions">Solutions</a><a href="#work">Our work</a><a href="#ordering">Help</a><a href="#about">About</a><a href="#contact">Contact</a><a class="btn btn-primary" href="#project">Request a quote</a>
+        </nav>
+        <details class="mobile-nav"><summary>Menu</summary><nav aria-label="Mobile primary"><a href="#products">Shop</a><a href="#solutions">Solutions</a><a href="#work">Our work</a><a href="#ordering">Help</a><a href="#about">About</a><a href="#contact">Contact</a><a href="#project">Request a quote</a></nav></details>
+      </div>
+      <div class="planned-tools" aria-label="Planned utility locations"><span>Search — planned</span><span>Account — planned</span><span>Cart — planned</span></div>
+      <p class="annotation">H01 · Shared header. Public logo reference retained unchanged; final master variant pending. Utilities show placement only.</p>
+    </div>
+  </header>
+  <main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap">
+        <p class="annotation">H02 · One static hero: brand promise, full-service introduction and two clear routes. Replace the outlined objects with real product photography.</p>
+        <div class="hero-grid">
+          <div>
+            <div class="gold-rule" aria-hidden="true"></div>
+            <p class="eyebrow">Majestic Print Solutions</p>
+            <h1 id="hero-title">Print.<br>Pack.<br>Promote.</h1>
+            <p>Printing, packaging, signage and personalised products — brought together for your business and your personal ideas.</p>
+            <div class="actions"><a class="btn btn-primary" href="#products">Shop products</a><a class="btn btn-secondary" href="#project">Plan a custom project</a></div>
+          </div>
+          <div class="photography-slot" role="img" aria-label="Planned hero photography: business stationery, packaging and a personalised product">
+            <div class="object-composition" aria-hidden="true"><div class="object object-paper">Print kit</div><div class="object object-box">Packaging</div><div class="object object-gift">Gift</div></div>
+            <div class="slot-label">PHOTOGRAPHY SLOT<br>Physical products · texture · print detail</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="routes" aria-labelledby="routes-title">
+      <div class="wrap">
+        <span class="section-id">H03 / Browse by purpose</span>
+        <h2 id="routes-title">What would you like to create?</h2>
+        <p class="annotation">Three purpose routes interpret the guide’s positioning. The complete 12-family service list remains under Solutions.</p>
+        <div class="purpose-grid">
+          <article class="purpose"><h3>Print</h3><p>Business stationery, marketing materials, labels and publications.</p><a href="#products">Explore print products →</a></article>
+          <article class="purpose pack"><h3>Pack</h3><p>Product boxes, paper bags, sleeves and branded packaging.</p><a href="sitemap.html#packaging-and-branding">Discuss your packaging →</a></article>
+          <article class="purpose promote"><h3>Promote</h3><p>Signs, vehicle graphics, corporate merchandise and personal gifts.</p><a href="#solutions">Explore branding solutions →</a></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="products" aria-labelledby="products-title">
+      <div class="wrap">
+        <div class="section-heading"><div><span class="section-id">H04 / Selected products</span><h2 id="products-title">Find your next print.</h2></div><a href="sitemap.html#shop">View shop page plan →</a></div>
+        <p class="annotation">Representative products, not verified bestsellers. Photography, quantities and rates will follow the approved catalogue. No sample prices or real cart actions.</p>
+        <div class="products">
+          <article class="product-card"><div class="product-slot">Business-card product photo</div><h3>Business cards</h3><p>Paper, finish and quantity choices.</p><a href="sitemap.html#standard-product">Product layout →</a></article>
+          <article class="product-card"><div class="product-slot">Brochure / leaflet product photo</div><h3>Brochures & flyers</h3><p>Formats for your next campaign.</p><a href="sitemap.html#standard-product">Product layout →</a></article>
+          <article class="product-card"><div class="product-slot">Label / tag product photo</div><h3>Labels & tags</h3><p>Brand details for your products.</p><a href="sitemap.html#labels-tags">Collection layout →</a></article>
+          <article class="product-card"><div class="product-slot">Calendar / notebook product photo</div><h3>Calendars & notebooks</h3><p>Useful print for work and gifting.</p><a href="sitemap.html#marketing-publications">Collection layout →</a></article>
+          <article class="product-card"><div class="product-slot">Personalised-mug product photo</div><h3>Personalised mugs</h3><p>A personal touch or a branded gift.</p><a href="sitemap.html#personalised-product">Gift layout →</a></article>
+          <article class="product-card"><div class="product-slot">Printed-shirt product photo</div><h3>Printed T-shirts</h3><p>Personal, team and event ideas.</p><a href="sitemap.html#gifts-apparel">Collection layout →</a></article>
+        </div>
+      </div>
+    </section>
+    <section class="section soft" id="solutions" aria-labelledby="solutions-title">
+      <div class="wrap">
+        <span class="section-id">H05 / Custom capabilities</span>
+        <p class="annotation">Give specialist services their own route, with relevant materials, examples and quote questions. All 12 families are present in the sitemap.</p>
+        <div class="split">
+          <div><p class="eyebrow">Beyond everyday print</p><h2 id="solutions-title">Built around<br>your project.</h2><p class="intro">From a branded surface to a shop sign or a vehicle, explore the right production solution for the job.</p><a class="btn btn-secondary" href="sitemap.html#solutions">Explore all 12 solutions</a></div>
+          <ul class="capability-list">
+            <li><a href="sitemap.html#uv-printing">UV printing →</a></li><li><a href="sitemap.html#large-format-printing">Large format →</a></li><li><a href="sitemap.html#signage-and-3d-signage">Signage & 3D signage →</a></li><li><a href="sitemap.html#cnc-cutting-and-engraving">CNC cutting & engraving →</a></li><li><a href="sitemap.html#laser-cutting-and-engraving">Laser cutting & engraving →</a></li><li><a href="sitemap.html#vehicle-branding">Vehicle branding →</a></li><li><a href="sitemap.html#packaging-and-branding">Packaging & branding →</a></li><li><a href="sitemap.html#promotional-and-corporate-gifts">Corporate gifts →</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="ordering" aria-labelledby="ordering-title">
+      <div class="wrap">
+        <span class="section-id">H06 / Ordering guidance</span><h2 id="ordering-title">A clear path from idea to print.</h2>
+        <p class="annotation">Two paths reduce uncertainty. Payment and proof policy must be confirmed; production requires cleared payment and any required artwork approval.</p>
+        <div class="process-grid">
+          <article class="process"><h3>Ordering a standard product</h3><ol><li>Choose your product and specification.</li><li>Provide artwork or request design help.</li><li>Review the order and payment details.</li><li>Complete required approval, then production.</li></ol></article>
+          <article class="process"><h3>Planning something custom</h3><ol><li>Tell us the intended result.</li><li>Review the specification and quote.</li><li>Agree the artwork and project requirements.</li><li>Proceed to production and fulfilment.</li></ol></article>
+        </div>
+        <div class="actions"><a href="sitemap.html#how-to-order">How-to-order page plan →</a><a href="sitemap.html#artwork">Artwork guidance →</a></div>
+      </div>
+    </section>
+    <section class="section soft" id="work" aria-labelledby="work-title">
+      <div class="wrap">
+        <div class="section-heading"><div><span class="section-id">H07 / Selected work</span><h2 id="work-title">See what takes shape.</h2></div><a href="sitemap.html#our-work">Portfolio page plan →</a></div>
+        <p class="annotation">Reserve real customer-approved projects. These labels describe the evidence to collect, not completed projects or invented clients.</p>
+        <div class="work-grid">
+          <article><div class="work-slot">Real commercial-print project<br>Photography required</div><h3>Print in practice</h3><p>Brief, paper and finish.</p></article>
+          <article><div class="work-slot">Real packaging project<br>Photography required</div><h3>A brand, packaged</h3><p>Format, material and application.</p></article>
+          <article><div class="work-slot">Real signage / branding project<br>Photography required</div><h3>A visible identity</h3><p>Scope, surface and installation.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="wrap">
+        <span class="section-id">H08 / Company evidence</span>
+        <div class="split"><div><h2 id="about-title">One partner.<br>Every printing solution.</h2><p>Offset and digital printing, specialised surfaces, signage, fabrication, packaging and promotional products — brought together under one identity.</p><a href="sitemap.html#about">About-page structure →</a></div><div class="product-slot" style="min-height: 240px">Real facility / team / production photograph</div></div>
+        <p class="annotation">Guide-led company statement. Add verified history, awards and project/review evidence once supplied; no invented statistics or trust badges.</p>
+        <div class="evidence-list"><p>Company history<br><strong>Verify dates and story.</strong></p><p>Production capability<br><strong>Show the actual team and work.</strong></p><p>Quality evidence<br><strong>Use approved awards and reviews.</strong></p></div>
+      </div>
+    </section>
+    <section class="section invitation" id="project" aria-labelledby="project-title">
+      <div class="wrap">
+        <span class="section-id" style="color: white">H09 / Project invitation</span>
+        <p class="annotation">Quote action leads to the page structure in this review. The final form will tailor questions to the service; this wireframe submits no data.</p>
+        <div class="split"><div><h2 id="project-title">Have an idea<br>in mind?</h2><p>Plan packaging, signage, a campaign or a personal creation with the right details from the start.</p></div><div><a class="btn" href="sitemap.html#request-a-quote">View custom-quote structure</a><p style="margin-top: 20px">Not sure which process you need?<br>The quote route includes “Help me choose”.</p></div></div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" id="contact">
+    <div class="wrap">
+      <p class="annotation">H10 · Useful footer and contacts. Pannala address is a legacy-site observation; confirm all contacts/hours and policy copy before launch.</p>
+      <div class="footer-grid">
+        <div><h3>Majestic Print Solutions</h3><p>Print. Pack. Promote.</p><p>95, Negombo Road, Pannala.<br>Contact details and hours to verify.</p><a href="sitemap.html#contact">Contact-page plan →</a></div>
+        <div><h3>Explore</h3><a href="#products">Shop products</a><a href="sitemap.html#solutions">All solutions</a><a href="#work">Our work</a><a href="#about">About Majestic</a></div>
+        <div><h3>Help</h3><a href="sitemap.html#how-to-order">How to order</a><a href="sitemap.html#artwork">Artwork preparation</a><a href="sitemap.html#delivery">Delivery & pickup</a><a href="sitemap.html#faq">FAQ</a></div>
+        <div><h3>Policies</h3><a href="sitemap.html#privacy-policy">Privacy</a><a href="sitemap.html#terms">Terms</a><a href="sitemap.html#returns-cancellations">Returns & cancellation</a><a href="sitemap.html#artwork-proof-policy">Artwork & proof</a></div>
+      </div>
+      <div class="footer-meta">Homepage wireframe · 5 October 2026 · Proposed layout, not a live ordering website. Named brand fonts use a fallback until approved files are supplied.</div>
+    </div>
+  </footer>
+  <script>
+    const annotationToggle = document.getElementById('annotations');
+    annotationToggle.addEventListener('change', () => document.body.classList.toggle('annotations-off', !annotationToggle.checked));
+    document.querySelectorAll('.mobile-nav a').forEach(link => link.addEventListener('click', () => document.querySelector('.mobile-nav').removeAttribute('open')));
+  </script>
+</body>
+</html>

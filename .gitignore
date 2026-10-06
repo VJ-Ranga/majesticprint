@@ -1,0 +1,5 @@
+# Client source files — keep out of the public repo
+*.pdf
+.remember/
+.claude/
+.obsidian/workspace*.json

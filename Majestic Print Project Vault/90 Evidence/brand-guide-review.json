@@ -1,0 +1,35 @@
+{
+  "source": "BRAND GUIDELINES copy.pdf",
+  "sha256": "0fe8479fd979c0390bf398266d47e2fbe86cc4c087ae9e7cb1fd5679ef5bec76",
+  "reviewed_on": "2026-10-05",
+  "guide_unchanged": true,
+  "palette": {
+    "magenta": "#D01C60",
+    "orange": "#CF6428",
+    "gold": "#EAA123",
+    "deep_blue": "#13477A",
+    "bright_blue": "#007CAC"
+  },
+  "tagline": "Print. Pack. Promote.",
+  "font_names": [
+    "Nexa Heavy",
+    "Nexa Text-Trial",
+    "Swis721 Md BT Medium"
+  ],
+  "fonts_extracted": false,
+  "service_families": [
+    "Offset Printing",
+    "Digital Offset Printing",
+    "Digital Printing",
+    "UV Printing",
+    "Large Format Printing",
+    "Signage & 3D Signage",
+    "CNC Cutting & Engraving",
+    "Laser Cutting & Engraving",
+    "Sublimation Printing",
+    "Vehicle Branding",
+    "Packaging & Branding",
+    "Promotional & Corporate Gifts"
+  ],
+  "wireframe_font_status": "Declared brand roles with system fallback; no font files supplied"
+}
