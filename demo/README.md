@@ -40,8 +40,8 @@ as a sample. Replace with Majestic's own product, project and workshop photograp
 
 ## Waiting on client
 - WhatsApp number, phone, email and hours (placeholders in `data.js`)
-- Licensed Nexa Heavy / Nexa Text webfonts (Poppins fallback in use)
-- Master logo files (public header logo used for reference)
+- Licensed web font files + licences: Nexa Heavy, Nexa Text (guide shows a "Trial" version) and Swiss721 Medium. Poppins / Helvetica-style fallbacks in use
+- Master logo files. Header, footer and preloader currently use the horizontal light/dark logos extracted as vectors from the brand guide PDF (`assets/img/brand/`); the public site SVG (`assets/img/logo.svg`) is kept only as the favicon because its wordmark is live text that falls back to a serif without Nexa installed
 - Real product, project and workshop photography (illustrated stand-ins now)
 - Rate card / prices, delivery coverage and proof policy wording
 

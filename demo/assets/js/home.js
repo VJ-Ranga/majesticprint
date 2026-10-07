@@ -338,7 +338,7 @@ function buildTicket(MP, list) {
 // A four-unit CMYK press: sheets feed in, pick up each plate colour, and land on the delivery stack.
 // Brand inks stand in for the process colours: C = Bright Blue, M = Magenta, Y = Gold, K = Deep Blue.
 function mountPressRun(host) {
-  var units = [["C", "#007CAC", "Bright Blue"], ["M", "#D01C60", "Magenta"], ["Y", "#EAA123", "Gold"], ["K", "#0A2A4A", "Deep Blue"]];
+  var units = [["C", "#007CAC", "Bright Blue"], ["M", "#D01C60", "Magenta"], ["Y", "#EAA123", "Gold"], ["K", "#13477A", "Deep Blue"]];
   var svg = '<svg viewBox="0 0 1200 230" class="press-svg" role="img" aria-labelledby="pressTitle"><title id="pressTitle">A sheet running through four print units — cyan, magenta, yellow and key — before landing on the delivery stack</title>';
   // feeder stack
   svg += '<g class="pr-stack">';
@@ -358,7 +358,7 @@ function mountPressRun(host) {
   // delivery stack
   svg += '<g class="pr-stack"><rect x="1058" y="160" width="120" height="5" fill="#fff"/><rect x="1058" y="167" width="120" height="5" fill="#fff" opacity=".8"/>' +
     '<rect x="1058" y="160" width="120" height="5" fill="url(#prPrinted)"/><text x="1118" y="196" class="pr-label" text-anchor="middle">DELIVERY</text></g>';
-  svg += '<defs><linearGradient id="prPrinted"><stop offset="0" stop-color="#007CAC"/><stop offset=".33" stop-color="#D01C60"/><stop offset=".66" stop-color="#EAA123"/><stop offset="1" stop-color="#0A2A4A"/></linearGradient></defs>';
+  svg += '<defs><linearGradient id="prPrinted"><stop offset="0" stop-color="#007CAC"/><stop offset=".33" stop-color="#D01C60"/><stop offset=".66" stop-color="#EAA123"/><stop offset="1" stop-color="#13477A"/></linearGradient></defs>';
   // three sheets in flight
   for (var s = 0; s < 3; s++) {
     svg += '<g class="pr-sheet" style="animation-delay:' + (-s * 2.6) + 's"><rect x="0" y="113" width="120" height="10" fill="#fff"/>';

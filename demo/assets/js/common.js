@@ -119,7 +119,7 @@
       el("header", { class: "site-header", id: "top" }, [
         el("div", { class: "container-xl header-row" }, [
           el("a", { class: "brand", href: "index.html", "aria-label": "Majestic Print Solutions — home" }, [
-            el("img", { src: "assets/img/logo-tight.svg", width: "78", height: "72", alt: "Majestic Print Solutions" })
+            el("img", { src: "assets/img/brand/logo-h-light.svg", width: "170", height: "47", alt: "Majestic Print Solutions" })
           ]),
           el("nav", { class: "main-nav d-none d-lg-flex", "aria-label": "Primary" }, navLinks()),
           el("div", { class: "header-actions" }, [
@@ -156,7 +156,7 @@
           ]),
           el("div", { class: "row g-5 footer-cols" }, [
             el("div", { class: "col-lg-4" }, [
-              el("img", { src: "assets/img/logo-tight.svg", width: "104", height: "96", alt: "Majestic Print Solutions", class: "footer-logo" }),
+              el("img", { src: "assets/img/brand/logo-h-dark.svg", width: "170", height: "47", alt: "Majestic Print Solutions", class: "footer-logo" }),
               el("p", { class: "footer-tag", text: "One partner. Every printing solution." }),
               el("p", { class: "footer-about", text: "Printing, packaging, signage and promotional products for businesses and personal orders across Sri Lanka." })
             ]),

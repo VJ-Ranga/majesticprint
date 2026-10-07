@@ -216,7 +216,7 @@
 .zone-key:hover, .zone-key:focus-visible { border-color: var(--mp-ink); }
 .zone-swatch { width: 22px; height: 0; border-top: 3px dashed var(--mp-magenta); }
 .zone-trim .zone-swatch { border-top-style: solid; border-top-color: var(--mp-ink); }
-.zone-safe .zone-swatch { border-top-color: var(--mp-bright); border-top-style: dotted; }
+.zone-safe .zone-swatch { border-top-color: var(--mp-gold); border-top-style: dotted; }
 .art-table { display: grid; grid-template-columns: 9rem 1fr; margin: 0; border-top: 1.5px solid var(--mp-ink); }
 .art-table dt, .art-table dd { margin: 0; padding: 1.1rem 0; border-bottom: 1px solid var(--mp-line); }
 .art-table dt { display: flex; flex-direction: column; gap: .15rem; }

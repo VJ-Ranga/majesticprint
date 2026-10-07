@@ -515,7 +515,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       '<rect x="62" y="186" width="120" height="7" fill="#fff" opacity=".6"/><circle cx="318" cy="96" r="26" fill="#D01C60"/>' +
       '<rect class="z z-bleed" x="10" y="10" width="380" height="240" fill="none" stroke="#D01C60" stroke-width="2" stroke-dasharray="6 5"/>' +
       '<rect class="z z-trim" x="30" y="30" width="340" height="200" fill="none" stroke="#0D2440" stroke-width="2.5"/>' +
-      '<rect class="z z-safe" x="46" y="46" width="308" height="168" fill="none" stroke="#5FD3FF" stroke-width="2" stroke-dasharray="3 4"/>' +
+      '<rect class="z z-safe" x="46" y="46" width="308" height="168" fill="none" stroke="#EAA123" stroke-width="2" stroke-dasharray="3 4"/>' +
       '</svg>';
     var legend = el("div", { class: "bleed-legend" }, zones.map(function (z) {
       var b = el("button", { type: "button", class: "zone-key zone-" + z[0], "data-zone": z[0] }, [el("span", { class: "zone-swatch", "aria-hidden": "true" }), el("span", { text: z[1] })]);
