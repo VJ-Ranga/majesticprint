@@ -40,7 +40,7 @@
     var loaded = document.readyState === "complete";
     window.addEventListener("load", function () { loaded = true; });
     var stepEl = document.getElementById("plStep"), pctEl = document.getElementById("plPct");
-    var steps = [[0, "Loading plates"], [28, "Registering C · M · Y"], [62, "Inking up"], [100, "Proof approved"]];
+    var steps = [[0, "Loading plates"], [28, "Registering C · M · Y"], [62, "Inking up"], [100, "Ready to print"]];
 
     function imageRatio() {
       var imgs = Array.prototype.filter.call(document.images, function (i) { return i.loading !== "lazy"; });
@@ -62,14 +62,13 @@
     function finish() {
       if (finished) return;
       finished = true;
-      pctEl.textContent = "100"; stepEl.textContent = "Proof approved";
+      pctEl.textContent = "100"; stepEl.textContent = "Ready to print";
       pl.querySelector(".pl-fill").style.setProperty("--p", "100%");
-      pl.classList.add("is-approved");
       setTimeout(function () {
         pl.classList.add("is-leaving");
         root.classList.remove("is-loading");
         setTimeout(function () { pl.remove(); }, 800);
-      }, quick || reduce ? 120 : 420);
+      }, quick || reduce ? 80 : 220);
     }
     requestAnimationFrame(frame);
     setTimeout(function () { loaded = true; }, 5000); // never hold the page longer than this

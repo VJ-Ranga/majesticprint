@@ -1010,9 +1010,7 @@ html:not(.js) .preloader { display: none; }
 .pl-m { background: var(--mp-magenta); }
 .pl-y { background: var(--mp-gold); }
 .pl-k { position: relative; z-index: 2; display: block; width: 100%; height: auto; opacity: 0; }
-.pl-stamp { position: absolute; right: -26px; bottom: 16px; font-size: .95rem; color: var(--mp-success); border-color: var(--mp-success); background: rgba(255, 255, 255, .85); opacity: 0; }
-.preloader.is-approved .pl-stamp { animation: stamp .45s cubic-bezier(.3, 1.6, .5, 1) forwards; }
-
+.preloader.is-approved 
 .pl-bar { position: relative; width: 240px; height: 12px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
 .pl-bar span:nth-child(1) { background: color-mix(in srgb, var(--mp-deep) 18%, #fff); }
 .pl-bar span:nth-child(2) { background: color-mix(in srgb, var(--mp-bright) 18%, #fff); }
