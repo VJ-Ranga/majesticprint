@@ -282,6 +282,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     var proof = el("aside", { class: "cap-proof", id: "capProofS", "aria-live": "polite" }, [
       el("figure", { class: "print-frame cap-photo" }, [el("img", { src: "", alt: "", width: "1600", height: "1067" }), el("figcaption", { class: "slug cp-slug" })]),
       el("div", { class: "cap-copy" }, [
+        el("span", { class: "cp-icon", "aria-hidden": "true" }),
         el("h3", { class: "cp-name" }), el("p", { class: "cp-text" }), el("p", { class: "cap-outputs cp-outputs" }),
         el("div", { class: "cap-actions" }, [el("a", { class: "btn-mp btn-mp-primary cp-cta", href: "#" })])
       ])
@@ -305,7 +306,7 @@ window.MP_PAGES = window.MP_PAGES || {};
             el("h3", null, [document.createTextNode(g[0]), el("span", { text: "." })]),
             el("ul", null, g[2].map(function (n) {
               var s = MP.serviceByName(n);
-              return el("li", null, [el("a", { href: "service.html?s=" + s.slug, html: "<span></span>" + MP.ARROW })]);
+              return el("li", null, [el("a", { href: "service.html?s=" + s.slug, style: "--ink:" + MP.ink(s.ink), html: '<span class="pm-icon" aria-hidden="true">' + ((window.MP_ICONS || {})[n] || "") + "</span><span></span>" + MP.ARROW })]);
             }))
           ]);
         }))
@@ -313,7 +314,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     ]));
     // fill link text safely
     MP.$$(".plate-col").forEach(function (col, gi) {
-      MP.$$("a", col).forEach(function (a, i) { a.firstChild.textContent = groups[gi][2][i]; });
+      MP.$$("a", col).forEach(function (a, i) { a.children[1].textContent = groups[gi][2][i]; });
     });
     MP.$("#pageBody").appendChild(cta(MP, "Not sure which process you need?", "Describe the result you want. We'll recommend the process, material and finish.", "contact.html#quote", "Help me choose"));
   };
@@ -324,7 +325,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     var i = 0;
     D.services.forEach(function (s, j) { if (s.slug === MP.param("s")) i = j; });
     var s = D.services[i], det = D.serviceDetail[s.name] || { materials: [], weNeed: [] }, inkHex = MP.ink(s.ink);
-    MP.pageHead({ kicker: D.inks[s.ink].name + " plate", title: s.name, crumbs: [["Solutions", "solutions.html"], [s.name]], ink: inkHex, lead: s.text });
+    MP.pageHead({ kicker: D.inks[s.ink].name + " plate", title: s.name, crumbs: [["Solutions", "solutions.html"], [s.name]], ink: inkHex, lead: s.text, icon: (window.MP_ICONS || {})[s.name] });
 
     var outputs = s.outputs.split(" · ").map(function (o) { return o.charAt(0).toUpperCase() + o.slice(1); });
     var need = el("ul", { class: "need-list" }, det.weNeed.map(function (n) { return el("li", null, [el("span", { class: "tick", "aria-hidden": "true" }), el("span", { text: n })]); }));

@@ -44,3 +44,11 @@ as a sample. Replace with Majestic's own product, project and workshop photograp
 - Master logo files (public header logo used for reference)
 - Real product, project and workshop photography (illustrated stand-ins now)
 - Rate card / prices, delivery coverage and proof policy wording
+
+## Motion, illustration and backgrounds (v4)
+- **Hero slider** — 4 sheets (Brand, Pack, Promote, Season). Each change re-runs the CMY plate registration; the colour bar is the slide control and its patch fills as the timer. Pause/play, arrows, swipe, keyboard; no autoplay under `prefers-reduced-motion`. Slides 2–4 live in `data.js → heroSlides`.
+- **Press run** — inline SVG of a 4-unit CMYK press (How it works). Sheets pick up each brand ink and land on delivery; runs only while on screen.
+- **Process pictograms** — 12 custom SVG icons in `assets/js/icons.js` (ink accents take each process's plate colour).
+- **Backgrounds** — halftone fields (`.bg-halftone`), self-healing cutting mat grid (`.bg-mat`), slowly turning registration target (`.bg-target`).
+- **Click feedback** — small CMY ink burst on buttons, tabs and tiles.
+- Built with CSS + vanilla JS (no animation library needed yet). If heavier scroll choreography is wanted later, GSAP 3.15 incl. ScrollTrigger is free for commercial use (gsap.com/standard-license) — self-host it in the WordPress theme.

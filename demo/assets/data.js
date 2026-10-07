@@ -25,6 +25,22 @@ window.MP_DATA = {
     gold:    { name: "Gold",        hex: "#EAA123" }
   },
 
+  // Hero slides after the first (slide 1 is in index.html). lines = headline lines; the last full stop takes the ink.
+  heroSlides: [
+    { kicker: "Pack", ink: "gold", lines: ["Packaging,", "made to fit."],
+      lead: "Mailer, tuck-end and rigid boxes, labels and sleeves — built around your product and printed to sell it.",
+      img: "assets/img/photos/svc-packaging.jpg", alt: "Printed retail cartons (sample image)", caption: "Retail cartons · sample image",
+      cta: ["Explore packaging", "shop.html?route=Pack"], cta2: ["Plan packaging", "contact.html?service=Packaging%20%26%20Branding#quote"] },
+    { kicker: "Promote", ink: "magenta", lines: ["Signs people", "find you by."],
+      lead: "3D letters, light boxes, banners and vehicle wraps — designed, made and installed by one team.",
+      img: "assets/img/photos/svc-signage.jpg", alt: "Illuminated 3D lettering (sample image)", caption: "3D lettering · sample image",
+      cta: ["See signage", "service.html?s=signage-and-3d-signage"], cta2: ["Get a quote", "contact.html?service=Signage%20%26%203D%20Signage#quote"] },
+    { kicker: "This season · Oct – Dec", ink: "bright", lines: ["Deepavali &", "year-end gifts."],
+      lead: "Desk diaries, engraved pens, gift boxes and greeting cards for clients and staff. Order early — the presses fill up.",
+      img: "assets/img/photos/gifts.jpg", alt: "Gift box with gold ribbon (sample image)", caption: "Gift sets · sample image",
+      cta: ["Shop seasonal gifts", "shop.html?occasion=corporate"], cta2: ["See the print calendar", "#gifts"] }
+  ],
+
   // Print / Pack / Promote — each printed as a duotone in its own ink
   routes: [
     { id: "print",   title: "Print",   ink: "bright",  img: "assets/img/photos/flyers.jpg",

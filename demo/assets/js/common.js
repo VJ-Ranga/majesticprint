@@ -220,6 +220,17 @@
     if (oc) oc.hide();
   });
 
+  /* ---------- Click feedback: a small CMY ink burst where you press ---------- */
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  document.addEventListener("pointerdown", function (e) {
+    if (calm.matches || !e.target.closest) return;
+    if (!e.target.closest(".btn-mp, .tab, .opt, .art-opt, .cal-bar, .cap-row, .occ-chip, .press-tab, .press-btn, .zone-key, .to-top, .ql-link")) return;
+    var b = el("span", { class: "ink-burst", "aria-hidden": "true" }, [el("i"), el("i"), el("i")]);
+    b.style.left = e.clientX + "px"; b.style.top = e.clientY + "px";
+    document.body.appendChild(b);
+    setTimeout(function () { b.remove(); }, 650);
+  });
+
   /* ---------- Reveal on scroll (content stays visible without JS) ---------- */
   var io = "IntersectionObserver" in window ? new IntersectionObserver(function (entries) {
     entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add("is-in"); io.unobserve(en.target); } });
@@ -267,7 +278,10 @@
         crumbs,
         h1 ? el("div", { class: "page-head-grid" }, [
           el("div", null, [opts.kicker ? el("p", { class: "kicker", text: opts.kicker }) : null, h1]),
-          opts.lead ? el("p", { class: "lead-text", text: opts.lead }) : null
+          el("div", { class: "page-head-side" }, [
+            opts.icon ? el("span", { class: "page-icon", style: "--ink:" + (opts.ink || ink("magenta")), "aria-hidden": "true", html: opts.icon }) : null,
+            opts.lead ? el("p", { class: "lead-text", text: opts.lead }) : null
+          ])
         ]) : null
       ])
     ]));

@@ -5,6 +5,112 @@ window.MP_PAGES.home = function (MP) {
   var D = MP.D, $ = MP.$, $$ = MP.$$, el = MP.el, ink = MP.ink, ARROW = MP.ARROW;
   var narrow = window.matchMedia("(max-width: 991px)");
 
+  /* ---------- Hero slider: every slide is a new plate run ---------- */
+  (function () {
+    var hero = $(".hero"), textWrap = $("#slidesText"), mediaWrap = $("#slidesMedia"), bar = $("#pressBar");
+    if (!hero || !textWrap) return;
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var slides = [{ kicker: "Print. Pack. Promote.", ink: "magenta" }].concat(D.heroSlides || []);
+    var total = slides.length, current = 0, paused = false;
+    $("#sheetTotal").textContent = String(total).padStart(2, "0");
+
+    // Build slides 2..n from data (text only, no HTML injection)
+    D.heroSlides.forEach(function (sl, k) {
+      var n = k + 2, inkHex = ink(sl.ink);
+      var plates = el("span", { class: "plates", "aria-hidden": "true" });
+      var kPlate = el("span", { class: "plate plate-k" });
+      sl.lines.forEach(function (line, li) {
+        var isLast = li === sl.lines.length - 1 && /\.$/.test(line);
+        kPlate.appendChild(document.createTextNode(isLast ? line.slice(0, -1) : line));
+        if (isLast) kPlate.appendChild(el("i", { class: "dot", style: "color:" + inkHex, text: "." }));
+        if (li < sl.lines.length - 1) kPlate.appendChild(el("br"));
+      });
+      plates.appendChild(kPlate);
+      ["c", "m", "y"].forEach(function (c) {
+        var pl = el("span", { class: "plate plate-" + c });
+        sl.lines.forEach(function (line, li) { pl.appendChild(document.createTextNode(line)); if (li < sl.lines.length - 1) pl.appendChild(el("br")); });
+        plates.appendChild(pl);
+      });
+      textWrap.appendChild(el("div", { class: "slide-text", role: "group", "aria-roledescription": "slide", "aria-label": n + " of " + total, style: "--ink:" + inkHex }, [
+        el("p", { class: "eyebrow", text: sl.kicker }),
+        el("h2", { class: "register slide-title" }, [el("span", { class: "visually-hidden", text: sl.lines.join(" ") }), plates]),
+        el("p", { class: "lead-text", text: sl.lead }),
+        el("div", { class: "hero-actions" }, [
+          el("a", { class: "btn-mp btn-mp-primary", href: sl.cta[1], text: sl.cta[0] }),
+          el("a", { class: "btn-mp btn-mp-outline", href: sl.cta2[1], text: sl.cta2[0] })
+        ])
+      ]));
+      mediaWrap.appendChild(el("figure", { class: "hero-media print-frame" }, [
+        el("img", { src: sl.img, alt: sl.alt, width: "1200", height: "1500", loading: "lazy" }),
+        el("figcaption", { class: "slug", text: sl.caption })
+      ]));
+    });
+
+    var texts = $$(".slide-text", textWrap), medias = $$(".hero-media", mediaWrap);
+    var labels = ["Brand", "Pack", "Promote", "Season"];
+    var tabs = slides.map(function (sl, i) {
+      var t = el("button", { type: "button", class: "press-tab", role: "tab", "aria-selected": i === 0 ? "true" : "false",
+        "aria-label": "Slide " + (i + 1) + ": " + (sl.lines ? sl.lines.join(" ") : "Print. Pack. Promote."), tabindex: i === 0 ? "0" : "-1",
+        style: "--ink:" + ink(sl.ink) }, [
+        el("span", { class: "press-patch", "aria-hidden": "true" }, [el("span", { class: "press-fill" })]),
+        el("span", { class: "slug", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") + " " + (labels[i] || "") })
+      ]);
+      t.addEventListener("click", function () { go(i); });
+      t.addEventListener("keydown", function (e) {
+        var n = e.key === "ArrowRight" ? (i + 1) % total : e.key === "ArrowLeft" ? (i - 1 + total) % total : null;
+        if (n !== null) { e.preventDefault(); go(n); tabs[n].focus(); }
+      });
+      bar.appendChild(t);
+      return t;
+    });
+
+    function go(i) {
+      if (i === current) return;
+      [texts, medias].forEach(function (list) {
+        list.forEach(function (node, j) {
+          node.classList.remove("is-active");
+          if (j === i) { void node.offsetWidth; node.classList.add("is-active"); }
+          if (j !== i) node.setAttribute("inert", ""); else node.removeAttribute("inert");
+        });
+      });
+      tabs.forEach(function (t, j) {
+        t.setAttribute("aria-selected", j === i ? "true" : "false");
+        t.setAttribute("tabindex", j === i ? "0" : "-1");
+        t.classList.toggle("is-done", j < i);
+      });
+      // restart the progress fill on the new patch
+      var fill = $(".press-fill", tabs[i]); fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = "";
+      $("#sheetNo").textContent = String(i + 1).padStart(2, "0");
+      current = i;
+    }
+    texts.forEach(function (t, j) { if (j) t.setAttribute("inert", ""); });
+    medias.forEach(function (m, j) { if (j) m.setAttribute("inert", ""); });
+
+    // Autoplay is driven by the patch fill animation; pausing the animation pauses the slideshow
+    bar.addEventListener("animationend", function (e) {
+      if (e.target.classList.contains("press-fill") && !paused && !reduce.matches) go((current + 1) % total);
+    });
+    $("#heroNext").addEventListener("click", function () { go((current + 1) % total); });
+    $("#heroPrev").addEventListener("click", function () { go((current - 1 + total) % total); });
+    var pauseBtn = $("#heroPause");
+    function setPaused(p) {
+      paused = p; hero.classList.toggle("is-paused", p);
+      pauseBtn.setAttribute("aria-label", p ? "Play slideshow" : "Pause slideshow");
+      pauseBtn.innerHTML = p ? '<i class="fa-solid fa-play" aria-hidden="true"></i>' : '<i class="fa-solid fa-pause" aria-hidden="true"></i>';
+    }
+    pauseBtn.addEventListener("click", function () { setPaused(!paused); });
+    if (reduce.matches) setPaused(true);
+
+    // Swipe
+    var x0 = null;
+    hero.addEventListener("pointerdown", function (e) { if (e.pointerType !== "mouse") x0 = e.clientX; });
+    hero.addEventListener("pointerup", function (e) {
+      if (x0 === null) return;
+      var dx = e.clientX - x0; x0 = null;
+      if (Math.abs(dx) > 50) go(dx < 0 ? (current + 1) % total : (current - 1 + total) % total);
+    });
+  })();
+
   /* ---------- Print / Pack / Promote (duotone plates) ---------- */
   var routeGrid = $("#routeGrid");
   D.routes.forEach(function (r) {
@@ -98,8 +204,13 @@ window.MP_PAGES.home = function (MP) {
   }
   showOccasion(0);
 
-  /* ---------- Job ticket ---------- */
+  /* ---------- Capability icons in "Why Majestic" ---------- */
+  $$("[data-icon]").forEach(function (n) { n.innerHTML = (window.MP_ICONS || {})[n.getAttribute("data-icon")] || ""; });
+
+  /* ---------- Job ticket + press run ---------- */
   buildTicket(MP, $("#stepList"));
+  var run = $("#pressRun");
+  if (run) mountPressRun(run);
 
   $$(".color-strip span").forEach(function (s, i) { s.style.setProperty("--n", i); });
 };
@@ -112,7 +223,7 @@ function initCapIndex(MP, capIndex, capProof, narrow, linkToPage) {
   var capLayout = capIndex.parentNode, rows = [], current = -1;
   D.services.forEach(function (s, i) {
     var btn = el("button", { type: "button", class: "cap-row", "aria-expanded": "false", "aria-controls": capProof.id, style: "--ink:" + ink(s.ink) }, [
-      el("span", { class: "cap-chip", "aria-hidden": "true" }),
+      el("span", { class: "cap-icon", "aria-hidden": "true", html: (window.MP_ICONS || {})[s.name] || "" }),
       el("span", { class: "cap-name", text: s.name }),
       el("span", { class: "cap-out", text: s.outputs.split(" · ").slice(0, 3).join(" · ") }),
       el("i", { class: "fa-solid fa-arrow-right cap-arrow", "aria-hidden": "true" })
@@ -138,6 +249,7 @@ function initCapIndex(MP, capIndex, capProof, narrow, linkToPage) {
       capProof.style.setProperty("--ink", ink(s.ink));
       $(".cp-slug", capProof).textContent = s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  sample image";
       $(".cp-name", capProof).textContent = s.name;
+      var cpi = $(".cp-icon", capProof); if (cpi) cpi.innerHTML = (window.MP_ICONS || {})[s.name] || "";
       $(".cp-text", capProof).textContent = s.text;
       $(".cp-outputs", capProof).textContent = s.outputs;
       var cta = $(".cp-cta", capProof);
@@ -167,4 +279,43 @@ function buildTicket(MP, list) {
       s.stamp ? MP.el("span", { class: "stamp", "aria-hidden": "true", text: "Approved" }) : null
     ]));
   });
+}
+
+// A four-unit CMYK press: sheets feed in, pick up each plate colour, and land on the delivery stack.
+// Brand inks stand in for the process colours: C = Bright Blue, M = Magenta, Y = Gold, K = Deep Blue.
+function mountPressRun(host) {
+  var units = [["C", "#007CAC", "Bright Blue"], ["M", "#D01C60", "Magenta"], ["Y", "#EAA123", "Gold"], ["K", "#0A2A4A", "Deep Blue"]];
+  var svg = '<svg viewBox="0 0 1200 230" class="press-svg" role="img" aria-labelledby="pressTitle"><title id="pressTitle">A sheet running through four print units — cyan, magenta, yellow and key — before landing on the delivery stack</title>';
+  // feeder stack
+  svg += '<g class="pr-stack">';
+  for (var f = 0; f < 6; f++) svg += '<rect x="22" y="' + (126 + f * 7) + '" width="120" height="5" fill="#fff" opacity="' + (0.9 - f * 0.1) + '"/>';
+  svg += '<text x="82" y="196" class="pr-label" text-anchor="middle">FEEDER</text></g>';
+  // paper path
+  svg += '<path d="M150 118H1040" class="pr-path"/>';
+  units.forEach(function (u, i) {
+    var cx = 280 + i * 200;
+    svg += '<g class="pr-unit" style="--u:' + u[1] + '">' +
+      '<rect x="' + (cx - 70) + '" y="18" width="140" height="190" class="pr-frame"/>' +
+      '<rect x="' + (cx - 46) + '" y="26" width="92" height="12" fill="' + u[1] + '" class="pr-fountain"/>' +
+      '<g class="pr-roll"><circle cx="' + cx + '" cy="78" r="34" class="pr-cyl" stroke="' + u[1] + '"/><path d="M' + cx + ' 44v68M' + (cx - 34) + ' 78h68" class="pr-spoke"/></g>' +
+      '<g class="pr-roll pr-roll-rev"><circle cx="' + cx + '" cy="158" r="34" class="pr-cyl"/><path d="M' + cx + ' 124v68M' + (cx - 34) + ' 158h68" class="pr-spoke"/></g>' +
+      '<text x="' + cx + '" y="226" class="pr-label" text-anchor="middle">' + u[0] + ' · ' + u[2].toUpperCase() + '</text></g>';
+  });
+  // delivery stack
+  svg += '<g class="pr-stack"><rect x="1058" y="160" width="120" height="5" fill="#fff"/><rect x="1058" y="167" width="120" height="5" fill="#fff" opacity=".8"/>' +
+    '<rect x="1058" y="160" width="120" height="5" fill="url(#prPrinted)"/><text x="1118" y="196" class="pr-label" text-anchor="middle">DELIVERY</text></g>';
+  svg += '<defs><linearGradient id="prPrinted"><stop offset="0" stop-color="#007CAC"/><stop offset=".33" stop-color="#D01C60"/><stop offset=".66" stop-color="#EAA123"/><stop offset="1" stop-color="#0A2A4A"/></linearGradient></defs>';
+  // three sheets in flight
+  for (var s = 0; s < 3; s++) {
+    svg += '<g class="pr-sheet" style="animation-delay:' + (-s * 2.6) + 's"><rect x="0" y="113" width="120" height="10" fill="#fff"/>';
+    units.forEach(function (u, i) {
+      svg += '<rect x="' + (8 + i * 27) + '" y="115" width="24" height="6" fill="' + u[1] + '" class="pr-band pr-band-' + i + '" style="animation-delay:' + (-s * 2.6) + 's"/>';
+    });
+    svg += "</g>";
+  }
+  svg += "</svg>";
+  host.innerHTML = svg;
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (en) { en.forEach(function (e) { host.classList.toggle("is-running", e.isIntersecting); }); }, { threshold: 0.2 }).observe(host);
+  } else host.classList.add("is-running");
 }
