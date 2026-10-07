@@ -125,7 +125,7 @@
         ])
       ]),
       el("a", { class: "wa-float", href: waLink("Hi Majestic Print, I'd like to ask about an order."), target: "_blank", rel: "noopener", "aria-label": "Chat with us on WhatsApp", html: '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>' }),
-      el("a", { class: "to-top", href: "#top", "aria-label": "Back to top", html: '<i class="fa-solid fa-arrow-up" aria-hidden="true"></i><span class="to-top-bar" aria-hidden="true"></span>' })
+      el("a", { class: "to-top", href: "#main", html: '<span class="to-top-track" aria-hidden="true"><span class="to-top-bar"></span></span><i class="fa-solid fa-arrow-up" aria-hidden="true"></i><span class="to-top-label">Back to top</span>' })
     );
   }
 
@@ -213,6 +213,15 @@
     };
     window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
   }
+  // Back to top: always scroll to the very top of the page, then move focus to the content
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest && e.target.closest(".to-top");
+    if (!t) return;
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    var main = document.getElementById("main");
+    if (main) { main.setAttribute("tabindex", "-1"); main.focus({ preventScroll: true }); }
+  });
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("#mobileNav a");
     if (!a) return;

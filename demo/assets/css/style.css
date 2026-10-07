@@ -650,19 +650,26 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
 .container-xl { --bs-gutter-x: 2.5rem; }
 .print-frame > figcaption { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* Back to top — square-cut, with a scroll-progress ink bar */
+/* Back to top — a tall tab on the right edge: progress track, arrow and label read bottom-to-top */
 .to-top {
   position: fixed; right: max(18px, env(safe-area-inset-right)); bottom: max(18px, env(safe-area-inset-bottom)); z-index: 1040;
-  width: 52px; height: 52px; display: grid; place-items: center; overflow: hidden;
-  background: var(--mp-deep); color: #fff; font-size: 1.05rem; text-decoration: none;
-  opacity: 0; visibility: hidden; transform: translateY(12px);
+  width: 50px; padding: .9rem 0 1rem; display: flex; flex-direction: column; align-items: center; gap: .7rem;
+  background: var(--mp-deep); color: #fff; text-decoration: none;
+  opacity: 0; visibility: hidden; transform: translateY(16px);
   transition: opacity .3s, visibility .3s, transform .3s var(--ease-out), box-shadow .22s var(--ease-out);
 }
 .to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
-.to-top:hover { color: #fff; box-shadow: -4px -4px 0 var(--mp-bright), 4px 4px 0 var(--mp-magenta); }
-.to-top i { transition: transform .25s var(--ease-out); }
-.to-top:hover i { transform: translateY(-3px); }
-.to-top-bar { position: absolute; left: 0; bottom: 0; height: 4px; width: 100%; background: var(--mp-gold); transform-origin: left; transform: scaleX(var(--progress, 0)); }
+.to-top:hover, .to-top:focus-visible { color: #fff; box-shadow: -4px -4px 0 var(--mp-bright), 4px 4px 0 var(--mp-magenta); }
+.to-top i { font-size: 1rem; transition: transform .3s var(--ease-out); }
+.to-top:hover i { transform: translateY(-5px); }
+.to-top-label {
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--font-mono); font-size: .66rem; font-weight: 500; letter-spacing: .18em; text-transform: uppercase;
+}
+/* Track shows how much page is left above you: it fills from the bottom up as you scroll down */
+.to-top-track { order: 3; position: relative; width: 3px; height: 46px; background: rgba(255, 255, 255, .22); }
+.to-top-bar { position: absolute; left: 0; right: 0; bottom: 0; height: 100%; background: var(--mp-gold); transform-origin: bottom; transform: scaleY(var(--progress, 0)); }
+@media (max-width: 575px) { .to-top-label { display: none; } .to-top { width: 46px; } .to-top-track { height: 30px; } }
 
 /* ==========================================================================
    22. Hero slider — each slide is a new plate run
