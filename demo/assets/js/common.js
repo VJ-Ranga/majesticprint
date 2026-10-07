@@ -130,13 +130,41 @@
         ])
       ]),
       el("div", { class: "offcanvas offcanvas-end mobile-nav", tabindex: "-1", id: "mobileNav", "aria-labelledby": "mobileNavLabel" }, [
-        el("div", { class: "offcanvas-header" }, [
-          el("p", { class: "offcanvas-title slug", id: "mobileNavLabel", text: "Menu" }),
-          el("button", { type: "button", class: "btn-close", "data-bs-dismiss": "offcanvas", "aria-label": "Close menu" })
+        el("div", { class: "mn-inkbar", "aria-hidden": "true" }, [el("span"), el("span"), el("span"), el("span"), el("span")]),
+        el("span", { class: "crop tl", "aria-hidden": "true" }), el("span", { class: "crop tr", "aria-hidden": "true" }),
+        el("span", { class: "crop bl", "aria-hidden": "true" }), el("span", { class: "crop br", "aria-hidden": "true" }),
+        el("div", { class: "mn-head" }, [
+          el("a", { class: "mn-logo", href: "index.html" }, [el("img", { src: "assets/img/brand/logo-h-light.svg", width: "170", height: "47", alt: "Majestic Print Solutions — home" })]),
+          el("button", { type: "button", class: "mn-close", "data-bs-dismiss": "offcanvas", "aria-label": "Close menu", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' })
         ]),
-        el("div", { class: "offcanvas-body" }, [
-          el("nav", { "aria-label": "Mobile primary" }, navLinks()),
-          el("a", { class: "btn-mp btn-mp-accent w-100 mt-4", href: "contact.html#quote", text: "Request a quote" })
+        el("p", { class: "mn-slug slug", id: "mobileNavLabel" }, [el("span", { class: "js-target", "aria-hidden": "true" }), document.createTextNode("Menu  ·  Print. Pack. Promote.")]),
+        el("div", { class: "offcanvas-body mn-body" }, [
+          el("nav", { class: "mn-nav", "aria-label": "Mobile primary" }, navLinks().map(function (a, i) {
+            var inks = ["bright", "magenta", "gold", "deep", "orange", "bright"];
+            a.classList.add("mn-link");
+            a.style.setProperty("--ink", ink(inks[i % inks.length]));
+            a.style.setProperty("--i", i);
+            var label = a.textContent; a.textContent = "";
+            a.appendChild(el("span", { class: "mn-no", "aria-hidden": "true", text: String(i + 1).padStart(2, "0") }));
+            a.appendChild(el("span", { class: "mn-label", text: label }));
+            a.appendChild(el("i", { class: "fa-solid fa-arrow-right mn-arrow", "aria-hidden": "true" }));
+            return a;
+          })),
+          el("div", { class: "mn-block" }, [
+            el("p", { class: "slug mn-cap", text: "Shop by" }),
+            el("div", { class: "mn-routes" }, D.routes.map(function (r) {
+              return el("a", { class: "mn-route", href: r.filter ? "shop.html?route=" + r.filter : "solutions.html", style: "--ink:" + ink(r.ink) }, [
+                el("span", { class: "mn-route-ink", "aria-hidden": "true" }),
+                el("span", { text: r.title + "." })
+              ]);
+            }))
+          ]),
+          el("div", { class: "mn-actions" }, [
+            el("a", { class: "btn-mp btn-mp-accent", href: "contact.html#quote", text: "Request a quote" }),
+            el("a", { class: "btn-mp btn-mp-whatsapp", href: waLink("Hi Majestic Print, I'd like to ask about an order."), target: "_blank", rel: "noopener", "aria-label": "Chat on WhatsApp", html: '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>' })
+          ]),
+          el("ul", { class: "contact-list mn-contact", id: "mobileContact" }),
+          el("div", { class: "mn-strip", "aria-hidden": "true" }, [el("span"), el("span"), el("span"), el("span"), el("span")])
         ])
       ])
     );
@@ -189,7 +217,7 @@
       return el("li", null, [el("i", { class: r[0], "aria-hidden": "true" }), body]);
     });
   }
-  $$("#contactList, #footerContact").forEach(function (ul) { contactItems().forEach(function (li) { ul.appendChild(li); }); });
+  $$("#contactList, #footerContact, #mobileContact").forEach(function (ul) { contactItems().forEach(function (li) { ul.appendChild(li); }); });
 
   /* ---------- Quote form → WhatsApp brief (home + contact) ---------- */
   var form = $("#quoteForm");
