@@ -1,6 +1,22 @@
-# Majestic Print — homepage demo
+# Majestic Print — website demo
 
-Working HTML demo of the new homepage. Open `index.html` in a browser (no build step).
+Working multi-page HTML demo. Open `index.html` in a browser (no build step; a local server is best so links with `?p=` work everywhere).
+
+## Pages
+| File | What it is |
+|---|---|
+| `index.html` | Homepage (with the demo view switcher) |
+| `shop.html` | Catalogue as spec sheets — filter by Print/Pack/Promote, occasion, search (`?route=Pack`, `?occasion=weddings`) |
+| `product.html?p=<slug>` | Product configurator: options, quantity, artwork upload/design/later, live job ticket, add to quote list, order on WhatsApp |
+| `solutions.html` | Capability index of all 12 processes + which processes make what |
+| `service.html?s=<slug>` | One template for every process: photo, what we make, materials, "to quote we need", products, next/previous process |
+| `work.html` | Portfolio with process filter and lightbox |
+| `about.html` | Story, three plates, brand traits, visit the workshop |
+| `how-to-order.html` | Standard vs custom tickets, interactive bleed/trim/safe diagram, artwork table, FAQ |
+| `contact.html` | Quote list + brief form → one WhatsApp message |
+
+Shared header/footer/quote list live in `assets/js/common.js`; page builders in `assets/js/home.js` and `assets/js/pages.js`; inner-page styles in `assets/css/pages.css`.
+The quote list is stored in the visitor's browser only (demo stand-in for a cart).
 
 - `assets/data.js` — products, 12 services, occasions, steps and contacts. Edit here.
 - `assets/css/style.css` — design tokens (brand inks, type scale, 8px spacing, button system) and motion.

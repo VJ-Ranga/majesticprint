@@ -682,3 +682,22 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
   .ticket-step .stamp { position: static; margin: .75rem 0 0; grid-column: 2; justify-self: start; }
   .footer-top .btn-mp { width: 100%; }
 }
+
+/* ---------- 21. Shared additions for multi-page build ---------- */
+.ql-link {
+  position: relative; display: inline-grid; place-items: center; width: 48px; height: 48px;
+  color: var(--mp-deep); font-size: 1.15rem; text-decoration: none; border: 1.5px solid transparent;
+}
+.ql-link:hover { border-color: var(--mp-ink); color: var(--mp-deep); }
+.ql-count {
+  position: absolute; top: 4px; right: 2px; min-width: 20px; height: 20px; padding: 0 5px;
+  display: grid; place-items: center; background: var(--mp-magenta); color: #fff;
+  font-family: var(--font-mono); font-size: .68rem; font-weight: 500;
+}
+.ql-count[hidden] { display: none; }
+.cap-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+.spec-card h3 a { color: inherit; text-decoration: none; }
+.spec-card h3 a:hover { color: var(--mp-magenta); }
+.spec-photo-link { display: block; }
+.container-xl { --bs-gutter-x: 2.5rem; }
+.print-frame > figcaption { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=8">
+  <link rel="stylesheet" href="assets/css/style.css?v=11">
   <script>
     document.documentElement.classList.add('js');
     // Restore the chosen demo variant before first paint (avoids a layout jump)
@@ -26,7 +26,7 @@
     })();
   </script>
 </head>
-<body>
+<body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- Demo-only control bar: compare hero variants. Remove for production. -->
@@ -46,48 +46,7 @@
     </div>
   </div>
 
-  <!-- Colour bar: the five brand inks, like the control strip on a press sheet -->
-  <div class="ink-bar" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
-
-  <header class="site-header" id="top">
-    <div class="container-xl header-row">
-      <a class="brand" href="#top" aria-label="Majestic Print Solutions — home">
-        <img src="assets/img/logo-tight.svg" width="78" height="72" alt="Majestic Print Solutions">
-      </a>
-      <nav class="main-nav d-none d-lg-flex" aria-label="Primary">
-        <a href="#products">Shop</a>
-        <a href="#solutions">Solutions</a>
-        <a href="#work">Our work</a>
-        <a href="#gifts">Gifts</a>
-        <a href="#process">How it works</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="header-actions">
-        <a class="btn-mp btn-mp-accent d-none d-sm-inline-flex" href="#quote">Request a quote</a>
-        <button class="menu-toggle d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Open menu">
-          <i class="fa-solid fa-bars" aria-hidden="true"></i>
-        </button>
-      </div>
-    </div>
-  </header>
-
-  <div class="offcanvas offcanvas-end mobile-nav" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel">
-    <div class="offcanvas-header">
-      <p class="offcanvas-title slug" id="mobileNavLabel">Menu</p>
-      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close menu"></button>
-    </div>
-    <div class="offcanvas-body">
-      <nav aria-label="Mobile primary">
-        <a href="#products">Shop</a>
-        <a href="#solutions">Solutions</a>
-        <a href="#work">Our work</a>
-        <a href="#gifts">Gifts</a>
-        <a href="#process">How it works</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <a class="btn-mp btn-mp-accent w-100 mt-4" href="#quote">Request a quote</a>
-    </div>
-  </div>
+  <div id="siteHeader"></div>
 
   <main id="main">
 
@@ -207,13 +166,13 @@
           <aside class="cap-proof" id="capProof" aria-live="polite">
             <figure class="print-frame cap-photo">
               <img id="cpImg" src="assets/img/photos/svc-offset.jpg" alt="" width="1600" height="1067">
-              <figcaption class="slug" id="cpSlug"></figcaption>
+              <figcaption class="slug cp-slug"></figcaption>
             </figure>
             <div class="cap-copy">
-              <h3 id="cpName"></h3>
-              <p id="cpText"></p>
-              <p class="cap-outputs" id="cpOutputs"></p>
-              <a class="btn-mp btn-mp-primary" id="cpCta" href="#quote">Plan this project</a>
+              <h3 class="cp-name"></h3>
+              <p class="cp-text"></p>
+              <p class="cap-outputs cp-outputs"></p>
+              <div class="cap-actions"><a class="btn-mp btn-mp-primary cp-cta" href="#quote">Plan this project</a><a class="text-link cp-more" href="solutions.html">Service details <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a></div>
             </div>
           </aside>
         </div>
@@ -373,44 +332,11 @@
     </section>
   </main>
 
-  <footer class="site-footer" id="contact">
-    <div class="container-xl">
-      <div class="footer-top">
-        <p class="footer-signoff" aria-hidden="true">Print<i class="dot c">.</i> Pack<i class="dot y">.</i> Promote<i class="dot m">.</i></p>
-        <a class="btn-mp btn-mp-light" href="#quote">Start your project <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
-      </div>
-      <div class="row g-5 footer-cols">
-        <div class="col-lg-4">
-          <img src="assets/img/logo-tight.svg" width="104" height="96" alt="Majestic Print Solutions" class="footer-logo">
-          <p class="footer-tag">One partner. Every printing solution.</p>
-          <p class="footer-about">Printing, packaging, signage and promotional products for businesses and personal orders across Sri Lanka.</p>
-        </div>
-        <div class="col-6 col-lg-2">
-          <h3>Shop</h3>
-          <a href="#products">Business print</a><a href="#products">Packaging</a><a href="#gifts">Gifts</a><a href="#products">Apparel</a>
-        </div>
-        <div class="col-6 col-lg-2">
-          <h3>Help</h3>
-          <a href="#process">How to order</a><a href="#quote">Request a quote</a><a href="#process">Artwork &amp; proofs</a><a href="#contact">Delivery</a>
-        </div>
-        <div class="col-lg-4">
-          <h3>Visit or call</h3>
-          <ul class="contact-list contact-list-light" id="footerContact"></ul>
-        </div>
-      </div>
-      <div class="footer-meta">
-        <span>© <span id="year">2026</span> Majestic Print Solutions</span>
-        <span class="slug">Homepage demo · content and contacts to confirm</span>
-      </div>
-    </div>
-  </footer>
-
-  <a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
-    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-  </a>
+  <div id="siteFooter"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="assets/data.js?v=8" defer></script>
-  <script src="assets/js/main.js?v=8" defer></script>
+  <script src="assets/data.js?v=9" defer></script>
+  <script src="assets/js/common.js?v=10" defer></script>
+  <script src="assets/js/home.js?v=10" defer></script>
 </body>
 </html>
