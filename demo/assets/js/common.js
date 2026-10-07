@@ -32,10 +32,11 @@
   /* ---------- Make-ready preloader ---------- */
   (function () {
     var pl = document.getElementById("preloader"), root = document.documentElement;
-    if (!pl) { root.classList.remove("is-loading"); return; }
+    // Homepage only, first visit in this browser only (the head script decides before first paint)
+    if (!pl || !root.classList.contains("is-loading")) { if (pl) pl.remove(); root.classList.remove("is-loading"); return; }
+    try { localStorage.setItem("mp-intro-seen", "1"); } catch (e) {}
     var quick = false, reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    try { quick = sessionStorage.getItem("mp-seen") === "1"; sessionStorage.setItem("mp-seen", "1"); } catch (e) {}
-    if (quick || reduce) pl.classList.add("pl-quick");
+    if (reduce) pl.classList.add("pl-quick");
     var minTime = quick || reduce ? 380 : 1500, start = performance.now(), shown = 0, finished = false;
     var loaded = document.readyState === "complete";
     window.addEventListener("load", function () { loaded = true; });

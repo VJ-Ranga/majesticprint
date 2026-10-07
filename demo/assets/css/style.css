@@ -1047,3 +1047,5 @@ html:not(.js) .preloader { display: none; }
   .preloader { transition: opacity .3s; }
   .preloader.is-leaving { clip-path: none; opacity: 0; }
 }
+
+html.pl-skip .preloader { display: none; }
