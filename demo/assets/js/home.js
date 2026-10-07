@@ -32,7 +32,11 @@ window.MP_PAGES.home = function (MP) {
         plates.appendChild(pl);
       });
       textWrap.appendChild(el("div", { class: "slide-text", role: "group", "aria-roledescription": "slide", "aria-label": n + " of " + total, style: "--ink:" + inkHex }, [
-        el("p", { class: "eyebrow", text: sl.kicker }),
+        el("p", { class: "eyebrow" }, [
+          el("span", { class: "eb-no", text: String(n).padStart(2, "0") }),
+          el("span", { class: "eb-text", text: sl.kicker }),
+          el("span", { class: "eb-rule", "aria-hidden": "true" })
+        ]),
         el("h2", { class: "register slide-title" }, [el("span", { class: "visually-hidden", text: sl.lines.join(" ") }), plates]),
         el("p", { class: "lead-text", text: sl.lead }),
         el("div", { class: "hero-actions" }, [
@@ -81,8 +85,24 @@ window.MP_PAGES.home = function (MP) {
       // restart the progress fill on the new patch
       var fill = $(".press-fill", tabs[i]); fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = "";
       $("#sheetNo").textContent = String(i + 1).padStart(2, "0");
+      markPlate(slides[i].ink);
       current = i;
     }
+    // Density readout: the slide's own ink plate is highlighted; readings drift like a live press check
+    var plateOf = { bright: "c", magenta: "m", gold: "y", orange: "y", deep: "k" };
+    var base = { c: 1.42, m: 1.38, y: 1.04, k: 1.76 };
+    function markPlate(inkKey) {
+      $$(".dens").forEach(function (d) { d.classList.toggle("is-hot", d.getAttribute("data-plate") === plateOf[inkKey]); });
+    }
+    markPlate(slides[0].ink);
+    if (!reduce.matches) setInterval(function () {
+      if (document.hidden) return;
+      $$(".dens").forEach(function (d) {
+        var p = d.getAttribute("data-plate"), v = base[p] + (Math.random() - 0.5) * 0.04;
+        d.querySelector("em").textContent = v.toFixed(2);
+      });
+    }, 1800);
+
     texts.forEach(function (t, j) { if (j) t.setAttribute("inert", ""); });
     medias.forEach(function (m, j) { if (j) m.setAttribute("inert", ""); });
 
@@ -203,6 +223,40 @@ window.MP_PAGES.home = function (MP) {
     });
   }
   showOccasion(0);
+
+  /* ---------- Workshop clock (Sri Lanka time) ---------- */
+  var clock = $("#workshopTime");
+  if (clock) {
+    var tick = function () {
+      clock.textContent = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Colombo", hour: "2-digit", minute: "2-digit" });
+    };
+    tick(); setInterval(tick, 20000);
+  }
+
+  /* ---------- Printer's loupe over the hero photo (pointer devices only) ---------- */
+  (function () {
+    var wrap = $("#heroMediaWrap"), loupe = $("#loupe");
+    if (!wrap || !loupe || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var ZOOM = 2.6;
+    wrap.addEventListener("pointermove", function (e) {
+      var img = $(".hero-media.is-active img", wrap);
+      if (!img) return;
+      var r = img.getBoundingClientRect();
+      var x = e.clientX - r.left, y = e.clientY - r.top;
+      if (x < 0 || y < 0 || x > r.width || y > r.height) { wrap.classList.remove("is-inspecting"); return; }
+      wrap.classList.add("is-inspecting");
+      var wr = wrap.getBoundingClientRect();
+      loupe.style.left = (e.clientX - wr.left) + "px";
+      loupe.style.top = (e.clientY - wr.top) + "px";
+      loupe.style.backgroundImage = "radial-gradient(circle, rgba(13,36,64,.22) 1px, transparent 1.4px), url('" + img.currentSrc.replace(/'/g, "%27") + "')";
+      // match object-fit: cover so the loupe shows exactly what is under the pointer
+      var sc = Math.max(r.width / img.naturalWidth, r.height / img.naturalHeight);
+      var dw = img.naturalWidth * sc, dh = img.naturalHeight * sc, ox = (r.width - dw) / 2, oy = (r.height - dh) / 2;
+      loupe.style.backgroundSize = "5px 5px, " + (dw * ZOOM) + "px " + (dh * ZOOM) + "px";
+      loupe.style.backgroundPosition = "0 0, " + (75 - (x - ox) * ZOOM) + "px " + (75 - (y - oy) * ZOOM) + "px";
+    });
+    wrap.addEventListener("pointerleave", function () { wrap.classList.remove("is-inspecting"); });
+  })();
 
   /* ---------- Capability icons in "Why Majestic" ---------- */
   $$("[data-icon]").forEach(function (n) { n.innerHTML = (window.MP_ICONS || {})[n.getAttribute("data-icon")] || ""; });
