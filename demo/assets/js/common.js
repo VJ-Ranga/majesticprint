@@ -124,7 +124,8 @@
           ])
         ])
       ]),
-      el("a", { class: "wa-float", href: waLink("Hi Majestic Print, I'd like to ask about an order."), target: "_blank", rel: "noopener", "aria-label": "Chat with us on WhatsApp", html: '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>' })
+      el("a", { class: "wa-float", href: waLink("Hi Majestic Print, I'd like to ask about an order."), target: "_blank", rel: "noopener", "aria-label": "Chat with us on WhatsApp", html: '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i>' }),
+      el("a", { class: "to-top", href: "#top", "aria-label": "Back to top", html: '<i class="fa-solid fa-arrow-up" aria-hidden="true"></i><span class="to-top-bar" aria-hidden="true"></span>' })
     );
   }
 
@@ -200,7 +201,16 @@
   /* ---------- Header state, mobile nav ---------- */
   var header = $(".site-header");
   if (header) {
-    var onScroll = function () { header.classList.toggle("is-scrolled", window.scrollY > 8); };
+    var toTop = $(".to-top");
+    var onScroll = function () {
+      var y = window.scrollY, max = document.documentElement.scrollHeight - window.innerHeight;
+      header.classList.toggle("is-scrolled", y > 8);
+      if (toTop) {
+        toTop.classList.toggle("is-visible", y > window.innerHeight * 0.8);
+        // Ink bar along the bottom edge shows how far down the page you are
+        toTop.style.setProperty("--progress", max > 0 ? Math.min(1, y / max) : 0);
+      }
+    };
     window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
   }
   document.addEventListener("click", function (e) {
