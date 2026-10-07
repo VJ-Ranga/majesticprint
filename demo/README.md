@@ -6,9 +6,17 @@ Working HTML demo of the new homepage. Open `index.html` in a browser (no build 
 - `assets/css/style.css` — design tokens (brand inks, type scale, 8px spacing, button system) and motion.
 - `assets/js/main.js` — rendering, product filter, swatch book, occasion tabs, quote → WhatsApp brief.
 
-Signature ideas: the hero is a press sheet (crop marks, registration targets, colour bar) and the headline
-prints as separate C/M/Y plates that lock into register. Services are shown as a swatch book. The proof step
-gets an APPROVED stamp. All motion is disabled under `prefers-reduced-motion`.
+Design concept: **the website is a print job.**
+- Paper is trimmed square — no rounded corners (only the WhatsApp button stays round).
+- Every photo is a printed sheet with crop marks and a slug line.
+- Brand inks act as process plates: Bright Blue = C, Magenta = M, Gold = Y, Deep Blue = K.
+  The hero headline prints as separate plates that lock into register.
+- Print / Pack / Promote images are duotones in their own ink; full colour on hover.
+- Products are spec sheets (size, stock, finish, minimum).
+- Solutions is a capability index: 12 processes, each with its own photo.
+- Gifts is a Sri Lankan print calendar (Avurudu, Vesak, Deepavali, Christmas, weddings).
+- How it works is a job ticket that ticks itself off and stamps the proof APPROVED.
+- Buttons misregister (cyan/magenta offset) on hover. All motion off under `prefers-reduced-motion`.
 
 ## Demo view switcher
 The dark bar at the top compares hero variants (saved per browser; also via URL):

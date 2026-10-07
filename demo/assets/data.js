@@ -2,6 +2,7 @@
  * Majestic Print — homepage demo content.
  * Edit this file to change products, services, occasions and contacts.
  * Items marked "waitingOnClient" are placeholders until Majestic confirms them.
+ * Photos in assets/img/photos are temporary stock images (see CREDITS.md).
  */
 window.MP_DATA = {
   contact: {
@@ -15,7 +16,7 @@ window.MP_DATA = {
     waitingOnClient: true
   },
 
-  // Brand inks from the guide. Used by the colour bar and service swatches.
+  // Brand inks from the guide
   inks: {
     deep:    { name: "Deep Blue",   hex: "#13477A" },
     bright:  { name: "Bright Blue", hex: "#007CAC" },
@@ -24,65 +25,102 @@ window.MP_DATA = {
     gold:    { name: "Gold",        hex: "#EAA123" }
   },
 
-  // Purpose routes: Print / Pack / Promote
+  // Print / Pack / Promote — each printed as a duotone in its own ink
   routes: [
-    { id: "print", img: "assets/img/photos/cmyk-ink.jpg",   title: "Print",   ink: "bright",
-      text: "Business cards, brochures, labels, calendars and everything your business hands out.",
-      items: ["Business cards", "Flyers & brochures", "Letterheads", "Calendars"] },
-    { id: "pack", img: "assets/img/photos/boxes.jpg",    title: "Pack",    ink: "gold",
-      text: "Boxes, bags, sleeves and stickers that make your product look ready for the shelf.",
-      items: ["Custom boxes", "Paper bags", "Sleeves & tags", "Product labels"] },
-    { id: "promote", img: "assets/img/photos/signage.jpg", title: "Promote", ink: "magenta",
-      text: "Signs, vehicle graphics, branded merchandise and gifts people actually keep.",
-      items: ["Shop signs", "Vehicle wraps", "Corporate gifts", "Printed apparel"] }
+    { id: "print",   title: "Print",   ink: "bright",  img: "assets/img/photos/flyers.jpg",
+      text: "Cards, brochures, labels and calendars — everything your business hands out.",
+      items: ["Business cards", "Brochures", "Letterheads", "Calendars"], target: "#products", filter: "Print" },
+    { id: "pack",    title: "Pack",    ink: "gold",    img: "assets/img/photos/boxes.jpg",
+      text: "Boxes, bags, sleeves and stickers that make a product shelf-ready.",
+      items: ["Custom boxes", "Paper bags", "Sleeves", "Labels"], target: "#products", filter: "Pack" },
+    { id: "promote", title: "Promote", ink: "magenta", img: "assets/img/photos/signage.jpg",
+      text: "Signs, vehicle graphics and branded gifts that keep your name in sight.",
+      items: ["Shop signs", "Vehicle wraps", "Corporate gifts", "Apparel"], target: "#solutions" }
   ],
 
-  // Representative launch products. Prices pending the approved rate card.
+  // Launch products as spec sheets. Specs are typical options — confirm against the rate card.
   products: [
-    { name: "Business cards",     art: "cards", img: "assets/img/photos/business-cards.jpg",   route: "Print",   options: "Matt, gloss or textured · spot UV · 100+",  service: "Offset Printing" },
-    { name: "Flyers & brochures", art: "flyers", img: "assets/img/photos/flyers.jpg",  route: "Print",   options: "A6 to A4 · folded or flat · 50+",            service: "Digital Printing" },
-    { name: "Product labels",     art: "labels", img: "assets/img/photos/labels.jpg",  route: "Pack",    options: "Paper or PVC · any shape · on rolls",        service: "Packaging & Branding" },
-    { name: "Custom boxes",       art: "box", img: "assets/img/photos/boxes.jpg",     route: "Pack",    options: "Mailer, tuck-end or rigid · your dieline",   service: "Packaging & Branding" },
-    { name: "Personalised mugs",  art: "mug", img: "assets/img/photos/mug.jpg",     route: "Promote", options: "Photo or logo · single or in bulk",          service: "Sublimation Printing" },
-    { name: "Printed T-shirts",   art: "tshirt", img: "assets/img/photos/tshirt.jpg",  route: "Promote", options: "Team, event or one-off · S to XXL",          service: "Sublimation Printing" }
+    { name: "Business cards",     img: "assets/img/photos/business-cards.jpg", route: "Print",   service: "Offset Printing",
+      specs: { Size: "90 × 55 mm", Stock: "350–400 gsm", Finish: "Matt · gloss · spot UV", From: "100 cards" } },
+    { name: "Flyers & brochures", img: "assets/img/photos/flyers.jpg",         route: "Print",   service: "Digital Printing",
+      specs: { Size: "A6 – A4", Stock: "130–170 gsm", Finish: "Flat or folded", From: "50 copies" } },
+    { name: "Product labels",     img: "assets/img/photos/labels.jpg",         route: "Pack",    service: "Packaging & Branding",
+      specs: { Size: "Any shape", Stock: "Paper · PVC", Finish: "Rolls or sheets", From: "100 labels" } },
+    { name: "Custom boxes",       img: "assets/img/photos/boxes.jpg",          route: "Pack",    service: "Packaging & Branding",
+      specs: { Size: "Made to fit", Stock: "Board · kraft", Finish: "Mailer · tuck-end · rigid", From: "Quote" } },
+    { name: "Personalised mugs",  img: "assets/img/photos/mug.jpg",            route: "Promote", service: "Sublimation Printing",
+      specs: { Size: "11 oz", Stock: "Ceramic", Finish: "Full-colour wrap", From: "1 mug" } },
+    { name: "Printed T-shirts",   img: "assets/img/photos/tshirt.jpg",         route: "Promote", service: "Sublimation Printing",
+      specs: { Size: "S – XXL", Stock: "Cotton · poly", Finish: "Screen or sublimation", From: "1 shirt" } }
   ],
 
-  // All 12 service families from the brand guide
+  // All 12 service families from the brand guide — the capability index
   services: [
-    { name: "Offset Printing",            ink: "deep",    tint: 100, text: "High-volume print with consistent colour, run after run.", examples: ["Business cards", "Brochures", "NCR books", "Diaries"] },
-    { name: "Digital Offset Printing",    ink: "deep",    tint: 70,  text: "Offset-quality short runs when you need hundreds, not thousands.", examples: ["Short-run stationery", "Invitations", "Booklets"] },
-    { name: "Digital Printing",           ink: "bright",  tint: 100, text: "Fast, flexible print for posters, stickers, cut-outs and photos.", examples: ["Posters", "PVC stickers", "Photo prints"] },
-    { name: "UV Printing",                ink: "bright",  tint: 70,  text: "Print directly onto acrylic, wood, glass, metal and more.", examples: ["Acrylic plaques", "Foam boards", "Branded objects"] },
-    { name: "Large Format Printing",      ink: "magenta", tint: 100, text: "Banners, backdrops and wall graphics, printed big and sharp.", examples: ["Hoardings", "Event backdrops", "Wallpapers"] },
-    { name: "Signage & 3D Signage",       ink: "magenta", tint: 70,  text: "Shop fronts, light boxes and raised letters that get noticed.", examples: ["3D letters", "LED signs", "Directional signs"] },
-    { name: "CNC Cutting & Engraving",    ink: "orange",  tint: 100, text: "Precise cutting in acrylic and wood for panels, letters and shapes.", examples: ["Partitions", "3D letters", "Custom panels"] },
-    { name: "Laser Cutting & Engraving",  ink: "orange",  tint: 70,  text: "Fine detail for gifts, name boards and wedding pieces.", examples: ["Name boards", "Wood decor", "Wedding items"] },
-    { name: "Sublimation Printing",       ink: "gold",    tint: 100, text: "Full-colour images on mugs, shirts, crystal and granite.", examples: ["Mugs", "T-shirts", "Crystal gifts"] },
-    { name: "Vehicle Branding",           ink: "gold",    tint: 70,  text: "Full or partial wraps that turn every trip into advertising.", examples: ["Full wraps", "Door graphics", "Fleet stickers"] },
-    { name: "Packaging & Branding",       ink: "deep",    tint: 40,  text: "Boxes, bags and labels designed around your product.", examples: ["Boxes", "Paper bags", "Sleeves"] },
-    { name: "Promotional & Corporate Gifts", ink: "magenta", tint: 40, text: "Branded diaries, pens, umbrellas and gift sets, in any quantity.", examples: ["Diaries", "Pens", "Gift sets"] }
+    { name: "Offset Printing",           ink: "deep",    img: "assets/img/photos/svc-offset.jpg",
+      text: "High-volume print with consistent colour, run after run.",
+      outputs: "Business cards · brochures · NCR books · diaries · calendars" },
+    { name: "Digital Offset Printing",   ink: "deep",    img: "assets/img/photos/svc-digital-offset.jpg",
+      text: "Offset-quality short runs when you need hundreds, not thousands.",
+      outputs: "Short-run stationery · invitations · booklets" },
+    { name: "Digital Printing",          ink: "bright",  img: "assets/img/photos/svc-digital.jpg",
+      text: "Fast, flexible print for posters, stickers, cut-outs and photos.",
+      outputs: "Posters · PVC stickers · cut-outs · photo prints" },
+    { name: "UV Printing",               ink: "bright",  img: "assets/img/photos/svc-uv.jpg",
+      text: "Print straight onto acrylic, wood, glass, metal and finished objects.",
+      outputs: "Acrylic plaques · foam board · glass · promotional items" },
+    { name: "Large Format Printing",     ink: "magenta", img: "assets/img/photos/svc-large-format.jpg",
+      text: "Banners, backdrops and wall graphics, printed big and sharp.",
+      outputs: "Hoardings · event backdrops · wallpapers · displays" },
+    { name: "Signage & 3D Signage",      ink: "magenta", img: "assets/img/photos/svc-signage.jpg",
+      text: "Shop fronts, light boxes and raised letters that get noticed.",
+      outputs: "3D letters · LED signs · light boxes · directional signs" },
+    { name: "CNC Cutting & Engraving",   ink: "orange",  img: "assets/img/photos/svc-cnc.jpg",
+      text: "Precise cutting in acrylic and wood for panels, letters and shapes.",
+      outputs: "Partitions · 3D letters · panels · architectural details" },
+    { name: "Laser Cutting & Engraving", ink: "orange",  img: "assets/img/photos/laser.jpg",
+      text: "Fine detail for gifts, name boards and wedding pieces.",
+      outputs: "Name boards · wood decor · acrylic gifts · wedding items" },
+    { name: "Sublimation Printing",      ink: "gold",    img: "assets/img/photos/svc-sublimation.jpg",
+      text: "Full-colour images on mugs, shirts, crystal and granite.",
+      outputs: "Mugs · T-shirts · crystal · granite" },
+    { name: "Vehicle Branding",          ink: "gold",    img: "assets/img/photos/svc-vehicle.jpg",
+      text: "Full or partial wraps that turn every trip into advertising.",
+      outputs: "Full wraps · door graphics · fleet stickers" },
+    { name: "Packaging & Branding",      ink: "deep",    img: "assets/img/photos/svc-packaging.jpg",
+      text: "Boxes, bags and labels designed around your product.",
+      outputs: "Boxes · paper bags · sleeves · tags" },
+    { name: "Promotional & Corporate Gifts", ink: "magenta", img: "assets/img/photos/svc-gifts.jpg",
+      text: "Branded diaries, pens, umbrellas and gift sets, in any quantity.",
+      outputs: "Diaries · pens · umbrellas · gift sets" }
   ],
 
-  // Showcase — SAMPLE stock images until real, customer-approved projects are supplied
+  // Showcase — SAMPLE stock images until customer-approved projects are supplied
   showcase: [
-    { title: "Fleet vehicle graphics", service: "Vehicle Branding",              img: "assets/img/photos/vehicle.jpg", size: "large" },
+    { title: "Illuminated 3D lettering", service: "Signage & 3D Signage",        img: "assets/img/photos/svc-signage.jpg", size: "large" },
     { title: "Engraved keepsakes",     service: "Laser Cutting & Engraving",     img: "assets/img/photos/laser.jpg" },
     { title: "Corporate gift sets",    service: "Promotional & Corporate Gifts", img: "assets/img/photos/gifts.jpg" }
   ],
 
-  // Gift and seasonal ideas — local occasions
+  // The Sri Lankan print calendar. start/span are months (1 = Jan). Dates vary by year.
   occasions: [
-    { id: "avurudu",   label: "Avurudu",   note: "April",       ideas: ["Branded calendars", "Greeting cards", "Gift boxes", "Staff T-shirts"] },
-    { id: "vesak",     label: "Vesak",     note: "May",         ideas: ["Lantern prints", "Dansal banners", "Event backdrops", "Greeting cards"] },
-    { id: "weddings",  label: "Weddings",  note: "All year",    ideas: ["Invitations", "Laser-cut name boards", "Welcome signs", "Thank-you tags"] },
-    { id: "corporate", label: "Year-end & corporate", note: "Oct–Dec", ideas: ["Diaries & notebooks", "Engraved pens", "Gift sets", "Desk calendars"] },
-    { id: "personal",  label: "Just because", note: "Any day",  ideas: ["Photo mugs", "Crystal prints", "Custom T-shirts", "Engraved keepsakes"] }
+    { id: "avurudu",   label: "Avurudu",          when: "April",               start: 4,  span: 1,  row: 1, ink: "orange",  img: "assets/img/photos/occ-avurudu.jpg",
+      ideas: ["Greeting cards", "Branded calendars", "Gift boxes", "Staff T-shirts"] },
+    { id: "vesak",     label: "Vesak",            when: "May",                 start: 5,  span: 1,  row: 2, ink: "gold",    img: "assets/img/photos/occ-vesak.jpg",
+      ideas: ["Lantern prints", "Dansal banners", "Event backdrops", "Greeting cards"] },
+    { id: "deepavali", label: "Deepavali",        when: "October – November",  start: 10, span: 2,  row: 1, ink: "magenta", img: "assets/img/photos/occ-deepavali.jpg",
+      ideas: ["Greeting cards", "Gift boxes", "Sweet-box sleeves", "Shop banners"] },
+    { id: "corporate", label: "Year-end gifting", when: "November – December", start: 11, span: 2,  row: 2, ink: "bright",  img: "assets/img/photos/occ-corporate.jpg",
+      ideas: ["Desk diaries", "Engraved pens", "Gift sets", "Desk calendars"] },
+    { id: "christmas", label: "Christmas",        when: "December",            start: 12, span: 1,  row: 3, ink: "deep",    img: "assets/img/photos/occ-christmas.jpg",
+      ideas: ["Christmas cards", "Gift wrap & tags", "Photo mugs", "Hamper sleeves"] },
+    { id: "weddings",  label: "Weddings",         when: "All year",            start: 1,  span: 12, row: 4, ink: "magenta", img: "assets/img/photos/occ-wedding.jpg",
+      ideas: ["Invitations", "Laser-cut name boards", "Welcome signs", "Thank-you tags"] }
   ],
 
   // Ordering process — real sequence, so it is numbered
   steps: [
     { title: "Choose or describe", text: "Pick a product, or tell us what you have in mind." },
-    { title: "Send your artwork",  text: "Upload your file, or ask our team to design it for you." },
+    { title: "Send your artwork",  text: "Upload your file, or ask our team to design it." },
     { title: "Approve your proof", text: "Check a proof before anything is printed.", stamp: true },
     { title: "Print and deliver",  text: "We produce it and deliver, or you collect in Pannala." }
   ]

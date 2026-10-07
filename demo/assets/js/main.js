@@ -14,168 +14,196 @@
     if (attrs) Object.keys(attrs).forEach(function (k) {
       if (k === "text") node.textContent = attrs[k];
       else if (k === "html") node.innerHTML = attrs[k]; // trusted, static markup only
-      else if (k === "style") node.setAttribute("style", attrs[k]);
       else node.setAttribute(k, attrs[k]);
     });
     (children || []).forEach(function (c) { if (c) node.appendChild(c); });
     return node;
   }
-
   function ink(key) { return (D.inks[key] || D.inks.deep).hex; }
   function waLink(text) {
     return "https://wa.me/" + D.contact.whatsapp + (text ? "?text=" + encodeURIComponent(text) : "");
   }
+  var ARROW = ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
+  var narrow = window.matchMedia("(max-width: 991px)");
 
-  var IDEA_ICONS = ["fa-gift", "fa-pen-nib", "fa-box-open", "fa-shirt"];
-
-  /* ---------- Routes ---------- */
+  /* ---------- Print / Pack / Promote (duotone plates) ---------- */
   var routeGrid = $("#routeGrid");
   D.routes.forEach(function (r) {
-    var list = el("ul", null, r.items.map(function (t) { return el("li", { text: t }); }));
-    var link = el("a", { href: r.id === "print" ? "#products" : "#solutions", html: 'Explore ' + r.title + ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>' });
-    link.addEventListener("click", function () { if (r.id === "print") setFilter("Print"); });
-    var h3 = el("h3", null, [document.createTextNode(r.title), el("span", { text: "." })]);
-    var media = el("div", { class: "route-media" }, [el("img", { src: r.img, alt: "", loading: "lazy", width: "800", height: "500" })]);
-    var card = el("article", { class: "route-card", style: "--ink:" + ink(r.ink) }, [media, el("div", { class: "route-body" }, [h3, el("p", { text: r.text }), list, link])]);
-    routeGrid.appendChild(el("div", { class: "col-md-4 reveal" }, [card]));
+    var link = el("a", { class: "text-link", href: r.target, html: "Explore " + r.title + ARROW });
+    link.addEventListener("click", function () { if (r.filter) setFilter(r.filter); });
+    routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(r.ink) }, [
+      el("figure", { class: "print-frame duo" }, [
+        el("div", { class: "duo-img" }, [
+          el("img", { class: "duo-base", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" }),
+          el("img", { class: "duo-color", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" })
+        ]),
+        el("figcaption", { class: "slug", text: D.inks[r.ink].name + " plate · duotone" })
+      ]),
+      el("h3", null, [document.createTextNode(r.title), el("span", { text: "." })]),
+      el("p", { text: r.text }),
+      el("p", { class: "route-items", text: r.items.join("  /  ") }),
+      link
+    ]));
   });
 
   /* ---------- Ticker ---------- */
-  var track = $("#tickerTrack"), tickInks = ["bright", "magenta", "gold", "orange"];
+  var track = $("#tickerTrack");
   [0, 1].forEach(function (pass) {
-    D.services.forEach(function (s, i) {
-      var li = el("li", { text: s.name, style: "--tick:" + ink(tickInks[i % tickInks.length]) });
+    D.services.forEach(function (s) {
+      var li = el("li", { text: s.name });
       if (pass) li.setAttribute("aria-hidden", "true");
       track.appendChild(li);
     });
   });
 
-  /* ---------- Showcase ---------- */
-  var showcase = $("#showcase");
-  D.showcase.forEach(function (w) {
-    showcase.appendChild(el("article", { class: "work-card reveal" + (w.size === "large" ? " is-large" : "") }, [
-      el("img", { src: w.img, alt: w.title + " (sample image)", loading: "lazy" }),
-      el("div", { class: "work-info" }, [el("p", { class: "slug", text: w.service }), el("h3", { text: w.title })])
-    ]));
-  });
-
-  /* ---------- Products + filter ---------- */
+  /* ---------- Products as spec sheets + filter ---------- */
   var productGrid = $("#productGrid");
   var routeInk = {}; D.routes.forEach(function (r) { routeInk[r.title] = r.ink; });
   D.products.forEach(function (p) {
-    var btn = el("a", { class: "btn-mp btn-mp-outline", href: "#quote", html: 'Customise <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>' });
-    btn.setAttribute("aria-label", "Customise " + p.name);
-    btn.addEventListener("click", function () { prefillQuote(p.service, p.name); });
-    var card = el("article", { class: "product-card" }, [
-      el("div", { class: "product-art" }, [
-        el("span", { class: "product-tag", style: "--ink:" + ink(routeInk[p.route]), text: p.route }),
-        el("img", { src: p.img, alt: p.name, loading: "lazy", width: "800", height: "600" })
+    var dl = el("dl", { class: "spec" });
+    Object.keys(p.specs).forEach(function (k) {
+      dl.appendChild(el("dt", { text: k }));
+      dl.appendChild(el("dd", { text: p.specs[k] }));
+    });
+    var cta = el("a", { class: "text-link", href: "#quote", html: "Customise" + ARROW });
+    cta.setAttribute("aria-label", "Customise " + p.name);
+    cta.addEventListener("click", function () { prefillQuote(p.service, p.name); });
+    productGrid.appendChild(el("article", { class: "spec-card reveal", "data-route": p.route, style: "--ink:" + ink(routeInk[p.route]) }, [
+      el("figure", { class: "print-frame spec-photo" }, [
+        el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: p.name, loading: "lazy", width: "800", height: "600" })]),
+        el("span", { class: "spec-plate", text: p.route })
       ]),
-      el("div", { class: "product-body" }, [
-        el("h3", { text: p.name }),
-        el("p", { text: p.options }),
-        btn
-      ])
-    ]);
-    productGrid.appendChild(el("div", { class: "col-sm-6 col-lg-4 product-col", "data-route": p.route }, [card]));
+      el("h3", { text: p.name }),
+      dl,
+      cta
+    ]));
   });
 
   function setFilter(route) {
-    $$(".filter-tabs .chip").forEach(function (b) {
+    $$(".filter-tabs .tab").forEach(function (b) {
       var on = b.getAttribute("data-filter") === route;
       b.classList.toggle("is-active", on);
       b.setAttribute("aria-pressed", on ? "true" : "false");
     });
-    $$(".product-col").forEach(function (c) {
+    $$(".spec-card").forEach(function (c) {
       c.hidden = !(route === "all" || c.getAttribute("data-route") === route);
     });
   }
-  $$(".filter-tabs .chip").forEach(function (b) {
+  $$(".filter-tabs .tab").forEach(function (b) {
     b.addEventListener("click", function () { setFilter(b.getAttribute("data-filter")); });
   });
 
-  /* ---------- Swatch book ---------- */
-  var swatchGrid = $("#swatchGrid");
-  var swatches = [];
+  /* ---------- Capability index (12 services) ---------- */
+  var capIndex = $("#capIndex"), capProof = $("#capProof"), capLayout = capIndex.parentNode, capRows = [];
   D.services.forEach(function (s, i) {
-    var inkObj = D.inks[s.ink];
-    var b = el("button", {
-      type: "button", class: "swatch", role: "listitem", "aria-pressed": "false",
-      style: "--ink:" + inkObj.hex + ";--tint:" + (s.tint / 100) + ";--n:" + i + ";--fan:" + ((i % 4) * 8 - 12)
-    }, [
-      el("span", { class: "swatch-ink", "aria-hidden": "true" }),
-      el("span", { class: "swatch-label" }, [
-        el("span", { class: "slug", text: inkObj.name + " · " + s.tint + "%" }),
-        el("strong", { text: s.name })
-      ])
+    var btn = el("button", { type: "button", class: "cap-row", "aria-expanded": "false", "aria-controls": "capProof", style: "--ink:" + ink(s.ink) }, [
+      el("span", { class: "cap-chip", "aria-hidden": "true" }),
+      el("span", { class: "cap-name", text: s.name }),
+      el("span", { class: "cap-out", text: s.outputs.split(" · ").slice(0, 3).join(" · ") }),
+      el("i", { class: "fa-solid fa-arrow-right cap-arrow", "aria-hidden": "true" })
     ]);
-    b.addEventListener("click", function () { selectService(i, true); });
-    swatches.push(b);
-    swatchGrid.appendChild(b);
+    btn.addEventListener("click", function () { selectService(i, true); });
+    btn.addEventListener("mouseenter", function () { if (!narrow.matches) selectService(i, false); });
+    btn.addEventListener("focus", function () { if (!narrow.matches) selectService(i, false); });
+    var li = el("li", null, [btn]);
+    capRows.push({ li: li, btn: btn });
+    capIndex.appendChild(li);
   });
+  // Warm the cache once the index is near, so swapping photos is instant
+  var warmed = false;
+  function warm() { if (warmed) return; warmed = true; D.services.forEach(function (s) { var im = new Image(); im.src = s.img; }); }
+  capIndex.addEventListener("pointerenter", warm, { once: true });
 
-  function selectService(i, fromUser) {
-    var s = D.services[i], inkObj = D.inks[s.ink];
-    swatches.forEach(function (b, j) { b.setAttribute("aria-pressed", i === j ? "true" : "false"); });
-    var detail = $("#swatchDetail");
-    detail.style.setProperty("--detail-ink", inkObj.hex);
-    $("#sdInk").textContent = inkObj.name + " · " + s.tint + "% tint";
-    $("#sdName").textContent = s.name;
-    $("#sdText").textContent = s.text;
-    var ul = $("#sdExamples"); ul.textContent = "";
-    s.examples.forEach(function (e) { ul.appendChild(el("li", { text: e })); });
-    var cta = $("#sdCta");
-    cta.textContent = "Plan your " + s.name.toLowerCase() + " project";
-    cta.onclick = function () { prefillQuote(s.name); };
-    // On small screens the detail sits below the grid — bring it into view
-    if (fromUser && window.innerWidth < 992) detail.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  var currentService = -1;
+  function selectService(i, fromClick) {
+    var s = D.services[i];
+    capRows.forEach(function (r, j) {
+      r.btn.classList.toggle("is-active", i === j);
+      r.btn.setAttribute("aria-expanded", i === j ? "true" : "false");
+    });
+    // On small screens the proof opens under the chosen row
+    if (narrow.matches) capRows[i].li.appendChild(capProof);
+    else if (capProof.parentNode !== capLayout) capLayout.appendChild(capProof);
+
+    if (i !== currentService) {
+      var img = $("#cpImg");
+      capProof.classList.remove("is-swapping"); void capProof.offsetWidth; capProof.classList.add("is-swapping");
+      img.src = s.img; img.alt = s.name + " (sample image)";
+      capProof.style.setProperty("--ink", ink(s.ink));
+      $("#cpSlug").textContent = s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  sample image";
+      $("#cpName").textContent = s.name;
+      $("#cpText").textContent = s.text;
+      $("#cpOutputs").textContent = s.outputs;
+      var cta = $("#cpCta");
+      cta.textContent = "Plan your " + s.name.toLowerCase() + " project";
+      cta.onclick = function () { prefillQuote(s.name); };
+      currentService = i;
+    }
+    if (fromClick && narrow.matches) {
+      requestAnimationFrame(function () { capRows[i].btn.scrollIntoView({ behavior: "smooth", block: "start" }); });
+    }
   }
   selectService(0, false);
+  narrow.addEventListener("change", function () { var i = currentService; currentService = -1; selectService(i, false); });
 
-  /* ---------- Occasions (tabs) ---------- */
-  var tabWrap = $("#occasionTabs"), panel = $("#occasionPanel"), tabs = [];
+  /* ---------- Showcase ---------- */
+  var showcase = $("#showcase");
+  D.showcase.forEach(function (w) {
+    showcase.appendChild(el("figure", { class: "print-frame work reveal" + (w.size === "large" ? " is-large" : "") }, [
+      el("div", { class: "work-img" }, [el("img", { src: w.img, alt: w.title + " (sample image)", loading: "lazy" })]),
+      el("figcaption", null, [el("span", { class: "slug", text: w.service }), el("strong", { text: w.title })])
+    ]));
+  });
+
+  /* ---------- Print calendar (occasions) ---------- */
+  var calTabs = $("#calTabs"), tabs = [];
   D.occasions.forEach(function (o, i) {
-    var t = el("button", { type: "button", class: "chip", role: "tab", id: "tab-" + o.id, "aria-controls": "occasionPanel", "aria-selected": "false", tabindex: "-1", text: o.label });
+    var t = el("button", {
+      type: "button", class: "cal-bar", "data-ink": o.ink, "data-span": o.span, "data-align": o.start + o.span > 12 ? "end" : "start", role: "tab", id: "tab-" + o.id, "aria-controls": "calPanel",
+      "aria-selected": "false", tabindex: "-1",
+      style: "--ink:" + ink(o.ink) + ";--start:" + o.start + ";--span:" + o.span + ";--row:" + o.row
+    }, [el("span", { class: "cal-label", text: o.label }), el("span", { class: "cal-when", text: o.when })]);
     t.addEventListener("click", function () { showOccasion(i); });
     t.addEventListener("keydown", function (e) {
       var n = null;
-      if (e.key === "ArrowRight") n = (i + 1) % tabs.length;
-      if (e.key === "ArrowLeft") n = (i - 1 + tabs.length) % tabs.length;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % tabs.length;
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i - 1 + tabs.length) % tabs.length;
       if (e.key === "Home") n = 0;
       if (e.key === "End") n = tabs.length - 1;
       if (n !== null) { e.preventDefault(); showOccasion(n); tabs[n].focus(); }
     });
-    tabs.push(t); tabWrap.appendChild(t);
+    tabs.push(t); calTabs.appendChild(t);
   });
   function showOccasion(i) {
-    var o = D.occasions[i];
+    var o = D.occasions[i], panel = $("#calPanel");
     tabs.forEach(function (t, j) {
       t.setAttribute("aria-selected", i === j ? "true" : "false");
       t.setAttribute("tabindex", i === j ? "0" : "-1");
     });
     panel.setAttribute("aria-labelledby", "tab-" + o.id);
-    panel.textContent = "";
-    panel.appendChild(el("p", { class: "occasion-note slug", text: "Season · " + o.note }));
-    o.ideas.forEach(function (idea, k) {
-      var a = el("a", { href: "#quote", html: 'Ask about this <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>' });
-      a.setAttribute("aria-label", "Ask about " + idea);
+    panel.style.setProperty("--ink", ink(o.ink));
+    panel.classList.remove("is-swapping"); void panel.offsetWidth; panel.classList.add("is-swapping");
+    var img = $("#calImg"); img.src = o.img; img.alt = o.label + " (sample image)";
+    $("#calWhen").textContent = o.when;
+    $("#calName").textContent = o.label;
+    var ul = $("#calIdeas"); ul.textContent = "";
+    o.ideas.forEach(function (idea) {
+      var a = el("a", { href: "#quote", html: "<span></span>" + ARROW });
+      a.firstChild.textContent = idea;
+      a.setAttribute("aria-label", "Ask about " + idea + " for " + o.label);
       a.addEventListener("click", function () { prefillQuote("Promotional & Corporate Gifts", idea + " for " + o.label); });
-      panel.appendChild(el("div", { class: "idea", style: "--n:" + k }, [
-        el("i", { class: "fa-solid " + IDEA_ICONS[k % IDEA_ICONS.length], "aria-hidden": "true" }),
-        el("span", { text: idea }),
-        a
-      ]));
+      ul.appendChild(el("li", null, [a]));
     });
   }
   showOccasion(0);
 
-  /* ---------- Process steps ---------- */
+  /* ---------- Job ticket steps ---------- */
   var stepList = $("#stepList");
   D.steps.forEach(function (s) {
-    stepList.appendChild(el("li", { class: "step reveal" + (s.stamp ? " step-proof" : "") }, [
-      s.stamp ? el("span", { class: "stamp", "aria-hidden": "true", text: "Approved" }) : null,
-      el("h3", { text: s.title }),
-      el("p", { text: s.text })
+    stepList.appendChild(el("li", { class: "ticket-step" + (s.stamp ? " is-proof" : "") }, [
+      el("span", { class: "tick", "aria-hidden": "true" }),
+      el("div", null, [el("h3", { text: s.title }), el("p", { text: s.text })]),
+      s.stamp ? el("span", { class: "stamp", "aria-hidden": "true", text: "Approved" }) : null
     ]));
   });
 
@@ -183,15 +211,14 @@
   function contactItems() {
     var c = D.contact;
     return [
-      ["fa-location-dot", c.address, null],
+      ["fa-solid fa-location-dot", c.address, null],
       ["fa-brands fa-whatsapp", "WhatsApp " + c.phoneDisplay, waLink()],
-      ["fa-envelope", c.email, "mailto:" + c.email],
-      ["fa-clock", c.hours, null]
+      ["fa-solid fa-envelope", c.email, "mailto:" + c.email],
+      ["fa-solid fa-clock", c.hours, null]
     ].map(function (r) {
-      var iconClass = r[0].indexOf("fa-brands") === 0 ? r[0] : "fa-solid " + r[0];
       var body = r[2] ? el("a", { href: r[2], text: r[1] }) : el("span", { text: r[1] });
       if (r[2] && r[2].indexOf("https://") === 0) { body.setAttribute("target", "_blank"); body.setAttribute("rel", "noopener"); }
-      return el("li", null, [el("i", { class: iconClass, "aria-hidden": "true" }), body]);
+      return el("li", null, [el("i", { class: r[0], "aria-hidden": "true" }), body]);
     });
   }
   contactItems().forEach(function (li) { $("#contactList").appendChild(li); });
@@ -235,7 +262,6 @@
       var firstBad = $(".is-invalid", form); if (firstBad) firstBad.focus();
       return;
     }
-
     var qty = $("#qQty").value.trim(), date = $("#qDate").value;
     var rows = [["Name", name], ["Service", service]];
     if (qty) rows.push(["Quantity", qty]);
@@ -244,17 +270,12 @@
 
     var dl = $("#briefList"); dl.textContent = "";
     rows.forEach(function (r) { dl.appendChild(el("dt", { text: r[0] })); dl.appendChild(el("dd", { text: r[1] })); });
-
-    var msg = "Hi Majestic Print, I'd like a quote.\n\n" + rows.map(function (r) { return r[0] + ": " + r[1]; }).join("\n");
-    $("#briefSend").href = waLink(msg);
+    $("#briefSend").href = waLink("Hi Majestic Print, I'd like a quote.\n\n" + rows.map(function (r) { return r[0] + ": " + r[1]; }).join("\n"));
 
     form.hidden = true; brief.hidden = false;
     $("#briefSend").focus();
   });
-
-  $("#briefEdit").addEventListener("click", function () {
-    brief.hidden = true; form.hidden = false; $("#qName").focus();
-  });
+  $("#briefEdit").addEventListener("click", function () { brief.hidden = true; form.hidden = false; $("#qName").focus(); });
 
   /* ---------- Demo view switcher (demo only) ---------- */
   var root = document.documentElement;
@@ -273,12 +294,11 @@
   syncDemo();
   $("#demoClose").addEventListener("click", function () { $("#demoBar").hidden = true; });
 
-  /* ---------- Header state + current section ---------- */
+  /* ---------- Header state ---------- */
   var header = $(".site-header");
   function onScroll() { header.classList.toggle("is-scrolled", window.scrollY > 8); }
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-  // Close mobile menu after choosing a link
   $$("#mobileNav a").forEach(function (a) {
     a.addEventListener("click", function () {
       var oc = window.bootstrap && window.bootstrap.Offcanvas.getInstance($("#mobileNav"));
@@ -288,8 +308,7 @@
 
   /* ---------- Reveal on scroll (content stays visible without JS) ---------- */
   $$(".color-strip span").forEach(function (s, i) { s.style.setProperty("--n", i); });
-
-  var targets = $$(".reveal, .swatch-book, .step");
+  var targets = $$(".reveal, .ticket-step");
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (en) {

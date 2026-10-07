@@ -14,7 +14,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=5">
+  <link rel="stylesheet" href="assets/css/style.css?v=8">
   <script>
     document.documentElement.classList.add('js');
     // Restore the chosen demo variant before first paint (avoids a layout jump)
@@ -169,7 +169,7 @@
           <h2 id="routes-title">What are you making?</h2>
           <p>Start with what you need it to do. We'll match the right process, material and finish.</p>
         </div>
-        <div class="row g-4" id="routeGrid"></div>
+        <div class="routes" id="routeGrid"></div>
       </div>
     </section>
 
@@ -183,13 +183,13 @@
             <p>Choose your options online, or ask us to recommend them.</p>
           </div>
           <div class="filter-tabs" role="group" aria-label="Filter products">
-            <button type="button" class="chip is-active" data-filter="all" aria-pressed="true">All</button>
-            <button type="button" class="chip" data-filter="Print" aria-pressed="false">Print</button>
-            <button type="button" class="chip" data-filter="Pack" aria-pressed="false">Pack</button>
-            <button type="button" class="chip" data-filter="Promote" aria-pressed="false">Promote</button>
+            <button type="button" class="tab is-active" data-filter="all" aria-pressed="true">All</button>
+            <button type="button" class="tab" data-filter="Print" aria-pressed="false">Print</button>
+            <button type="button" class="tab" data-filter="Pack" aria-pressed="false">Pack</button>
+            <button type="button" class="tab" data-filter="Promote" aria-pressed="false">Promote</button>
           </div>
         </div>
-        <div class="row g-4" id="productGrid"></div>
+        <div class="spec-grid" id="productGrid"></div>
         <p class="fine-print">Prices appear once the rate card is confirmed. Every order gets a proof before printing.</p>
       </div>
     </section>
@@ -200,16 +200,21 @@
         <div class="section-head reveal">
           <p class="kicker">Solutions</p>
           <h2 id="solutions-title">Twelve ways to make it.</h2>
-          <p>Every service in-house, from offset to laser. Pick a swatch to see what it covers.</p>
+          <p>Every process in-house, from offset to laser. Choose one to see what it makes.</p>
         </div>
-        <div class="swatch-layout">
-          <div class="swatch-book" id="swatchGrid" role="list"></div>
-          <aside class="swatch-detail" id="swatchDetail" aria-live="polite">
-            <p class="slug" id="sdInk"></p>
-            <h3 id="sdName"></h3>
-            <p id="sdText"></p>
-            <ul id="sdExamples" class="sd-examples"></ul>
-            <a class="btn-mp btn-mp-primary" id="sdCta" href="#quote">Plan this project</a>
+        <div class="cap-layout">
+          <ol class="cap-index" id="capIndex"></ol>
+          <aside class="cap-proof" id="capProof" aria-live="polite">
+            <figure class="print-frame cap-photo">
+              <img id="cpImg" src="assets/img/photos/svc-offset.jpg" alt="" width="1600" height="1067">
+              <figcaption class="slug" id="cpSlug"></figcaption>
+            </figure>
+            <div class="cap-copy">
+              <h3 id="cpName"></h3>
+              <p id="cpText"></p>
+              <p class="cap-outputs" id="cpOutputs"></p>
+              <a class="btn-mp btn-mp-primary" id="cpCta" href="#quote">Plan this project</a>
+            </div>
           </aside>
         </div>
       </div>
@@ -254,28 +259,56 @@
       </div>
     </section>
 
-    <!-- GIFTS by occasion -->
-    <section class="section section-deep" id="gifts" aria-labelledby="gifts-title">
+    <!-- GIFTS: the Sri Lankan print calendar -->
+    <section class="section section-tint" id="gifts" aria-labelledby="gifts-title">
       <div class="container-xl">
         <div class="section-head reveal">
-          <p class="kicker kicker-light">Gifts &amp; seasons</p>
-          <h2 id="gifts-title">Something for every occasion</h2>
-          <p>Personal gifts and seasonal print for the dates that matter here.</p>
+          <p class="kicker">Gifts &amp; seasons</p>
+          <h2 id="gifts-title">A year of reasons to print</h2>
+          <p>The dates our presses get busiest. Pick one to see what people order — and plan early.</p>
         </div>
-        <div class="occasion-tabs" role="tablist" aria-label="Occasions" id="occasionTabs"></div>
-        <div class="occasion-panel" id="occasionPanel" role="tabpanel" tabindex="0"></div>
+        <div class="cal reveal">
+          <div class="cal-months" aria-hidden="true">
+            <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span><span>Jul</span><span>Aug</span><span>Sep</span><span>Oct</span><span>Nov</span><span>Dec</span>
+          </div>
+          <div class="cal-grid" role="tablist" aria-label="Occasions through the year" id="calTabs"></div>
+        </div>
+        <div class="cal-panel" id="calPanel" role="tabpanel" tabindex="0">
+          <figure class="print-frame cal-photo"><img id="calImg" src="" alt="" width="1600" height="1067"></figure>
+          <div class="cal-copy">
+            <p class="slug" id="calWhen"></p>
+            <h3 id="calName"></h3>
+            <ul class="cal-ideas" id="calIdeas"></ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- PROCESS with proof stamp -->
-    <section class="section" id="process" aria-labelledby="process-title">
+    <!-- PROCESS: job ticket -->
+    <section class="section section-deep" id="process" aria-labelledby="process-title">
       <div class="container-xl">
-        <div class="section-head reveal">
-          <p class="kicker">How it works</p>
-          <h2 id="process-title">From file to finished</h2>
-          <p>Nothing goes to print until you've approved it.</p>
+        <div class="process-grid">
+          <div class="process-copy reveal">
+            <p class="kicker">How it works</p>
+            <h2 id="process-title">From file to finished</h2>
+            <p class="lead-text">Every job travels with a ticket. Nothing goes to press until you've approved the proof.</p>
+            <figure class="print-frame process-photo">
+              <img src="assets/img/photos/proof-check.jpg" alt="Checking colour on a printed proof" width="1600" height="1067" loading="lazy">
+              <figcaption class="slug">Sample image · proof check</figcaption>
+            </figure>
+          </div>
+          <div class="ticket reveal">
+            <div class="ticket-head">
+              <span class="ticket-title">Job ticket</span>
+              <span class="slug">No. MP–0418 · Sample</span>
+            </div>
+            <ol class="ticket-steps" id="stepList"></ol>
+            <div class="ticket-foot">
+              <span class="slug">Customer copy</span>
+              <span class="barcode" aria-hidden="true"></span>
+            </div>
+          </div>
         </div>
-        <ol class="steps" id="stepList"></ol>
       </div>
     </section>
 
@@ -377,7 +410,7 @@
   </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
-  <script src="assets/data.js?v=5" defer></script>
-  <script src="assets/js/main.js?v=5" defer></script>
+  <script src="assets/data.js?v=8" defer></script>
+  <script src="assets/js/main.js?v=8" defer></script>
 </body>
 </html>
