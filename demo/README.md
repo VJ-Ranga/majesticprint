@@ -5,7 +5,7 @@ Working multi-page HTML demo. Open `index.html` in a browser (no build step; a l
 ## Pages
 | File | What it is |
 |---|---|
-| `index.html` | Homepage (with the demo view switcher) |
+| `index.html` | Homepage (full-width hero with tall image) |
 | `shop.html` | Catalogue as spec sheets — filter by Print/Pack/Promote, occasion, search (`?route=Pack`, `?occasion=weddings`) |
 | `product.html?p=<slug>` | Product configurator: options, quantity, artwork upload/design/later, live job ticket, add to quote list, order on WhatsApp |
 | `solutions.html` | Capability index of all 12 processes + which processes make what |
@@ -33,13 +33,6 @@ Design concept: **the website is a print job.**
 - Gifts is a Sri Lankan print calendar (Avurudu, Vesak, Deepavali, Christmas, weddings).
 - How it works is a job ticket that ticks itself off and stamps the proof APPROVED.
 - Buttons misregister (cyan/magenta offset) on hover. All motion off under `prefers-reduced-motion`.
-
-## Demo view switcher
-The dark bar at the top compares hero variants (saved per browser; also via URL):
-- `?layout=full` / `?layout=boxed` — full-width sheet or boxed sheet on the press bed
-- `?media=tall` / `?media=wide` / `?media=none` — portrait photo, wide photo, or no photo (CMY overprint graphic)
-
-Remove `.demo-bar` before production.
 
 ## Photos
 Temporary Unsplash/Pexels stock images in `assets/img/photos/` (credits in `CREDITS.md`). Each is captioned

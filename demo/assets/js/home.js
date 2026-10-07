@@ -101,22 +101,6 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Job ticket ---------- */
   buildTicket(MP, $("#stepList"));
 
-  /* ---------- Demo view switcher (demo only) ---------- */
-  var root = document.documentElement;
-  function syncDemo() {
-    $$(".seg button").forEach(function (b) {
-      b.setAttribute("aria-pressed", root.getAttribute("data-" + b.getAttribute("data-set")) === b.getAttribute("data-value") ? "true" : "false");
-    });
-  }
-  $$(".seg button").forEach(function (b) {
-    b.addEventListener("click", function () {
-      root.setAttribute("data-" + b.getAttribute("data-set"), b.getAttribute("data-value"));
-      try { localStorage.setItem("mp-demo-view", JSON.stringify({ layout: root.getAttribute("data-layout"), media: root.getAttribute("data-media") })); } catch (e) {}
-      syncDemo();
-    });
-  });
-  syncDemo();
-  $("#demoClose").addEventListener("click", function () { $("#demoBar").hidden = true; });
   $$(".color-strip span").forEach(function (s, i) { s.style.setProperty("--n", i); });
 };
 

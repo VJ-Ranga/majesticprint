@@ -14,37 +14,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-  <link rel="stylesheet" href="assets/css/style.css?v=11">
+  <link rel="stylesheet" href="assets/css/style.css?v=12">
   <script>
     document.documentElement.classList.add('js');
-    // Restore the chosen demo variant before first paint (avoids a layout jump)
-    (function () {
-      var q = new URLSearchParams(location.search), s = {};
-      try { s = JSON.parse(localStorage.getItem('mp-demo-view') || '{}'); } catch (e) {}
-      document.documentElement.setAttribute('data-layout', q.get('layout') || s.layout || 'full');
-      document.documentElement.setAttribute('data-media', q.get('media') || s.media || 'tall');
-    })();
   </script>
 </head>
 <body data-page="home">
   <a class="skip-link" href="#main">Skip to content</a>
-
-  <!-- Demo-only control bar: compare hero variants. Remove for production. -->
-  <div class="demo-bar" id="demoBar" role="region" aria-label="Demo view options">
-    <div class="container-xl demo-bar-row">
-      <span class="slug">Demo view</span>
-      <div class="seg" role="group" aria-label="Hero width">
-        <button type="button" data-set="layout" data-value="boxed">Boxed</button>
-        <button type="button" data-set="layout" data-value="full">Full width</button>
-      </div>
-      <div class="seg" role="group" aria-label="Hero image">
-        <button type="button" data-set="media" data-value="tall">Tall image</button>
-        <button type="button" data-set="media" data-value="wide">Wide image</button>
-        <button type="button" data-set="media" data-value="none">No image</button>
-      </div>
-      <button type="button" class="demo-close" id="demoClose" aria-label="Hide demo options"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
-    </div>
-  </div>
 
   <div id="siteHeader"></div>
 
@@ -87,24 +63,12 @@
               </div>
             </div>
 
-            <!-- Variant: tall image -->
+            <!-- Hero image -->
             <figure class="hero-media media-tall print-frame">
               <img src="assets/img/photos/hero-tall.jpg" width="1100" height="1650" alt="Printed products stacked on a work table" fetchpriority="high">
               <figcaption class="slug">Sample image · real product photography to come</figcaption>
             </figure>
-
-            <!-- Variant: no image — CMY overprint -->
-            <div class="hero-overprint media-none" aria-hidden="true">
-              <span class="ov ov-c"></span><span class="ov ov-m"></span><span class="ov ov-y"></span>
-              <span class="ov-target"></span>
-            </div>
           </div>
-
-          <!-- Variant: wide image -->
-          <figure class="hero-media media-wide print-frame">
-            <img src="assets/img/photos/hero-wide.jpg" width="1600" height="1200" alt="Printing press in production" loading="lazy">
-            <figcaption class="slug">Sample image · real workshop photography to come</figcaption>
-          </figure>
 
           <div class="color-strip" aria-hidden="true">
             <span style="--i:#13477A"></span><span style="--i:#007CAC"></span><span style="--i:#D01C60"></span><span style="--i:#CF6428"></span><span style="--i:#EAA123"></span>
@@ -337,6 +301,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" defer></script>
   <script src="assets/data.js?v=9" defer></script>
   <script src="assets/js/common.js?v=10" defer></script>
-  <script src="assets/js/home.js?v=10" defer></script>
+  <script src="assets/js/home.js?v=11" defer></script>
 </body>
 </html>
