@@ -28,6 +28,52 @@
   var page = document.body.getAttribute("data-page") || "";
 
   D.services.forEach(function (s) { s.slug = slugify(s.name); });
+
+  /* ---------- Make-ready preloader ---------- */
+  (function () {
+    var pl = document.getElementById("preloader"), root = document.documentElement;
+    if (!pl) { root.classList.remove("is-loading"); return; }
+    var quick = false, reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    try { quick = sessionStorage.getItem("mp-seen") === "1"; sessionStorage.setItem("mp-seen", "1"); } catch (e) {}
+    if (quick || reduce) pl.classList.add("pl-quick");
+    var minTime = quick || reduce ? 380 : 1500, start = performance.now(), shown = 0, finished = false;
+    var loaded = document.readyState === "complete";
+    window.addEventListener("load", function () { loaded = true; });
+    var stepEl = document.getElementById("plStep"), pctEl = document.getElementById("plPct");
+    var steps = [[0, "Loading plates"], [28, "Registering C · M · Y"], [62, "Inking up"], [100, "Proof approved"]];
+
+    function imageRatio() {
+      var imgs = Array.prototype.filter.call(document.images, function (i) { return i.loading !== "lazy"; });
+      if (!imgs.length) return 1;
+      return imgs.filter(function (i) { return i.complete; }).length / imgs.length;
+    }
+    function frame() {
+      if (finished) return;
+      var t = Math.min(1, (performance.now() - start) / minTime);
+      var target = (loaded ? t : Math.min(t, 0.92 * imageRatio())) * 100;
+      shown += (target - shown) * 0.18;
+      if (target - shown < 0.4) shown = target;
+      pl.style.setProperty("--p", shown.toFixed(1) + "%");
+      pl.querySelector(".pl-fill").style.setProperty("--p", shown.toFixed(1) + "%");
+      pctEl.textContent = Math.round(shown);
+      for (var k = steps.length - 1; k >= 0; k--) if (shown >= steps[k][0]) { stepEl.textContent = steps[k][1]; break; }
+      if (shown >= 100 && loaded) finish(); else requestAnimationFrame(frame);
+    }
+    function finish() {
+      if (finished) return;
+      finished = true;
+      pctEl.textContent = "100"; stepEl.textContent = "Proof approved";
+      pl.querySelector(".pl-fill").style.setProperty("--p", "100%");
+      pl.classList.add("is-approved");
+      setTimeout(function () {
+        pl.classList.add("is-leaving");
+        root.classList.remove("is-loading");
+        setTimeout(function () { pl.remove(); }, 800);
+      }, quick || reduce ? 120 : 420);
+    }
+    requestAnimationFrame(frame);
+    setTimeout(function () { loaded = true; }, 5000); // never hold the page longer than this
+  })();
   function serviceByName(name) { return D.services.filter(function (s) { return s.name === name; })[0]; }
 
   /* ---------- Quote list (per-browser convenience, like a cart without payment) ---------- */

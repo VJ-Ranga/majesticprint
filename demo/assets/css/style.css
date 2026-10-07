@@ -965,3 +965,88 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
 .hero .sheet { min-height: calc(100svh - var(--header-h) - 70px); }
 @media (max-width: 575px) { .hero .sheet { min-height: 0; } }
 @media (max-width: 991px) { .loupe-hint { display: none !important; } }
+
+/* ==========================================================================
+   30. Make-ready preloader
+   ========================================================================== */
+html.is-loading { overflow: hidden; }
+/* Hold every page animation until the sheet leaves the press */
+html.is-loading main *, html.is-loading main *::before, html.is-loading main *::after,
+html.is-loading .site-header *, html.is-loading .job-strip * { animation-play-state: paused !important; }
+
+.preloader {
+  position: fixed; inset: 0; z-index: 5000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2.4rem;
+  background-color: var(--mp-surface);
+  background-image:
+    linear-gradient(rgba(19, 71, 122, .07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(19, 71, 122, .07) 1px, transparent 1px),
+    linear-gradient(rgba(19, 71, 122, .03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(19, 71, 122, .03) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
+  background-position: center;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path .75s cubic-bezier(.7, 0, .2, 1);
+  animation: pl-fallback .4s ease 7s forwards; /* safety net if a script fails */
+}
+html:not(.js) .preloader { display: none; }
+@keyframes pl-fallback { to { opacity: 0; visibility: hidden; } }
+.preloader.is-leaving { clip-path: inset(0 0 100% 0); }
+
+.pl-sheet {
+  position: relative; width: 240px; height: 240px; display: grid; place-items: center;
+  background: #fff; box-shadow: var(--shadow-sheet);
+  transition: transform .75s cubic-bezier(.7, 0, .2, 1);
+}
+.preloader.is-leaving .pl-sheet { transform: translateY(-40px); }
+.pl-sheet .reg-mark { display: block; }
+.pl-sheet .reg-mark.left { left: -40px; }
+.pl-sheet .reg-mark.right { right: -40px; }
+.pl-logo { position: relative; width: 136px; height: 126px; isolation: isolate; }
+.pl-plate {
+  position: absolute; inset: 0; opacity: 0; mix-blend-mode: multiply;
+  -webkit-mask: url("../img/logo-tight.svg") center / contain no-repeat; mask: url("../img/logo-tight.svg") center / contain no-repeat;
+}
+.pl-c { background: var(--mp-bright); }
+.pl-m { background: var(--mp-magenta); }
+.pl-y { background: var(--mp-gold); }
+.pl-k { position: relative; z-index: 2; display: block; width: 100%; height: auto; opacity: 0; }
+.pl-stamp { position: absolute; right: -26px; bottom: 16px; font-size: .95rem; color: var(--mp-success); border-color: var(--mp-success); background: rgba(255, 255, 255, .85); opacity: 0; }
+.preloader.is-approved .pl-stamp { animation: stamp .45s cubic-bezier(.3, 1.6, .5, 1) forwards; }
+
+.pl-bar { position: relative; width: 240px; height: 12px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; }
+.pl-bar span:nth-child(1) { background: color-mix(in srgb, var(--mp-deep) 18%, #fff); }
+.pl-bar span:nth-child(2) { background: color-mix(in srgb, var(--mp-bright) 18%, #fff); }
+.pl-bar span:nth-child(3) { background: color-mix(in srgb, var(--mp-magenta) 18%, #fff); }
+.pl-bar span:nth-child(4) { background: color-mix(in srgb, var(--mp-orange) 18%, #fff); }
+.pl-bar span:nth-child(5) { background: color-mix(in srgb, var(--mp-gold) 18%, #fff); }
+.pl-fill {
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, var(--mp-deep) 0 19.4%, transparent 19.4% 20.2%, var(--mp-bright) 20.2% 39.6%, transparent 39.6% 40.4%,
+    var(--mp-magenta) 40.4% 59.6%, transparent 59.6% 60.4%, var(--mp-orange) 60.4% 79.8%, transparent 79.8% 80.6%, var(--mp-gold) 80.6%);
+  clip-path: inset(0 calc(100% - var(--p, 0%)) 0 0);
+}
+.pl-status { display: flex; gap: .6rem; color: var(--mp-ink); min-width: 240px; justify-content: center; }
+.pl-status #plPct { min-width: 2ch; text-align: right; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .preloader:not(.pl-quick) .crop { animation: pl-crop .45s var(--ease-out) .05s both; }
+  .preloader:not(.pl-quick) .reg-mark { animation: fade-in .4s ease .25s both; }
+  .preloader:not(.pl-quick) .pl-sheet { animation: pl-sheet .5s var(--ease-out) both; }
+  .preloader:not(.pl-quick) .pl-c { animation: pl-c .8s var(--ease-out) .25s both, pl-out .35s ease 1.35s forwards; }
+  .preloader:not(.pl-quick) .pl-m { animation: pl-m .8s var(--ease-out) .4s both, pl-out .35s ease 1.35s forwards; }
+  .preloader:not(.pl-quick) .pl-y { animation: pl-y .8s var(--ease-out) .55s both, pl-out .35s ease 1.35s forwards; }
+  .preloader:not(.pl-quick) .pl-k { animation: pl-k .4s ease 1.15s forwards; }
+  @keyframes pl-sheet { from { opacity: 0; transform: translateY(16px) scale(.96); } }
+  @keyframes pl-crop { from { opacity: 0; transform: scale(.2); } }
+  @keyframes pl-c { from { opacity: 0; transform: translate(-16px, 9px); } 35% { opacity: .9; } to { opacity: .9; transform: none; } }
+  @keyframes pl-m { from { opacity: 0; transform: translate(14px, -10px); } 35% { opacity: .9; } to { opacity: .9; transform: none; } }
+  @keyframes pl-y { from { opacity: 0; transform: translate(5px, 14px); } 35% { opacity: .9; } to { opacity: .9; transform: none; } }
+  @keyframes pl-k { to { opacity: 1; } }
+  @keyframes pl-out { to { opacity: 0; } }
+}
+.preloader.pl-quick .pl-k { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .pl-k { opacity: 1; }
+  .preloader { transition: opacity .3s; }
+  .preloader.is-leaving { clip-path: none; opacity: 0; }
+}
