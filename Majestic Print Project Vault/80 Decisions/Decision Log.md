@@ -1,6 +1,6 @@
 ---
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-11
 status: active-register
 tags: [decisions]
 ---
@@ -45,3 +45,9 @@ D06 remains a historical initial scan, superseded for current asset status by D0
 | P09 | 2026-10-07 | Quote form builds a WhatsApp brief (no server submission) for the demo stage | Demo scope | Proposed |
 | D12 | 2026-10-07 | Use the brand guide's own horizontal logos (vector crop from the PDF, light + dark) in the demo; the public SVG's live-text wordmark renders in a fallback serif without Nexa | User approved after brand audit | Confirmed for demo; replace with client master files when supplied |
 | D13 | 2026-10-07 | Off-brand colours removed (press K and bleed-diagram safe line now Deep Blue / Gold); tagline sign-off uses Swiss721 stack with Helvetica fallback | Brand audit | Confirmed |
+| D14 | 2026-10-07 | Design system "the website is a print job": square-cut, crop marks, brand inks as plates, no rounded/ribbon styling | User approved v3 after rejecting v2 | Confirmed |
+| D15 | 2026-10-07 | Build inner pages: shop, product configurator, solutions, service, work, about, how to order, contact | User request | Built |
+| D16 | 2026-10-07 | Homepage hero: full width, tall image, four-slide slider with press control strip, job label and loupe | User choice and feedback | Confirmed |
+| D17 | 2026-10-07 | Loading screen on the homepage only, first visit per browser; no stamp. Slow-connection handling deferred to WordPress | User decision after UX discussion | Confirmed |
+| D18 | 2026-10-07 | WhatsApp button bottom-left; labelled Back to top tab bottom-right; mobile menu redesigned as a press sheet | User request | Built |
+| D19 | 2026-10-07 | Publish the demo on GitHub Pages from the public repository | User request | Live |

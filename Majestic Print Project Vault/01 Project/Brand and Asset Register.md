@@ -37,3 +37,12 @@ The original empty-folder scan is historical. It must no longer be treated as th
 Keep client originals intact and create derivatives separately. Brand-guide facts outrank old website copy and competitor styling. Operational facts still require client/staff confirmation. No font subset has been extracted from the PDF or embedded in the wireframe.
 
 Related: [[Selling Points and Content]], [[Performance and Accessibility]].
+
+## Demo asset status (updated 2026-10-11)
+
+- **Logo in the demo:** horizontal light and dark logos cropped as vectors from the brand guide PDF, stored in `demo/assets/img/brand/`. Unaltered artwork with outlined Nexa and Swiss721 letterforms and the exact guide colours. Replace with client master files when supplied.
+- **Public website SVG:** kept only as the browser tab icon. Its wordmark is live text and renders in a fallback serif on devices without Nexa installed, which is also true of the client's current live site.
+- **Fonts:** Poppins and a Helvetica-style stack are stand-ins. Licensed Nexa Heavy, Nexa Text and Swiss721 Medium web fonts are still needed.
+- **Photography:** 32 temporary Unsplash/Pexels images, credited in `demo/assets/img/photos/CREDITS.md`.
+
+See [[HTML Demo - Current State]].

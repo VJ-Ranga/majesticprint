@@ -1,8 +1,8 @@
 ---
 title: Majestic Print Project Dashboard
 created: 2026-10-05
-updated: 2026-10-05
-status: brand-aligned-plan-and-wireframe
+updated: 2026-10-11
+status: html-demo-built-awaiting-client-review
 tags: [majestic-print, dashboard]
 ---
 
@@ -10,14 +10,19 @@ tags: [majestic-print, dashboard]
 
 Build a premium, practical printing shop for **both business orders and personal gifts**. Validate the experience in responsive HTML first, then implement it in WordPress and WooCommerce with the approved payment gateway.
 
-**Current direction:** **Print. Pack. Promote.** A product shop plus a Solutions hub covering all 12 guide families, guided quotes, real product/project imagery, and limited motion. The brand guide is authoritative; page layouts and commercial policies remain proposals for review.
+**Current stage (11 October 2026):** the HTML demo is built and live for client review. Start with [[HTML Demo - Current State]].
 
-**Complete linked wireframes:** [[Full Wireframe Set]]. Start at `planning/wireframes/index.html`; every sitemap node now links to its page layout.
+- **Live demo:** https://vj-ranga.github.io/majesticprint/demo/
+- **Repository:** https://github.com/VJ-Ranga/majesticprint
+- **Local demo files:** `demo/` in the workspace
 
-**New review deliverables:** [[Brand Guide Findings]], [[Service Coverage Matrix]], [[Brand-Aligned Research Refresh]], [[Page Structure Trees]] and [[Homepage Wireframe Plan]]. Open `planning/sitemap.html` and `planning/homepage-wireframe.html` in the workspace for the visual page tree and responsive annotated homepage.
+**Current direction:** **Print. Pack. Promote.** A product shop plus a Solutions hub covering all 12 guide families, guided quotes, and a design system built on one idea: *the website is a print job* (square-cut sheets, crop marks, brand inks as press plates). The brand guide is authoritative for logo, colours and fonts. Commercial policies remain proposals for review.
+
+**Earlier planning artifacts** (still valid as structure references): [[Full Wireframe Set]] at `planning/wireframes/index.html`, [[Brand Guide Findings]], [[Service Coverage Matrix]], [[Brand-Aligned Research Refresh]], [[Page Structure Trees]], [[Homepage Wireframe Plan]], `planning/sitemap.html`.
 
 ## Read these first
 
+0. [[HTML Demo - Current State]] — what is built, the design rules, what was verified, what is waiting on the client.
 1. [[Project Brief]] — confirmed intent, assumptions, and success measures.
 2. [[Current Site Audit]] — what exists and the issues found.
 3. [[Research Synthesis]] — which competitor patterns are useful.
@@ -34,7 +39,7 @@ Build a premium, practical printing shop for **both business orders and personal
 | Research | [[Sri Lankan Competitors]], [[International Benchmarks]], [[Research Synthesis]], [[Sources]] |
 | Proposed design | [[Recommended Experience]], [[Sitemap and Navigation]], [[Page Blueprints]] |
 | Ordering | [[Product Model and Pricing]], [[Customer Journeys]], [[Artwork and Proof Workflow]] |
-| Build | [[HTML Prototype Scope]], [[WordPress Architecture]], [[Payments and Fulfilment]] |
+| Build | [[HTML Demo - Current State]], [[HTML Prototype Scope]], [[WordPress Architecture]], [[Payments and Fulfilment]] |
 | Quality and transition | [[Performance and Accessibility]], [[Migration and SEO]], [[QA and Acceptance]] |
 | Management | [[Project Roadmap]], [[Open Questions]], [[Decision Log]], [[Research Method and Limits]] |
 
@@ -49,10 +54,13 @@ Build a premium, practical printing shop for **both business orders and personal
 - [x] Reconcile earlier research and page plans with the guide.
 - [x] Create the sitemap/page structures and homepage review wireframe.
 - [x] Build the full linked wireframe set and verify all 67 pages at two mobile widths.
-- [ ] Receive master logo variants, licensed webfont files, rate card and photography.
+- [x] Agree design direction ("the website is a print job", approved by the user 7 October).
+- [x] Build the HTML demo: homepage plus shop, product, solutions, service, work, about, how to order, contact.
+- [x] Audit logo, colours and fonts against the brand guide; switch to the guide's own logos.
+- [x] Publish the demo on GitHub Pages.
+- [ ] Client reviews the live demo.
+- [ ] Receive master logo files, licensed webfont files, rate card and photography.
 - [ ] Confirm launch catalogue, pricing, fulfilment, and staff workflow.
-- [ ] Agree design direction and detailed HTML build scope.
-- [ ] Build and review HTML prototype.
 - [ ] Build and test WordPress/WooCommerce on staging.
 - [ ] Approve and launch.
 
@@ -68,4 +76,4 @@ See [[Planning Verification]] for passed static checks, desktop browser evidence
 
 ## Immediate next step
 
-Review the visual sitemap and homepage wireframe, then confirm the layout priorities and launch products. The guide is now received. Master logo/webfont files, rates and real imagery remain needed before the final visual storefront.
+Share the live demo with the client and collect feedback. In parallel, request the items listed under "Waiting on client" in [[HTML Demo - Current State]]: real contacts, licensed fonts, master logos, photography and the rate card. Then scope the WordPress/WooCommerce build.

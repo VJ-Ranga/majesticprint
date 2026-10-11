@@ -1,6 +1,6 @@
 ---
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-11
 status: draft-roadmap-not-execution-approval
 tags: [roadmap, delivery]
 ---
@@ -14,7 +14,7 @@ This is a proposed delivery sequence, not a fixed estimate or an approved implem
 | 1. Research and discovery | Folder scan, public-site audit, URL inventory, competitors, this vault | Findings traceable and unknowns explicit | This research pass delivered |
 | 2. Brand and operational definition | Guide identity/palette/12 families; remaining fonts/logo masters/rates/policies | Brand baseline established; operations/assets resolved | Guide reviewed; remaining inputs pending |
 | 3. Sitemap and wireframe review | Page tree, per-page section structures, annotated homepage, guide mapping | Review routes and layout; resolve changes | Delivered for review |
-| 4. HTML prototype | First review slice, then agreed templates and states | Client reviews visual system and key journeys; prototype QA recorded | Not started |
+| 4. HTML prototype | Homepage plus eight inner templates, published on GitHub Pages | Client reviews visual system and key journeys; prototype QA recorded | Built and live 7 October; awaiting client review. See [[HTML Demo - Current State]] |
 | 5. WordPress implementation | Staging theme, content/product models, cart, gateway, quote/upload/proof operations | Functional and operational acceptance | Not started |
 | 6. Content and migration | Approved copy/media/rates, route mapping, data migration rehearsal | Content/data checks and redirects signed off | Not started |
 | 7. Launch and handover | Approved release, post-launch checks, staff training, recovery documentation | Production acceptance and ownership clear | Not started |
@@ -48,9 +48,12 @@ Related: [[HTML Prototype Scope]], [[Open Questions]], [[QA and Acceptance]].
 - [x] Refresh targeted capability research and retain relevant earlier findings.
 - [x] Create full sitemap and per-page section trees.
 - [x] Create responsive annotated homepage wireframe.
-- [ ] Review hierarchy/section priorities and launch examples.
-- [ ] Obtain usable logo/webfonts/photos and commercial specifications.
-- [ ] Prepare the detailed functional HTML implementation plan.
-- [ ] Build approved visual/functional HTML slice, then staging WordPress integration.
+- [x] Agree the design direction and build the HTML demo (nine pages, shared design system).
+- [x] Brand audit: guide logos, exact palette, font fallbacks documented.
+- [x] Publish the demo: https://vj-ranga.github.io/majesticprint/demo/
+- [ ] Client review of the live demo.
+- [ ] Obtain master logos, licensed webfonts, photography and commercial specifications.
+- [ ] Scope and plan the WordPress/WooCommerce build (cart, checkout, gateway, artwork upload, proof workflow).
+- [ ] Build on staging, then content migration and launch.
 
 This roadmap covers the whole project; it is not a detailed code execution plan for all commerce subsystems.

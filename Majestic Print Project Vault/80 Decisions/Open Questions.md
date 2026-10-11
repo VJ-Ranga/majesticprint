@@ -1,6 +1,6 @@
 ---
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-11
 status: awaiting-inputs
 tags: [questions, decisions]
 ---
@@ -35,9 +35,23 @@ Are English, Sinhala and Tamil needed at launch? Which approved photos, projects
 
 Confirm budget range, target date, hosting/staging access, existing editor preference, customer/order data preservation, email/analytics integrations, maintenance owner and licence budget. Do staff need corporate reorders/workspaces at launch or later?
 
+## Raised by the HTML demo (October 2026)
+
+1. What are the real WhatsApp number, phone, email and opening hours? The demo uses placeholders.
+2. Are the product option lists (sizes, stocks, finishes, minimum quantities) correct for each launch product?
+3. Are the artwork rules right for Majestic: 3 mm bleed, 4 mm safe zone, 300 dpi, CMYK, PDF?
+4. Does every order get a proof, as the demo says? What are the real payment, delivery and collection terms for the FAQ?
+5. Should the small technical labels stay in IBM Plex Mono, or use brand fonts only?
+6. Should the hero headline stay in the heading font, or use the tagline face (Swiss721) like the footer?
+7. How should the loading screen behave on slow connections? Deferred to the WordPress build.
+8. Should the quote list become a real cart with prices at launch, or stay a quote request?
+9. Which occasions belong in the print calendar, and are the gift ideas right for each?
+
 ## Answered
 
 Audience: a mix of business print orders and personal gifts. Recorded on 5 October 2026 in [[Decision Log]].
+
+Design direction: "the website is a print job", approved by the user on 7 October 2026. Hero layout: full width with a tall image and a four-slide slider. Loading screen: homepage only, first visit only. All recorded in [[Decision Log]] and [[HTML Demo - Current State]].
 
 ## Resolved by the supplied guide
 
