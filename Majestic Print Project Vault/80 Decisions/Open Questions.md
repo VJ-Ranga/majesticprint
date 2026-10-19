@@ -45,7 +45,7 @@ Confirm budget range, target date, hosting/staging access, existing editor prefe
 6. Should the hero headline stay in the heading font, or use the tagline face (Swiss721) like the footer?
 7. How should the loading screen behave on slow connections? Deferred to the WordPress build.
 8. Should the quote list become a real cart with prices at launch, or stay a quote request?
-9. Which occasions belong in the print calendar, and are the gift ideas right for each?
+9. Are the typical "Materials" listed on each service page correct? (Not in the brand guide.)
 
 ## Answered
 

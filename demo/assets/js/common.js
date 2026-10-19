@@ -27,7 +27,7 @@
   var ARROW = ' <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>';
   var page = document.body.getAttribute("data-page") || "";
 
-  D.services.forEach(function (s) { s.slug = slugify(s.name); });
+  D.services.forEach(function (s) { s.slug = slugify(s.name); s.outputs = s.items.join(" · "); });
 
   /* ---------- Make-ready preloader ---------- */
   (function () {
@@ -98,8 +98,7 @@
   /* ---------- Header + footer ---------- */
   var NAV = [
     ["shop", "shop.html", "Shop"],
-    ["solutions", "solutions.html", "Solutions"],
-    ["work", "work.html", "Our work"],
+    ["solutions", "services.html", "Services"],
     ["order", "how-to-order.html", "How to order"],
     ["about", "about.html", "About"],
     ["contact", "contact.html", "Contact"]
@@ -153,7 +152,7 @@
           el("div", { class: "mn-block" }, [
             el("p", { class: "slug mn-cap", text: "Shop by" }),
             el("div", { class: "mn-routes" }, D.routes.map(function (r) {
-              return el("a", { class: "mn-route", href: r.filter ? "shop.html?route=" + r.filter : "solutions.html", style: "--ink:" + ink(r.ink) }, [
+              return el("a", { class: "mn-route", href: r.filter ? "shop.html?route=" + r.filter : "services.html", style: "--ink:" + ink(r.ink) }, [
                 el("span", { class: "mn-route-ink", "aria-hidden": "true" }),
                 el("span", { text: r.title + "." })
               ]);
@@ -188,7 +187,7 @@
               el("p", { class: "footer-tag", text: "One partner. Every printing solution." }),
               el("p", { class: "footer-about", text: "Printing, packaging, signage and promotional products for businesses and personal orders across Sri Lanka." })
             ]),
-            col("Shop", [["Business print", "shop.html?route=Print"], ["Packaging", "shop.html?route=Pack"], ["Promotional", "shop.html?route=Promote"], ["Gifts by occasion", "index.html#gifts"]]),
+            col("Shop", [["Business print", "shop.html?route=Print"], ["Packaging", "shop.html?route=Pack"], ["Promotional", "shop.html?route=Promote"], ["Corporate gifts", "service.html?s=promotional-and-corporate-gifts"]]),
             col("Help", [["How to order", "how-to-order.html"], ["Artwork guide", "how-to-order.html#artwork"], ["FAQ", "how-to-order.html#faq"], ["Request a quote", "contact.html#quote"]]),
             el("div", { class: "col-lg-4" }, [el("h3", { text: "Visit or call" }), el("ul", { class: "contact-list contact-list-light", id: "footerContact" })])
           ]),

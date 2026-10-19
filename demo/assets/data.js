@@ -1,6 +1,6 @@
 /*
  * Majestic Print — homepage demo content.
- * Edit this file to change products, services, occasions and contacts.
+ * Edit this file to change products, services and contacts.
  * Items marked "waitingOnClient" are placeholders until Majestic confirms them.
  * Photos in assets/img/photos are temporary stock images (see CREDITS.md).
  */
@@ -38,14 +38,14 @@ window.MP_DATA = {
     { kicker: "This season · Oct – Dec", ink: "bright", lines: ["Deepavali &", "year-end gifts."],
       lead: "Desk diaries, engraved pens, gift boxes and greeting cards for clients and staff. Order early — the presses fill up.",
       img: "assets/img/photos/gifts.jpg", alt: "Gift box with gold ribbon (sample image)", caption: "Gift sets · sample image",
-      cta: ["Shop seasonal gifts", "shop.html?occasion=corporate"], cta2: ["See the print calendar", "#gifts"] }
+      cta: ["Shop seasonal gifts", "shop.html?occasion=corporate"], cta2: ["Corporate gift ideas", "service.html?s=promotional-and-corporate-gifts"] }
   ],
 
   // Print / Pack / Promote — each printed as a duotone in its own ink
   routes: [
     { id: "print",   title: "Print",   ink: "bright",  img: "assets/img/photos/flyers.jpg",
       text: "Cards, brochures, labels and calendars — everything your business hands out.",
-      items: ["Business cards", "Brochures", "Letterheads", "Calendars"], target: "#products", filter: "Print" },
+      items: ["Visiting cards", "Brochures", "Letterheads", "Calendars"], target: "#products", filter: "Print" },
     { id: "pack",    title: "Pack",    ink: "gold",    img: "assets/img/photos/boxes.jpg",
       text: "Boxes, bags, sleeves and stickers that make a product shelf-ready.",
       items: ["Custom boxes", "Paper bags", "Sleeves", "Labels"], target: "#products", filter: "Pack" },
@@ -56,7 +56,7 @@ window.MP_DATA = {
 
   // Launch products as spec sheets. Specs are typical options — confirm against the rate card.
   products: [
-    { slug: "business-cards", name: "Business cards",     img: "assets/img/photos/business-cards.jpg", route: "Print",   service: "Offset Printing",
+    { slug: "business-cards", name: "Visiting cards",     img: "assets/img/photos/business-cards.jpg", route: "Print",   service: "Offset Printing",
       specs: { Size: "90 × 55 mm", Stock: "350–400 gsm", Finish: "Matt · gloss · spot UV", From: "100 cards" } },
     { slug: "flyers-brochures", name: "Flyers & brochures", img: "assets/img/photos/flyers.jpg",         route: "Print",   service: "Digital Printing",
       specs: { Size: "A6 – A4", Stock: "130–170 gsm", Finish: "Flat or folded", From: "50 copies" } },
@@ -70,54 +70,74 @@ window.MP_DATA = {
       specs: { Size: "S – XXL", Stock: "Cotton · poly", Finish: "Screen or sublimation", From: "1 shirt" } }
   ],
 
-  // All 12 service families from the brand guide — the capability index
+  // All 12 service families — names, taglines, descriptions and item lists exactly as in the brand guide ("05. What we do")
   services: [
-    { name: "Offset Printing",           ink: "deep",    img: "assets/img/photos/svc-offset.jpg",
-      text: "High-volume print with consistent colour, run after run.",
-      outputs: "Business cards · brochures · NCR books · diaries · calendars" },
-    { name: "Digital Offset Printing",   ink: "deep",    img: "assets/img/photos/svc-digital-offset.jpg",
-      text: "Offset-quality short runs when you need hundreds, not thousands.",
-      outputs: "Short-run stationery · invitations · booklets" },
-    { name: "Digital Printing",          ink: "bright",  img: "assets/img/photos/svc-digital.jpg",
-      text: "Fast, flexible print for posters, stickers, cut-outs and photos.",
-      outputs: "Posters · PVC stickers · cut-outs · photo prints" },
-    { name: "UV Printing",               ink: "bright",  img: "assets/img/photos/svc-uv.jpg",
-      text: "Print straight onto acrylic, wood, glass, metal and finished objects.",
-      outputs: "Acrylic plaques · foam board · glass · promotional items" },
-    { name: "Large Format Printing",     ink: "magenta", img: "assets/img/photos/svc-large-format.jpg",
-      text: "Banners, backdrops and wall graphics, printed big and sharp.",
-      outputs: "Hoardings · event backdrops · wallpapers · displays" },
-    { name: "Signage & 3D Signage",      ink: "magenta", img: "assets/img/photos/svc-signage.jpg",
-      text: "Shop fronts, light boxes and raised letters that get noticed.",
-      outputs: "3D letters · LED signs · light boxes · directional signs" },
-    { name: "CNC Cutting & Engraving",   ink: "orange",  img: "assets/img/photos/svc-cnc.jpg",
-      text: "Precise cutting in acrylic and wood for panels, letters and shapes.",
-      outputs: "Partitions · 3D letters · panels · architectural details" },
-    { name: "Laser Cutting & Engraving", ink: "orange",  img: "assets/img/photos/laser.jpg",
-      text: "Fine detail for gifts, name boards and wedding pieces.",
-      outputs: "Name boards · wood decor · acrylic gifts · wedding items" },
-    { name: "Sublimation Printing",      ink: "gold",    img: "assets/img/photos/svc-sublimation.jpg",
-      text: "Full-colour images on mugs, shirts, crystal and granite.",
-      outputs: "Mugs · T-shirts · crystal · granite" },
-    { name: "Vehicle Branding",          ink: "gold",    img: "assets/img/photos/svc-vehicle.jpg",
-      text: "Full or partial wraps that turn every trip into advertising.",
-      outputs: "Full wraps · door graphics · fleet stickers" },
-    { name: "Packaging & Branding",      ink: "deep",    img: "assets/img/photos/svc-packaging.jpg",
-      text: "Boxes, bags and labels designed around your product.",
-      outputs: "Boxes · paper bags · sleeves · tags" },
+    { name: "Offset Printing", ink: "deep", img: "assets/img/photos/svc-offset.jpg",
+      tagline: "Traditional Print Excellence",
+      text: "High-quality offset printing for professional business and promotional materials.",
+      itemsLabel: "We produce",
+      items: ["Visiting Cards", "Letterheads", "Brochures", "Posters", "Calendars", "NCR Bill Books", "Envelopes", "File Covers", "Stickers", "Tag Cards", "Wedding Cards", "Diaries & Notebooks"] },
+    { name: "Digital Offset Printing", ink: "deep", img: "assets/img/photos/svc-digital-offset.jpg",
+      tagline: "Short Runs. Professional Results.",
+      text: "Efficient digital offset solutions for high-quality printing with flexibility for small and medium quantities.",
+      itemsLabel: "Ideal for",
+      items: ["Business Stationery", "Marketing Materials", "Invitations", "Brochures", "Flyers", "Cards", "Short-run Publications", "Visiting Cards", "Letterheads", "Posters"] },
+    { name: "Digital Printing", ink: "bright", img: "assets/img/photos/svc-digital.jpg",
+      tagline: "Fast. Flexible. High Quality.",
+      text: "Modern digital printing solutions for quick-turnaround promotional and commercial requirements.",
+      itemsLabel: "Ideal for",
+      items: ["Posters", "Flyers", "PVC Stickers", "Labels", "Cutouts", "Photo Prints", "Promotional Materials", "Custom Print Products"] },
+    { name: "UV Printing", ink: "bright", img: "assets/img/photos/svc-uv.jpg",
+      tagline: "Print Beyond Paper",
+      text: "Advanced UV printing for vibrant, durable and premium-quality direct-to-surface applications.",
+      itemsLabel: "Applications include",
+      items: ["Acrylic", "PVC", "Foam Board", "Wood", "Glass", "Metal Surfaces", "Promotional Products", "Customized Signage"] },
+    { name: "Large Format Printing", ink: "magenta", img: "assets/img/photos/svc-large-format.jpg",
+      tagline: "Big Print. Big Impact.",
+      text: "Large-scale printing solutions designed for advertising, branding and environmental graphics.",
+      itemsLabel: "We produce",
+      items: ["Hoardings", "Large Format Banners", "Backdrops", "Wall Graphics", "Wallpapers", "Posters", "Promotional Displays", "Event Branding"] },
+    { name: "Signage & 3D Signage", ink: "magenta", img: "assets/img/photos/svc-signage.jpg",
+      tagline: "Make Your Brand Visible",
+      text: "Professional indoor and outdoor signage designed to give businesses a strong physical presence.",
+      itemsLabel: "Our solutions include",
+      items: ["3D Letter Signs", "LED Signs", "Light Boxes", "Dealer Boards", "Shop Signage", "Corporate Signage", "Directional Signs", "Outdoor Advertising Signs", "Acrylic Signs", "Custom Signage"] },
+    { name: "CNC Cutting & Engraving", ink: "orange", img: "assets/img/photos/svc-cnc.jpg",
+      tagline: "Precision Made Possible",
+      text: "Computer-controlled cutting and engraving for detailed, accurate and customized applications.",
+      itemsLabel: "Applications include",
+      items: ["Acrylic Cutting", "Wooden Cutting", "3D Letters", "Wall Partitions", "Decorative Panels", "Custom Shapes", "Personalized Products", "Engraving", "Architectural Elements"] },
+    { name: "Laser Cutting & Engraving", ink: "orange", img: "assets/img/photos/laser.jpg",
+      tagline: "Detail. Precision. Craft.",
+      text: "Precision laser cutting and engraving for creative, decorative and personalized products.",
+      itemsLabel: "We create",
+      items: ["Personalized Gifts", "Wooden Décor", "Acrylic Products", "Name Boards", "Decorative Items", "Custom Designs", "Engraved Products", "Event & Wedding Items"] },
+    { name: "Sublimation Printing", ink: "gold", img: "assets/img/photos/svc-sublimation.jpg",
+      tagline: "Brand It. Personalize It.",
+      text: "High-quality sublimation printing for customized promotional and personal products.",
+      itemsLabel: "We produce",
+      items: ["T-Shirts", "Mugs", "Glass Crystals", "Granite Items", "Customized Gifts", "Promotional Merchandise"] },
+    { name: "Vehicle Branding", ink: "gold", img: "assets/img/photos/svc-vehicle.jpg",
+      tagline: "Take Your Brand on the Road",
+      text: "Transform vehicles into powerful mobile advertising platforms.",
+      itemsLabel: "Applications include",
+      items: ["Vehicle Stickers", "Full Vehicle Branding", "Partial Vehicle Branding", "Commercial Vehicle Graphics", "Custom Promotional Graphics"] },
+    { name: "Packaging & Branding", ink: "deep", img: "assets/img/photos/svc-packaging.jpg",
+      tagline: "Packaging That Represents",
+      text: "Creative and professional packaging solutions designed to protect products while strengthening brand identity.",
+      itemsLabel: "Solutions include",
+      items: ["Product Boxes", "Custom Packaging", "Paper Bags", "Labels & Stickers", "Packaging Sleeves", "Product Tags", "Branded Materials"] },
     { name: "Promotional & Corporate Gifts", ink: "magenta", img: "assets/img/photos/svc-gifts.jpg",
-      text: "Branded diaries, pens, umbrellas and gift sets, in any quantity.",
-      outputs: "Diaries · pens · umbrellas · gift sets" }
+      tagline: "Make Your Brand Part of Their Every Day",
+      text: "Customized promotional products for businesses, events and corporate campaigns.",
+      itemsLabel: "We offer",
+      items: ["Diaries", "Notebooks", "Pens", "Mugs", "T-Shirts", "Umbrellas", "Key Tags", "Customized Gifts", "Corporate Gift Sets"] }
   ],
 
-  // Showcase — SAMPLE stock images until customer-approved projects are supplied
-  showcase: [
-    { title: "Illuminated 3D lettering", service: "Signage & 3D Signage",        img: "assets/img/photos/svc-signage.jpg", size: "large" },
-    { title: "Engraved keepsakes",     service: "Laser Cutting & Engraving",     img: "assets/img/photos/laser.jpg" },
-    { title: "Corporate gift sets",    service: "Promotional & Corporate Gifts", img: "assets/img/photos/gifts.jpg" }
-  ],
+  // Brand guide closing statement
+  statement: ["From Offset to Digital.", "From UV to Large Format.", "From CNC & Laser to Signage.", "From Packaging to Promotional Products."],
 
-  // The Sri Lankan print calendar. start/span are months (1 = Jan). Dates vary by year.
+  // Occasions used by the shop filter (start/span/row are legacy calendar fields)
   occasions: [
     { id: "avurudu",   label: "Avurudu",          when: "April",               start: 4,  span: 1,  row: 1, ink: "orange",  img: "assets/img/photos/occ-avurudu.jpg",
       ideas: ["Greeting cards", "Branded calendars", "Gift boxes", "Staff T-shirts"] },
@@ -148,7 +168,7 @@ window.MP_DATA = {
   // Full shop catalogue. Option lists are typical — confirm against the rate card.
   // Prices are not shown until Majestic supplies rates (waitingOnClient).
   catalogue: [
-    { slug: "business-cards", name: "Business cards", route: "Print", service: "Offset Printing", img: "assets/img/photos/business-cards.jpg",
+    { slug: "business-cards", name: "Visiting cards", route: "Print", service: "Offset Printing", img: "assets/img/photos/business-cards.jpg",
       occasions: ["corporate"], blurb: "The card that does the introducing. Heavy stock, crisp type, finishes you can feel.",
       options: { Size: ["Standard 90 × 55 mm", "Square 65 × 65 mm", "Slim 85 × 45 mm"], Stock: ["350 gsm matt", "400 gsm silk", "Textured linen"], Finish: ["None", "Matt lamination", "Spot UV", "Gold foil"], Sides: ["Single-sided", "Double-sided"] },
       quantities: [100, 250, 500, 1000] },
@@ -217,19 +237,6 @@ window.MP_DATA = {
     "Packaging & Branding":          { materials: ["Folding board", "Kraft", "Corrugated", "Rigid board"], weNeed: ["Product dimensions", "Box style", "Quantity", "Artwork or dieline"] },
     "Promotional & Corporate Gifts": { materials: ["Notebooks", "Pens", "Mugs", "Umbrellas", "Keytags"], weNeed: ["Items", "Quantity", "Branding method", "Deadline"] }
   },
-
-  // Portfolio — SAMPLE stock images until customer-approved projects are supplied
-  work: [
-    { title: "Illuminated shop lettering", service: "Signage & 3D Signage",          img: "assets/img/photos/svc-signage.jpg" },
-    { title: "Engraved keepsakes",         service: "Laser Cutting & Engraving",     img: "assets/img/photos/laser.jpg" },
-    { title: "Corporate gift sets",        service: "Promotional & Corporate Gifts", img: "assets/img/photos/gifts.jpg" },
-    { title: "Event banner run",           service: "Large Format Printing",         img: "assets/img/photos/svc-large-format.jpg" },
-    { title: "Wedding stationery suite",   service: "Digital Offset Printing",       img: "assets/img/photos/occ-wedding.jpg" },
-    { title: "Retail soap cartons",        service: "Packaging & Branding",          img: "assets/img/photos/svc-packaging.jpg" },
-    { title: "Team shirt print run",       service: "Sublimation Printing",          img: "assets/img/photos/tshirt.jpg" },
-    { title: "Vehicle wrap install",       service: "Vehicle Branding",              img: "assets/img/photos/svc-vehicle.jpg" },
-    { title: "Acrylic panel cutting",      service: "CNC Cutting & Engraving",       img: "assets/img/photos/svc-cnc.jpg" }
-  ],
 
   // Standard prepress guidance — confirm Majestic's exact file requirements
   artwork: [

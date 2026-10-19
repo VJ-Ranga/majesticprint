@@ -134,7 +134,7 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Print / Pack / Promote (duotone plates) ---------- */
   var routeGrid = $("#routeGrid");
   D.routes.forEach(function (r) {
-    var href = r.filter ? "shop.html?route=" + r.filter : "solutions.html";
+    var href = r.filter ? "shop.html?route=" + r.filter : "services.html";
     routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(r.ink) }, [
       el("figure", { class: "print-frame duo" }, [
         el("div", { class: "duo-img" }, [
@@ -176,53 +176,6 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Capability index ---------- */
   initCapIndex(MP, $("#capIndex"), $("#capProof"), narrow, false);
 
-  /* ---------- Showcase ---------- */
-  var showcase = $("#showcase");
-  D.showcase.forEach(function (w) {
-    showcase.appendChild(el("figure", { class: "print-frame work reveal" + (w.size === "large" ? " is-large" : "") }, [
-      el("div", { class: "work-img" }, [el("img", { src: w.img, alt: w.title + " (sample image)", loading: "lazy" })]),
-      el("figcaption", null, [el("span", { class: "slug", text: w.service }), el("strong", { text: w.title })])
-    ]));
-  });
-
-  /* ---------- Print calendar ---------- */
-  var calTabs = $("#calTabs"), tabs = [];
-  D.occasions.forEach(function (o, i) {
-    var t = el("button", {
-      type: "button", class: "cal-bar", "data-ink": o.ink, "data-span": o.span, "data-align": o.start + o.span > 12 ? "end" : "start",
-      role: "tab", id: "tab-" + o.id, "aria-controls": "calPanel", "aria-selected": "false", tabindex: "-1",
-      style: "--ink:" + ink(o.ink) + ";--start:" + o.start + ";--span:" + o.span + ";--row:" + o.row
-    }, [el("span", { class: "cal-label", text: o.label }), el("span", { class: "cal-when", text: o.when })]);
-    t.addEventListener("click", function () { showOccasion(i); });
-    t.addEventListener("keydown", function (e) {
-      var n = null;
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (i + 1) % tabs.length;
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (i - 1 + tabs.length) % tabs.length;
-      if (e.key === "Home") n = 0;
-      if (e.key === "End") n = tabs.length - 1;
-      if (n !== null) { e.preventDefault(); showOccasion(n); tabs[n].focus(); }
-    });
-    tabs.push(t); calTabs.appendChild(t);
-  });
-  function showOccasion(i) {
-    var o = D.occasions[i], panel = $("#calPanel");
-    tabs.forEach(function (t, j) { t.setAttribute("aria-selected", i === j ? "true" : "false"); t.setAttribute("tabindex", i === j ? "0" : "-1"); });
-    panel.setAttribute("aria-labelledby", "tab-" + o.id);
-    panel.style.setProperty("--ink", ink(o.ink));
-    panel.classList.remove("is-swapping"); void panel.offsetWidth; panel.classList.add("is-swapping");
-    var img = $("#calImg"); img.src = o.img; img.alt = o.label + " (sample image)";
-    $("#calWhen").textContent = o.when;
-    $("#calName").textContent = o.label;
-    var ul = $("#calIdeas"); ul.textContent = "";
-    o.ideas.forEach(function (idea) {
-      var a = el("a", { href: "#quote", html: "<span></span>" + ARROW });
-      a.firstChild.textContent = idea;
-      a.setAttribute("aria-label", "Ask about " + idea + " for " + o.label);
-      a.addEventListener("click", function () { MP.prefillQuote("Promotional & Corporate Gifts", idea + " for " + o.label); });
-      ul.appendChild(el("li", null, [a]));
-    });
-  }
-  showOccasion(0);
 
   /* ---------- Workshop clock (Sri Lanka time) ---------- */
   var clock = $("#workshopTime");
@@ -279,7 +232,7 @@ function initCapIndex(MP, capIndex, capProof, narrow, linkToPage) {
     var btn = el("button", { type: "button", class: "cap-row", "aria-expanded": "false", "aria-controls": capProof.id, style: "--ink:" + ink(s.ink) }, [
       el("span", { class: "cap-icon", "aria-hidden": "true", html: (window.MP_ICONS || {})[s.name] || "" }),
       el("span", { class: "cap-name", text: s.name }),
-      el("span", { class: "cap-out", text: s.outputs.split(" · ").slice(0, 3).join(" · ") }),
+      el("span", { class: "cap-out", text: s.tagline }),
       el("i", { class: "fa-solid fa-arrow-right cap-arrow", "aria-hidden": "true" })
     ]);
     btn.addEventListener("click", function () { select(i, true); });
@@ -302,10 +255,11 @@ function initCapIndex(MP, capIndex, capProof, narrow, linkToPage) {
       img.src = s.img; img.alt = s.name + " (sample image)";
       capProof.style.setProperty("--ink", ink(s.ink));
       $(".cp-slug", capProof).textContent = s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  sample image";
+      var tg = $(".cp-tagline", capProof); if (tg) tg.textContent = s.tagline;
       $(".cp-name", capProof).textContent = s.name;
       var cpi = $(".cp-icon", capProof); if (cpi) cpi.innerHTML = (window.MP_ICONS || {})[s.name] || "";
       $(".cp-text", capProof).textContent = s.text;
-      $(".cp-outputs", capProof).textContent = s.outputs;
+      $(".cp-outputs", capProof).textContent = s.itemsLabel + ": " + s.items.join(" · ");
       var cta = $(".cp-cta", capProof);
       if (linkToPage) {
         cta.textContent = "See " + s.name;

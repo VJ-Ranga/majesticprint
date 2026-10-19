@@ -8,9 +8,8 @@ Working multi-page HTML demo. Open `index.html` in a browser (no build step; a l
 | `index.html` | Homepage (full-width hero with tall image) |
 | `shop.html` | Catalogue as spec sheets — filter by Print/Pack/Promote, occasion, search (`?route=Pack`, `?occasion=weddings`) |
 | `product.html?p=<slug>` | Product configurator: options, quantity, artwork upload/design/later, live job ticket, add to quote list, order on WhatsApp |
-| `solutions.html` | Capability index of all 12 processes + which processes make what |
-| `service.html?s=<slug>` | One template for every process: photo, what we make, materials, "to quote we need", products, next/previous process |
-| `work.html` | Portfolio with process filter and lightbox |
+| `services.html` | "What we do": all 12 services with the guide's taglines, the guide's closing statement, and which processes make what |
+| `service.html?s=<slug>` | One template for every service: guide tagline, description and full item list, materials, "to quote we need", products, next/previous |
 | `about.html` | Story, three plates, brand traits, visit the workshop |
 | `how-to-order.html` | Standard vs custom tickets, interactive bleed/trim/safe diagram, artwork table, FAQ |
 | `contact.html` | Quote list + brief form → one WhatsApp message |
@@ -53,3 +52,8 @@ as a sample. Replace with Majestic's own product, project and workshop photograp
 - **Click feedback** — small CMY ink burst on buttons, tabs and tiles.
 - Built with CSS + vanilla JS (no animation library needed yet). If heavier scroll choreography is wanted later, GSAP 3.15 incl. ScrollTrigger is free for commercial use (gsap.com/standard-license) — self-host it in the WordPress theme.
 - **Make-ready preloader** — the logo registers on a small press sheet (C, M, Y plates lock in, then the real logo), the ink bar fills with real image-load progress and the sheet wipes off upward. Homepage only, first visit in a browser only (localStorage `mp-intro-seen`); reduced-motion users get a quick fade. Slow-connection handling to be decided in the WordPress build. Page animations wait until it leaves.
+
+## Content source (19 Oct 2026)
+- Service names, taglines, descriptions and item lists come word for word from the brand guide's "05. What we do" section (`data.js → services`), including local terms such as Visiting Cards and NCR Bill Books.
+- Removed at the client's request: the Our work portfolio and the homepage Gifts & seasons calendar. The menu is now Shop · Services · How to order · About · Contact.
+- The "Materials" lists on service pages are typical values, not from the guide — confirm with the client.

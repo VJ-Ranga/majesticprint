@@ -1,6 +1,6 @@
 ---
 created: 2026-10-05
-updated: 2026-10-11
+updated: 2026-10-19
 status: active-register
 tags: [decisions]
 ---
@@ -51,3 +51,6 @@ D06 remains a historical initial scan, superseded for current asset status by D0
 | D17 | 2026-10-07 | Loading screen on the homepage only, first visit per browser; no stamp. Slow-connection handling deferred to WordPress | User decision after UX discussion | Confirmed |
 | D18 | 2026-10-07 | WhatsApp button bottom-left; labelled Back to top tab bottom-right; mobile menu redesigned as a press sheet | User request | Built |
 | D19 | 2026-10-07 | Publish the demo on GitHub Pages from the public repository | User request | Live |
+| D20 | 2026-10-19 | Remove Our work (portfolio) and the homepage Gifts & seasons calendar; the client does not need them | User instruction | Done |
+| D21 | 2026-10-19 | Rename Solutions to Services ("What we do" as page heading); menu Shop · Services · How to order · About · Contact | Recommendation; user approved removing Our work | Done |
+| D22 | 2026-10-19 | Service names, taglines, descriptions and item lists taken word for word from the brand guide | Brand audit of "05. What we do" | Done |

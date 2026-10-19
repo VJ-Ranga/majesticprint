@@ -1,6 +1,6 @@
 ---
 created: 2026-10-11
-updated: 2026-10-11
+updated: 2026-10-19
 status: demo-built-awaiting-client-review
 tags: [build, demo, design-system, current-state]
 ---
@@ -31,16 +31,22 @@ The user approved this direction on 7 October after rejecting an earlier version
 
 Rejected and not to be reintroduced: rounded cards, pill buttons, gradient accent ribbons, coloured strips on top of cards, plain colour-swatch boxes for services, large empty white sections.
 
+## Changes on 19 October 2026
+
+- **Removed at the client's request:** the Our work portfolio (page, menu item and homepage showcase) and the homepage Gifts & seasons calendar. The shop's occasion filter is kept.
+- **Menu is now:** Shop · Services · How to order · About · Contact. `solutions.html` is renamed `services.html`, headed "What we do" as in the brand guide.
+- **Service content now comes word for word from the brand guide:** names, taglines (e.g. "Traditional Print Excellence", "Print Beyond Paper"), descriptions and full item lists (5–12 items each), including local terms such as Visiting Cards and NCR Bill Books. The guide's closing statement appears on the Services page.
+- **Still not from the guide:** the "Materials" lists on service pages and the shop's product option lists are typical values to confirm.
+
 ## Pages built
 
 | File | What it does |
 |---|---|
-| `index.html` | Homepage: hero slider, service ticker, Print/Pack/Promote, products, capability index, showcase, Why Majestic, print calendar, job ticket and press run, quote form |
+| `index.html` | Homepage: hero slider, service ticker, Print/Pack/Promote, products, services index, Why Majestic, job ticket and press run, quote form |
 | `shop.html` | 13 products as spec sheets; filter by Print/Pack/Promote, occasion and search; filters live in the URL |
 | `product.html?p=<slug>` | Configurator: option tiles, quantity, artwork (upload / design for me / send later), live job ticket, add to quote list, order on WhatsApp |
-| `solutions.html` | Capability index of all 12 processes and a map of which processes make what |
-| `service.html?s=<slug>` | One template for every process: photo, what we make, materials, "to quote we need", related products, previous/next |
-| `work.html` | Portfolio with process filter and enlarge view |
+| `services.html` | "What we do": all 12 services with guide taglines, the guide's closing statement, and which processes make what |
+| `service.html?s=<slug>` | One template for every service: guide tagline, description and full item list, materials, "to quote we need", related products, previous/next |
 | `about.html` | Statement, three plates, brand personality words, visit card with map link |
 | `how-to-order.html` | Standard vs custom tickets, interactive bleed/trim/safe diagram, artwork table, FAQ |
 | `contact.html` | Quote list plus brief form, sent as one WhatsApp message |
@@ -56,8 +62,7 @@ Shared header, footer, mobile menu and quote list are built once in `assets/js/c
 - **Stamp badge** turning slowly on the hero image: "Proof before print · Pannala · Sri Lanka".
 - **Print/Pack/Promote** as duotones in each ink; full colour on hover.
 - **Products as spec sheets:** size, stock, finish, minimum.
-- **Capability index:** 12 processes with custom icons; hover or tap shows that process as a proof.
-- **Sri Lankan print calendar:** Avurudu, Vesak, Deepavali, year-end gifting, Christmas, weddings across twelve months.
+- **Services index:** 12 services with custom icons and the guide's taglines; hover or tap shows that service as a proof.
 - **Job ticket** that ticks itself off and stamps the proof APPROVED, plus an animated four-unit press run.
 - **Quote form** that builds a WhatsApp brief; nothing is sent until the visitor taps send.
 

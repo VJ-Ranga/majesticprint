@@ -276,13 +276,14 @@ window.MP_PAGES = window.MP_PAGES || {};
   /* ============================================================== SOLUTIONS */
   P.solutions = function (MP) {
     var el = MP.el;
-    MP.pageHead({ kicker: "Solutions", title: "Twelve ways to make it", crumbs: [["Solutions"]], ink: MP.ink("magenta"),
-      lead: "Every process under one roof — so one team can take a job from paper to packaging to the sign above your door." });
+    MP.pageHead({ kicker: "What we do", title: "Twelve ways to make it", crumbs: [["Services"]], ink: MP.ink("magenta"),
+      lead: "From traditional printing to advanced digital production, signage, packaging and promotional solutions — Majestic Print Solutions brings everything together under one roof." });
     var index = el("ol", { class: "cap-index", id: "capIndexS" });
     var proof = el("aside", { class: "cap-proof", id: "capProofS", "aria-live": "polite" }, [
       el("figure", { class: "print-frame cap-photo" }, [el("img", { src: "", alt: "", width: "1600", height: "1067" }), el("figcaption", { class: "slug cp-slug" })]),
       el("div", { class: "cap-copy" }, [
         el("span", { class: "cp-icon", "aria-hidden": "true" }),
+        el("p", { class: "slug cp-tagline" }),
         el("h3", { class: "cp-name" }), el("p", { class: "cp-text" }), el("p", { class: "cap-outputs cp-outputs" }),
         el("div", { class: "cap-actions" }, [el("a", { class: "btn-mp btn-mp-primary cp-cta", href: "#" })])
       ])
@@ -291,6 +292,16 @@ window.MP_PAGES = window.MP_PAGES || {};
       el("div", { class: "container-xl" }, [el("div", { class: "cap-layout" }, [index, proof])])
     ]));
     initCapIndex(MP, index, proof, window.matchMedia("(max-width: 991px)"), true);
+
+    // Brand guide closing statement
+    MP.$("#pageBody").appendChild(el("section", { class: "statement-band" }, [
+      el("div", { class: "container-xl" }, [
+        el("p", { class: "slug", text: "One partner. Every printing solution." }),
+        el("ul", { class: "statement-lines" }, MP.D.statement.map(function (t, i) {
+          return el("li", { style: "--ink:" + MP.ink(["bright", "magenta", "orange", "gold"][i]), text: t });
+        }))
+      ])
+    ]));
 
     // Print / Pack / Promote map
     var groups = [
@@ -325,9 +336,9 @@ window.MP_PAGES = window.MP_PAGES || {};
     var i = 0;
     D.services.forEach(function (s, j) { if (s.slug === MP.param("s")) i = j; });
     var s = D.services[i], det = D.serviceDetail[s.name] || { materials: [], weNeed: [] }, inkHex = MP.ink(s.ink);
-    MP.pageHead({ kicker: D.inks[s.ink].name + " plate", title: s.name, crumbs: [["Solutions", "solutions.html"], [s.name]], ink: inkHex, lead: s.text, icon: (window.MP_ICONS || {})[s.name] });
+    MP.pageHead({ kicker: s.tagline, title: s.name, crumbs: [["Services", "services.html"], [s.name]], ink: inkHex, lead: s.text, icon: (window.MP_ICONS || {})[s.name] });
 
-    var outputs = s.outputs.split(" · ").map(function (o) { return o.charAt(0).toUpperCase() + o.slice(1); });
+    var outputs = s.items;
     var need = el("ul", { class: "need-list" }, det.weNeed.map(function (n) { return el("li", null, [el("span", { class: "tick", "aria-hidden": "true" }), el("span", { text: n })]); }));
     var body = MP.$("#pageBody");
     body.appendChild(el("section", { class: "section section-tight" }, [
@@ -338,7 +349,7 @@ window.MP_PAGES = window.MP_PAGES || {};
         ]),
         el("div", { class: "svc-grid", style: "--ink:" + inkHex }, [
           el("div", { class: "reveal" }, [
-            el("p", { class: "kicker", text: "What we make" }),
+            el("p", { class: "kicker", text: s.itemsLabel }),
             el("ul", { class: "make-list" }, outputs.map(function (o) { return el("li", null, [el("span", { class: "cap-chip", "aria-hidden": "true" }), el("span", { text: o })]); }))
           ]),
           el("div", { class: "reveal" }, [
@@ -374,45 +385,6 @@ window.MP_PAGES = window.MP_PAGES || {};
       ]);
     };
     body.appendChild(el("nav", { class: "pagers", "aria-label": "Other processes" }, [el("div", { class: "container-xl pagers-row" }, [pager(prev, "prev"), pager(next, "next")])]));
-  };
-
-  /* =================================================================== WORK */
-  P.work = function (MP) {
-    var D = MP.D, el = MP.el, $$ = MP.$$;
-    MP.pageHead({ kicker: "Our work", title: "Made to be noticed", crumbs: [["Our work"]], ink: MP.ink("gold"),
-      lead: "Signs, vehicles, packaging and gifts from the workshop floor. Sample images shown until customer-approved projects are added." });
-    var used = []; D.work.forEach(function (w) { if (used.indexOf(w.service) === -1) used.push(w.service); });
-    var tabs = el("div", { class: "filter-tabs", role: "group", "aria-label": "Filter by process" }, ["All"].concat(used).map(function (n) {
-      var b = el("button", { type: "button", class: "tab" + (n === "All" ? " is-active" : ""), "aria-pressed": n === "All" ? "true" : "false", text: n });
-      b.addEventListener("click", function () {
-        $$(".tab", tabs).forEach(function (t) { t.classList.toggle("is-active", t === b); t.setAttribute("aria-pressed", t === b); });
-        $$(".work", grid).forEach(function (w) { w.hidden = !(n === "All" || w.getAttribute("data-svc") === n); });
-      });
-      return b;
-    }));
-    var dialog = el("dialog", { class: "lightbox", "aria-label": "Project image" }, [
-      el("button", { type: "button", class: "lightbox-close", "aria-label": "Close", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' }),
-      el("figure", { class: "print-frame" }, [el("img", { src: "", alt: "" }), el("figcaption", { class: "slug" })])
-    ]);
-    dialog.querySelector(".lightbox-close").addEventListener("click", function () { dialog.close(); });
-    dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
-    var grid = el("div", { class: "work-grid" });
-    D.work.forEach(function (w, k) {
-      var btn = el("button", { type: "button", class: "work-open print-frame", "aria-label": "Enlarge " + w.title }, [el("div", { class: "work-img" }, [el("img", { src: w.img, alt: w.title + " (sample image)", loading: "lazy" })])]);
-      btn.addEventListener("click", function () {
-        dialog.querySelector("img").src = w.img; dialog.querySelector("img").alt = w.title;
-        dialog.querySelector("figcaption").textContent = w.title + "  ·  " + w.service + "  ·  sample image";
-        dialog.showModal();
-      });
-      var svc = MP.serviceByName(w.service);
-      grid.appendChild(el("figure", { class: "work reveal" + (k % 4 === 0 ? " is-tall" : ""), "data-svc": w.service }, [
-        btn,
-        el("figcaption", null, [el("strong", { text: w.title }), el("a", { class: "slug", href: "service.html?s=" + svc.slug, text: w.service })])
-      ]));
-    });
-    MP.$("#pageBody").appendChild(el("section", { class: "section section-tight" }, [el("div", { class: "container-xl" }, [tabs, grid])]));
-    MP.$("#pageBody").appendChild(dialog);
-    MP.$("#pageBody").appendChild(cta(MP, "Your project could be next.", "Tell us about it — we'll come back with a proof and a quote.", "contact.html#quote", "Start a project"));
   };
 
   /* ================================================================== ABOUT */
