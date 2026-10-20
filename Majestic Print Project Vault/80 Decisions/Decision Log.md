@@ -54,3 +54,6 @@ D06 remains a historical initial scan, superseded for current asset status by D0
 | D20 | 2026-10-19 | Remove Our work (portfolio) and the homepage Gifts & seasons calendar; the client does not need them | User instruction | Done |
 | D21 | 2026-10-19 | Rename Solutions to Services ("What we do" as page heading); menu Shop · Services · How to order · About · Contact | Recommendation; user approved removing Our work | Done |
 | D22 | 2026-10-19 | Service names, taglines, descriptions and item lists taken word for word from the brand guide | Brand audit of "05. What we do" | Done |
+| D23 | 2026-10-20 | Hero control strip reduced to ruler marks only (job, sheet, density and clock removed) | User feedback: too complicated | Done |
+| D24 | 2026-10-20 | Shop occasion filter (Avurudu, Vesak…) removed: customers do not shop for print by festival | User feedback on practicality | Done |
+

@@ -28,18 +28,11 @@ window.MP_PAGES = window.MP_PAGES || {};
     MP.pageHead({ kicker: "Shop", title: "Shop", crumbs: [["Shop"]], ink: MP.ink("bright"),
       lead: "Business print, packaging and promotional products. Choose your options, add them to a quote list, and send it in one go." });
 
-    var state = { route: MP.param("route") || "all", occasion: MP.param("occasion") || "", q: "" };
+    var state = { route: MP.param("route") || "all", q: "" };
     var routeTabs = el("div", { class: "filter-tabs", role: "group", "aria-label": "Product type" },
       ["all", "Print", "Pack", "Promote"].map(function (r) {
         var b = el("button", { type: "button", class: "tab", "data-route": r, "aria-pressed": "false", text: r === "all" ? "All" : r });
         b.addEventListener("click", function () { state.route = r; render(); });
-        return b;
-      }));
-    var occ = el("div", { class: "occ-filters", role: "group", "aria-label": "Occasion" },
-      [{ id: "", label: "Any occasion" }].concat(D.occasions).map(function (o) {
-        var b = el("button", { type: "button", class: "occ-chip", "data-occ": o.id, "aria-pressed": "false", text: o.label });
-        if (o.ink) b.style.setProperty("--ink", MP.ink(o.ink));
-        b.addEventListener("click", function () { state.occasion = o.id; render(); });
         return b;
       }));
     var search = el("input", { type: "search", class: "form-control", id: "shopSearch", placeholder: "Search products", "aria-label": "Search products" });
@@ -55,7 +48,6 @@ window.MP_PAGES = window.MP_PAGES || {};
 
     D.catalogue.forEach(function (p) {
       var card = MP.specCard(specsFor(p), "product.html?p=" + p.slug);
-      card.setAttribute("data-occ", p.occasions.join(" "));
       card.setAttribute("data-name", (p.name + " " + p.service + " " + p.blurb).toLowerCase());
       grid.appendChild(card);
     });
@@ -63,7 +55,6 @@ window.MP_PAGES = window.MP_PAGES || {};
     mount(MP, el("section", { class: "section section-tight" }, [
       el("div", { class: "container-xl" }, [
         el("div", { class: "shop-bar" }, [routeTabs, el("div", { class: "shop-search" }, [el("i", { class: "fa-solid fa-magnifying-glass", "aria-hidden": "true" }), search])]),
-        occ,
         count,
         grid,
         empty
@@ -73,18 +64,16 @@ window.MP_PAGES = window.MP_PAGES || {};
 
     function render() {
       $$("[data-route]", routeTabs).forEach(function (b) { var on = b.getAttribute("data-route") === state.route; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on); });
-      $$("[data-occ]", occ).forEach(function (b) { var on = b.getAttribute("data-occ") === state.occasion; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on); });
       var n = 0;
       $$(".spec-card", grid).forEach(function (c) {
         var show = (state.route === "all" || c.getAttribute("data-route") === state.route) &&
-          (!state.occasion || (" " + c.getAttribute("data-occ") + " ").indexOf(" " + state.occasion + " ") !== -1) &&
           (!state.q || c.getAttribute("data-name").indexOf(state.q) !== -1);
         c.hidden = !show; if (show) { n++; c.classList.add("is-in"); }
       });
       count.textContent = n + (n === 1 ? " product" : " products") + "  ·  sheet 01";
       empty.hidden = n > 0;
       var url = new URL(location.href);
-      ["route", "occasion"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
+      ["route"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
       history.replaceState(null, "", url);
     }
     render();

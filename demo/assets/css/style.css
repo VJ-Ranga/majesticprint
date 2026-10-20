@@ -1081,3 +1081,8 @@ html.pl-skip .preloader { display: none; }
 /* Guide taglines in the services index */
 .cp-tagline { color: var(--ink, var(--mp-magenta)); margin: 0 0 .35rem; }
 .cap-out { font-style: normal; }
+
+/* Ruler band only — header and hero separated by a millimetre ruler */
+.job-strip { height: 16px; background: var(--mp-paper); background-image: none; border-top: 1px solid var(--mp-line); border-bottom: 0; }
+.job-strip .js-ruler { height: 10px; }
+.hero .sheet { min-height: calc(100svh - var(--header-h) - 22px); }

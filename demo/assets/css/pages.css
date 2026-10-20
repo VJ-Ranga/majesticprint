@@ -33,13 +33,6 @@
 .shop-search { position: relative; min-width: min(100%, 320px); }
 .shop-search i { position: absolute; left: 0; top: 50%; transform: translateY(-50%); color: var(--mp-muted); }
 .shop-search .form-control { padding-left: 1.75rem; }
-.occ-filters { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: var(--s5); }
-.occ-chip {
-  min-height: 40px; padding: .4rem .9rem; background: #fff; border: 1.5px solid var(--mp-line); border-left: 5px solid var(--ink, var(--mp-ink));
-  font-size: .88rem; font-weight: 600; color: var(--mp-ink); transition: background-color .2s, color .2s, border-color .2s;
-}
-.occ-chip:hover { border-color: var(--ink, var(--mp-ink)); }
-.occ-chip.is-active { background: var(--ink, var(--mp-ink)); border-color: var(--ink, var(--mp-ink)); color: #fff; }
 .result-count { margin-bottom: var(--s5); padding-bottom: .8rem; border-bottom: 1.5px solid var(--mp-ink); color: var(--mp-ink); }
 .empty-sheet { border: 1.5px dashed var(--mp-line); padding: var(--s8) var(--s4); text-align: center; }
 .empty-sheet h3 { font-size: 1.8rem; font-weight: 800; margin: .5rem 0; }

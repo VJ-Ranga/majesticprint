@@ -12,7 +12,6 @@ window.MP_PAGES.home = function (MP) {
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     var slides = [{ kicker: "Print. Pack. Promote.", ink: "magenta" }].concat(D.heroSlides || []);
     var total = slides.length, current = 0, paused = false;
-    $("#sheetTotal").textContent = String(total).padStart(2, "0");
 
     // Build slides 2..n from data (text only, no HTML injection)
     D.heroSlides.forEach(function (sl, k) {
@@ -84,25 +83,8 @@ window.MP_PAGES.home = function (MP) {
       });
       // restart the progress fill on the new patch
       var fill = $(".press-fill", tabs[i]); fill.style.animation = "none"; void fill.offsetWidth; fill.style.animation = "";
-      $("#sheetNo").textContent = String(i + 1).padStart(2, "0");
-      markPlate(slides[i].ink);
       current = i;
     }
-    // Density readout: the slide's own ink plate is highlighted; readings drift like a live press check
-    var plateOf = { bright: "c", magenta: "m", gold: "y", orange: "y", deep: "k" };
-    var base = { c: 1.42, m: 1.38, y: 1.04, k: 1.76 };
-    function markPlate(inkKey) {
-      $$(".dens").forEach(function (d) { d.classList.toggle("is-hot", d.getAttribute("data-plate") === plateOf[inkKey]); });
-    }
-    markPlate(slides[0].ink);
-    if (!reduce.matches) setInterval(function () {
-      if (document.hidden) return;
-      $$(".dens").forEach(function (d) {
-        var p = d.getAttribute("data-plate"), v = base[p] + (Math.random() - 0.5) * 0.04;
-        d.querySelector("em").textContent = v.toFixed(2);
-      });
-    }, 1800);
-
     texts.forEach(function (t, j) { if (j) t.setAttribute("inert", ""); });
     medias.forEach(function (m, j) { if (j) m.setAttribute("inert", ""); });
 
@@ -176,15 +158,6 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Capability index ---------- */
   initCapIndex(MP, $("#capIndex"), $("#capProof"), narrow, false);
 
-
-  /* ---------- Workshop clock (Sri Lanka time) ---------- */
-  var clock = $("#workshopTime");
-  if (clock) {
-    var tick = function () {
-      clock.textContent = new Date().toLocaleTimeString("en-GB", { timeZone: "Asia/Colombo", hour: "2-digit", minute: "2-digit" });
-    };
-    tick(); setInterval(tick, 20000);
-  }
 
   /* ---------- Printer's loupe over the hero photo (pointer devices only) ---------- */
   (function () {
