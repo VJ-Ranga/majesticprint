@@ -193,7 +193,6 @@
           el("div", { class: "header-actions" }, [
             el("button", { type: "button", class: "ql-link search-open", "aria-label": "Search products and services", "aria-haspopup": "dialog", html: '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>' }),
             el("a", { class: "ql-link", href: "cart.html", "aria-label": "Cart", html: '<i class="fa-solid fa-bag-shopping" aria-hidden="true"></i><span class="ql-count cart-count" hidden>0</span>' }),
-            el("a", { class: "ql-link", href: "contact.html#quote", "aria-label": "Quote list", html: '<i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span class="ql-count" hidden>0</span>' }),
             el("a", { class: "btn-mp btn-mp-accent d-none d-sm-inline-flex", href: "contact.html#quote", text: "Request a quote" }),
             el("button", { class: "menu-toggle d-lg-none", type: "button", "data-bs-toggle": "offcanvas", "data-bs-target": "#mobileNav", "aria-controls": "mobileNav", "aria-label": "Open menu", html: '<i class="fa-solid fa-bars" aria-hidden="true"></i>' })
           ])
@@ -499,17 +498,16 @@
   });
 
   /* ---------- Shared builders ---------- */
-  // Spec-sheet product card (used by home and shop)
+  // Product card (swaps to a second photo on hover) (used by home and shop)
   function specCard(p, href) {
     var cat = catById(p.cat);
     var full = productBySlug(p.slug);
-    var sheet = el("div", { class: "spec-sheet", "aria-hidden": "true" }, [el("span", { class: "slug", text: "Spec sheet" })]);
-    var dl = el("dl", { class: "spec" });
-    Object.keys(p.specs).filter(function (k) { return k !== "From"; }).slice(0, 3).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
-    sheet.appendChild(dl);
+    var img2 = p.img2 || (full && full.img2);
+    var imgs = [el("img", { class: "spec-img-a", src: p.img, alt: "", loading: "lazy", width: "800", height: "600" })];
+    if (img2 && img2 !== p.img) imgs.push(el("img", { class: "spec-img-b", src: img2, alt: "", loading: "lazy", width: "800", height: "600", "aria-hidden": "true" }));
     var kids = [
       el("figure", { class: "print-frame spec-photo" }, [
-        el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: "", loading: "lazy", width: "800", height: "600" }), sheet]),
+        el("div", { class: "spec-img" }, imgs),
         el("span", { class: "spec-plate", text: cat.title })
       ])
     ];
