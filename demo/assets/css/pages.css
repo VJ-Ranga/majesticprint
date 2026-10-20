@@ -309,3 +309,5 @@
   font-family: var(--font-display); font-weight: 800; font-size: clamp(1.3rem, 2.6vw, 2rem); letter-spacing: -.03em;
 }
 .statement-lines li::before { content: ""; width: 14px; height: 14px; flex: none; background: var(--ink); }
+@media (min-width: 992px) { .plate-map { grid-template-columns: repeat(4, 1fr); } }
+.plate-col h3 { font-size: 1.6rem; }

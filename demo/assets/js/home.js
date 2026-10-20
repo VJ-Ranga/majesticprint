@@ -50,7 +50,7 @@ window.MP_PAGES.home = function (MP) {
     });
 
     var texts = $$(".slide-text", textWrap), medias = $$(".hero-media", mediaWrap);
-    var labels = ["Brand", "Pack", "Promote", "Season"];
+    var labels = ["Brand", "Packaging", "Signage", "Gifts"];
     var tabs = slides.map(function (sl, i) {
       var t = el("button", { type: "button", class: "press-tab", role: "tab", "aria-selected": i === 0 ? "true" : "false",
         "aria-label": "Slide " + (i + 1) + ": " + (sl.lines ? sl.lines.join(" ") : "Print. Pack. Promote."), tabindex: i === 0 ? "0" : "-1",
@@ -113,22 +113,21 @@ window.MP_PAGES.home = function (MP) {
     });
   })();
 
-  /* ---------- Print / Pack / Promote (duotone plates) ---------- */
+  /* ---------- Product categories (duotone plates) ---------- */
   var routeGrid = $("#routeGrid");
-  D.routes.forEach(function (r) {
-    var href = r.filter ? "shop.html?route=" + r.filter : "services.html";
-    routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(r.ink) }, [
+  D.categories.forEach(function (c) {
+    routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(c.ink) }, [
       el("figure", { class: "print-frame duo" }, [
         el("div", { class: "duo-img" }, [
-          el("img", { class: "duo-base", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" }),
-          el("img", { class: "duo-color", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" })
+          el("img", { class: "duo-base", src: c.img, alt: "", loading: "lazy", width: "900", height: "1125" }),
+          el("img", { class: "duo-color", src: c.img, alt: "", loading: "lazy", width: "900", height: "1125" })
         ]),
-        el("figcaption", { class: "slug", text: D.inks[r.ink].name + " plate · duotone" })
+        el("figcaption", { class: "slug", text: D.inks[c.ink].name + " · duotone" })
       ]),
-      el("h3", null, [document.createTextNode(r.title), el("span", { text: "." })]),
-      el("p", { text: r.text }),
-      el("p", { class: "route-items", text: r.items.join("  /  ") }),
-      el("a", { class: "text-link", href: href, html: "Explore " + r.title + ARROW })
+      el("h3", null, [document.createTextNode(c.title), el("span", { text: "." })]),
+      el("p", { text: c.text }),
+      el("p", { class: "route-items", text: c.items.join("  /  ") }),
+      el("a", { class: "text-link", href: "shop.html?cat=" + c.id, html: "Browse" + ARROW })
     ]));
   });
 
@@ -145,14 +144,16 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Products as spec sheets + filter ---------- */
   var productGrid = $("#productGrid");
   D.products.forEach(function (p) { productGrid.appendChild(MP.specCard(p, "product.html?p=" + p.slug)); });
-  $$(".filter-tabs .tab").forEach(function (b) {
+  // Category tabs, built from the categories that have products on the homepage
+  var tabWrap = $("#productTabs"), used = {};
+  D.products.forEach(function (p) { used[p.cat] = true; });
+  [{ id: "all", title: "All" }].concat(D.categories.filter(function (c) { return used[c.id]; })).forEach(function (c) {
+    var b = el("button", { type: "button", class: "tab" + (c.id === "all" ? " is-active" : ""), "aria-pressed": c.id === "all" ? "true" : "false", text: c.title });
     b.addEventListener("click", function () {
-      var route = b.getAttribute("data-filter");
-      $$(".filter-tabs .tab").forEach(function (t) {
-        var on = t === b; t.classList.toggle("is-active", on); t.setAttribute("aria-pressed", on ? "true" : "false");
-      });
-      $$(".spec-card", productGrid).forEach(function (c) { c.hidden = !(route === "all" || c.getAttribute("data-route") === route); });
+      $$(".tab", tabWrap).forEach(function (t) { var on = t === b; t.classList.toggle("is-active", on); t.setAttribute("aria-pressed", on ? "true" : "false"); });
+      $$(".spec-card", productGrid).forEach(function (card) { card.hidden = !(c.id === "all" || card.getAttribute("data-cat") === c.id); });
     });
+    tabWrap.appendChild(b);
   });
 
   /* ---------- Capability index ---------- */

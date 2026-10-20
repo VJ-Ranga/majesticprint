@@ -57,3 +57,5 @@ as a sample. Replace with Majestic's own product, project and workshop photograp
 - Service names, taglines, descriptions and item lists come word for word from the brand guide's "05. What we do" section (`data.js → services`), including local terms such as Visiting Cards and NCR Bill Books.
 - Removed at the client's request: the Our work portfolio and the homepage Gifts & seasons calendar. The menu is now Shop · Services · How to order · About · Contact.
 - The "Materials" lists on service pages are typical values, not from the guide — confirm with the client.
+- Product categories (`data.js → categories`): Cards & stationery, Marketing print, Signs & banners, Printed packaging, Gifts & apparel. "Print. Pack. Promote." is the tagline only (hero headline and footer), not a category. Shop filter: `shop.html?cat=<id>`.
+

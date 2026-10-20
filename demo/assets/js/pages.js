@@ -10,7 +10,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     var specs = {};
     Object.keys(p.options).slice(0, 3).forEach(function (k) { specs[k] = p.options[k].slice(0, 2).join(" · ") + (p.options[k].length > 2 ? " +" : ""); });
     specs.From = p.quantities[0] + (p.quantities[0] === 1 ? " piece" : " pieces");
-    return { slug: p.slug, name: p.name, img: p.img, route: p.route, specs: specs };
+    return { slug: p.slug, name: p.name, img: p.img, cat: p.cat, specs: specs };
   }
   function cta(MP, title, text, href, label) {
     return MP.el("section", { class: "cta-band" }, [
@@ -26,13 +26,13 @@ window.MP_PAGES = window.MP_PAGES || {};
   P.shop = function (MP) {
     var D = MP.D, el = MP.el, $ = MP.$, $$ = MP.$$;
     MP.pageHead({ kicker: "Shop", title: "Shop", crumbs: [["Shop"]], ink: MP.ink("bright"),
-      lead: "Business print, packaging and promotional products. Choose your options, add them to a quote list, and send it in one go." });
+      lead: "Cards, marketing print, banners, printed packaging and gifts. Choose your options, add them to a quote list, and send it in one go." });
 
-    var state = { route: MP.param("route") || "all", q: "" };
-    var routeTabs = el("div", { class: "filter-tabs", role: "group", "aria-label": "Product type" },
-      ["all", "Print", "Pack", "Promote"].map(function (r) {
-        var b = el("button", { type: "button", class: "tab", "data-route": r, "aria-pressed": "false", text: r === "all" ? "All" : r });
-        b.addEventListener("click", function () { state.route = r; render(); });
+    var state = { cat: MP.param("cat") || "all", q: "" };
+    var routeTabs = el("div", { class: "filter-tabs", role: "group", "aria-label": "Product category" },
+      [{ id: "all", title: "All products" }].concat(D.categories).map(function (c) {
+        var b = el("button", { type: "button", class: "tab", "data-cat": c.id, "aria-pressed": "false", text: c.title });
+        b.addEventListener("click", function () { state.cat = c.id; render(); });
         return b;
       }));
     var search = el("input", { type: "search", class: "form-control", id: "shopSearch", placeholder: "Search products", "aria-label": "Search products" });
@@ -63,17 +63,17 @@ window.MP_PAGES = window.MP_PAGES || {};
     mount(MP, cta(MP, "Can't see it here?", "Most of what we print is made to order. Tell us what you need and we'll put a quote together.", "contact.html#quote", "Plan a custom project"));
 
     function render() {
-      $$("[data-route]", routeTabs).forEach(function (b) { var on = b.getAttribute("data-route") === state.route; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on); });
+      $$("[data-cat]", routeTabs).forEach(function (b) { var on = b.getAttribute("data-cat") === state.cat; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on); });
       var n = 0;
       $$(".spec-card", grid).forEach(function (c) {
-        var show = (state.route === "all" || c.getAttribute("data-route") === state.route) &&
+        var show = (state.cat === "all" || c.getAttribute("data-cat") === state.cat) &&
           (!state.q || c.getAttribute("data-name").indexOf(state.q) !== -1);
         c.hidden = !show; if (show) { n++; c.classList.add("is-in"); }
       });
       count.textContent = n + (n === 1 ? " product" : " products") + "  ·  sheet 01";
       empty.hidden = n > 0;
       var url = new URL(location.href);
-      ["route"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
+      ["cat"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
       history.replaceState(null, "", url);
     }
     render();
@@ -83,8 +83,8 @@ window.MP_PAGES = window.MP_PAGES || {};
   P.product = function (MP) {
     var D = MP.D, el = MP.el, $ = MP.$, $$ = MP.$$;
     var p = D.catalogue.filter(function (x) { return x.slug === MP.param("p"); })[0] || D.catalogue[0];
-    var routeInk = {}; D.routes.forEach(function (r) { routeInk[r.title] = r.ink; });
-    var inkHex = MP.ink(routeInk[p.route]);
+    var cat = MP.catById(p.cat);
+    var inkHex = MP.ink(cat.ink);
     MP.pageHead({ crumbs: [["Shop", "shop.html"], [p.name]] });
     $("#pageHead").classList.add("page-head-slim");
 
@@ -216,7 +216,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     });
     update();
 
-    var plate = el("p", { class: "pd-plate", style: "--ink:" + inkHex }, [el("span", { text: p.route }), document.createTextNode("  ·  " + p.service)]);
+    var plate = el("p", { class: "pd-plate", style: "--ink:" + inkHex }, [el("span", { text: cat.title }), document.createTextNode("  ·  " + p.service)]);
     var title = el("h1", { class: "pd-title" }, [document.createTextNode(p.name), el("span", { class: "dot", style: "color:" + inkHex, text: "." })]);
     document.title = p.name + " — Majestic Print Solutions";
 
@@ -233,7 +233,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       return el("li", null, [el("span", { class: "art-val", text: a.value }), el("span", null, [el("strong", { text: a.term }), el("span", { text: a.text })])]);
     }));
     var related = el("div", { class: "spec-grid" });
-    D.catalogue.filter(function (x) { return x.route === p.route && x.slug !== p.slug; }).slice(0, 3).forEach(function (x) {
+    D.catalogue.filter(function (x) { return x.cat === p.cat && x.slug !== p.slug; }).slice(0, 3).forEach(function (x) {
       related.appendChild(MP.specCard(specsFor(x), "product.html?p=" + x.slug));
     });
     mount(MP, el("section", { class: "section section-tint" }, [
@@ -256,7 +256,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     ]));
     mount(MP, el("section", { class: "section" }, [
       el("div", { class: "container-xl" }, [
-        el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Also in " + p.route }), el("h2", { text: "You might also need" })]),
+        el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Also in " + cat.title }), el("h2", { text: "You might also need" })]),
         related
       ])
     ]));
@@ -294,13 +294,14 @@ window.MP_PAGES = window.MP_PAGES || {};
 
     // Print / Pack / Promote map
     var groups = [
-      ["Print", "bright", ["Offset Printing", "Digital Offset Printing", "Digital Printing", "UV Printing"]],
-      ["Pack", "gold", ["Packaging & Branding", "Digital Printing", "Offset Printing"]],
-      ["Promote", "magenta", ["Large Format Printing", "Signage & 3D Signage", "Vehicle Branding", "CNC Cutting & Engraving", "Laser Cutting & Engraving", "Sublimation Printing", "Promotional & Corporate Gifts"]]
+      ["Paper printing", "bright", ["Offset Printing", "Digital Offset Printing", "Digital Printing"]],
+      ["Signs & large format", "magenta", ["Large Format Printing", "Signage & 3D Signage", "Vehicle Branding", "UV Printing"]],
+      ["Cutting & engraving", "orange", ["CNC Cutting & Engraving", "Laser Cutting & Engraving"]],
+      ["Packaging & gifts", "gold", ["Packaging & Branding", "Sublimation Printing", "Promotional & Corporate Gifts"]]
     ];
     MP.$("#pageBody").appendChild(el("section", { class: "section section-tint" }, [
       el("div", { class: "container-xl" }, [
-        el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "By purpose" }), el("h2", { text: "Which processes make what" })]),
+        el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "By type" }), el("h2", { text: "Services at a glance" })]),
         el("div", { class: "plate-map" }, groups.map(function (g) {
           return el("div", { class: "plate-col reveal", style: "--ink:" + MP.ink(g[1]) }, [
             el("h3", null, [document.createTextNode(g[0]), el("span", { text: "." })]),
@@ -396,13 +397,13 @@ window.MP_PAGES = window.MP_PAGES || {};
     ])]));
 
     var pillars = [
-      ["Print", "bright", "Business stationery, marketing print, publications and labels — offset for volume, digital for speed."],
-      ["Pack", "gold", "Boxes, sleeves, bags and labels that make a product look ready for the shelf."],
-      ["Promote", "magenta", "Signage, vehicle graphics, large format and branded gifts that keep a name in sight."]
+      ["Printing", "bright", "Visiting cards, stationery, marketing print and publications — offset for volume, digital for speed."],
+      ["Packaging", "gold", "Printed boxes, sleeves, bags and labels that make a product ready for the shelf."],
+      ["Signage & branding", "magenta", "Signs, vehicle graphics, large format and branded gifts that keep a name in sight."]
     ];
     body.appendChild(el("section", { class: "section section-tint" }, [el("div", { class: "container-xl" }, [
-      el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "What we do" }), el("h2", { text: "Three plates, one impression" }),
-        el("p", { text: "Like cyan, magenta and yellow on a press, our three services overlap to make a complete brand." })]),
+      el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "What we do" }), el("h2", { text: "Everything under one roof" }),
+        el("p", { text: "Printing, packaging and signage from one team, so your brand looks the same everywhere it appears." })]),
       el("div", { class: "pillars" }, pillars.map(function (p) {
         return el("div", { class: "pillar reveal", style: "--ink:" + MP.ink(p[1]) }, [
           el("span", { class: "pillar-plate", "aria-hidden": "true" }),

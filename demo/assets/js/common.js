@@ -28,6 +28,7 @@
   var page = document.body.getAttribute("data-page") || "";
 
   D.services.forEach(function (s) { s.slug = slugify(s.name); s.outputs = s.items.join(" · "); });
+  function catById(id) { return D.categories.filter(function (c) { return c.id === id; })[0] || D.categories[0]; }
 
   /* ---------- Make-ready preloader ---------- */
   (function () {
@@ -136,7 +137,7 @@
           el("a", { class: "mn-logo", href: "index.html" }, [el("img", { src: "assets/img/brand/logo-h-light.svg", width: "170", height: "47", alt: "Majestic Print Solutions — home" })]),
           el("button", { type: "button", class: "mn-close", "data-bs-dismiss": "offcanvas", "aria-label": "Close menu", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' })
         ]),
-        el("p", { class: "mn-slug slug", id: "mobileNavLabel" }, [el("span", { class: "js-target", "aria-hidden": "true" }), document.createTextNode("Menu  ·  Print. Pack. Promote.")]),
+        el("p", { class: "mn-slug slug", id: "mobileNavLabel" }, [el("span", { class: "js-target", "aria-hidden": "true" }), document.createTextNode("Menu")]),
         el("div", { class: "offcanvas-body mn-body" }, [
           el("nav", { class: "mn-nav", "aria-label": "Mobile primary" }, navLinks().map(function (a, i) {
             var inks = ["bright", "magenta", "gold", "deep", "orange", "bright"];
@@ -151,10 +152,10 @@
           })),
           el("div", { class: "mn-block" }, [
             el("p", { class: "slug mn-cap", text: "Shop by" }),
-            el("div", { class: "mn-routes" }, D.routes.map(function (r) {
-              return el("a", { class: "mn-route", href: r.filter ? "shop.html?route=" + r.filter : "services.html", style: "--ink:" + ink(r.ink) }, [
+            el("div", { class: "mn-routes" }, D.categories.map(function (c) {
+              return el("a", { class: "mn-route", href: "shop.html?cat=" + c.id, style: "--ink:" + ink(c.ink) }, [
                 el("span", { class: "mn-route-ink", "aria-hidden": "true" }),
-                el("span", { text: r.title + "." })
+                el("span", { text: c.title })
               ]);
             }))
           ]),
@@ -187,7 +188,7 @@
               el("p", { class: "footer-tag", text: "One partner. Every printing solution." }),
               el("p", { class: "footer-about", text: "Printing, packaging, signage and promotional products for businesses and personal orders across Sri Lanka." })
             ]),
-            col("Shop", [["Business print", "shop.html?route=Print"], ["Packaging", "shop.html?route=Pack"], ["Promotional", "shop.html?route=Promote"], ["Corporate gifts", "service.html?s=promotional-and-corporate-gifts"]]),
+            col("Shop", D.categories.map(function (c) { return [c.title, "shop.html?cat=" + c.id]; })),
             col("Help", [["How to order", "how-to-order.html"], ["Artwork guide", "how-to-order.html#artwork"], ["FAQ", "how-to-order.html#faq"], ["Request a quote", "contact.html#quote"]]),
             el("div", { class: "col-lg-4" }, [el("h3", { text: "Visit or call" }), el("ul", { class: "contact-list contact-list-light", id: "footerContact" })])
           ]),
@@ -327,14 +328,14 @@
   /* ---------- Shared builders ---------- */
   // Spec-sheet product card (used by home and shop)
   function specCard(p, href) {
-    var routeInk = {}; D.routes.forEach(function (r) { routeInk[r.title] = r.ink; });
+    var cat = catById(p.cat);
     var dl = el("dl", { class: "spec" });
     Object.keys(p.specs).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
-    return el("article", { class: "spec-card reveal", "data-route": p.route, style: "--ink:" + ink(routeInk[p.route]) }, [
+    return el("article", { class: "spec-card reveal", "data-cat": cat.id, style: "--ink:" + ink(cat.ink) }, [
       el("a", { class: "spec-photo-link", href: href, tabindex: "-1", "aria-hidden": "true" }, [
         el("figure", { class: "print-frame spec-photo" }, [
           el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: "", loading: "lazy", width: "800", height: "600" })]),
-          el("span", { class: "spec-plate", text: p.route })
+          el("span", { class: "spec-plate", text: cat.title })
         ])
       ]),
       el("h3", null, [el("a", { href: href, text: p.name })]),
@@ -375,7 +376,7 @@
 
   window.MP = {
     D: D, $: $, $$: $$, el: el, ink: ink, slugify: slugify, waLink: waLink, param: param, ARROW: ARROW,
-    quote: quote, prefillQuote: prefillQuote, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
+    quote: quote, prefillQuote: prefillQuote, catById: catById, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
   };
 
   // Page scripts register via MP_PAGE; run them, then observe whatever they built
