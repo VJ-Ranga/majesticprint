@@ -556,6 +556,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       status.appendChild(el("a", { class: "text-link", href: "cart.html", text: "View cart" }));
       status.appendChild(document.createTextNode("  ·  "));
       status.appendChild(el("a", { class: "text-link", href: "checkout.html", text: "Checkout" }));
+      MP.openCart();
     });
     buyBtn.addEventListener("click", function () { addToCart(); window.location.href = "checkout.html"; });
     quoteBtn.addEventListener("click", function () {

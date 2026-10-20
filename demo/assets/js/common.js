@@ -523,6 +523,7 @@
         cart.add({ slug: full.slug, name: full.name, img: full.img, options: o, qty: q, unit: r.unit, total: r.total });
         add.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
         add.classList.add("is-done"); add.disabled = true;
+        openCart();
         setTimeout(function () { add.innerHTML = '<i class="fa-solid fa-cart-plus" aria-hidden="true"></i>'; add.classList.remove("is-done"); add.disabled = false; }, 1600);
       });
       row.appendChild(add);
@@ -560,13 +561,106 @@
     if (opts.title) document.title = opts.title + " — Majestic Print Solutions";
   }
 
+  /* ---------- Side cart panel (mini cart) ---------- */
+  var cartPanel = null;
+  function optLine(it) {
+    var v = Object.keys(it.options || {}).map(function (k) { return it.options[k]; }).filter(Boolean);
+    return v.slice(0, 3).join(" · ");
+  }
+  function renderCartPanel() {
+    if (!cartPanel) return;
+    var items = cart.list(), n = items.length;
+    $("#cartPanelLabel").lastChild.textContent = "Your cart · " + n + (n === 1 ? " item" : " items");
+    var body = $("#cartPanelBody"), foot = $("#cartPanelFoot");
+    body.textContent = ""; foot.textContent = "";
+    if (!n) {
+      foot.hidden = true;
+      body.appendChild(el("div", { class: "cp-empty" }, [
+        el("i", { class: "fa-solid fa-bag-shopping", "aria-hidden": "true" }),
+        el("p", { class: "cp-empty-t", text: "Your cart is empty" }),
+        el("a", { class: "btn-mp btn-mp-primary", href: "shop.html", text: "Browse the shop" })
+      ]));
+      return;
+    }
+    foot.hidden = false;
+    var ul = el("ul", { class: "cp-list" });
+    items.forEach(function (it, i) {
+      var notes = [];
+      if (it.express) notes.push("Express");
+      if (it.personal) notes.push("Personalised");
+      var qtyEl = el("span", { class: "cp-qty-n", "aria-live": "polite", text: String(it.qty) });
+      var minus = el("button", { type: "button", class: "cp-step", "aria-label": "Decrease quantity of " + it.name, html: '<i class="fa-solid fa-minus" aria-hidden="true"></i>' });
+      var plus = el("button", { type: "button", class: "cp-step", "aria-label": "Increase quantity of " + it.name, html: '<i class="fa-solid fa-plus" aria-hidden="true"></i>' });
+      var qs = ((productBySlug(it.slug) || {}).quantities || []).slice().sort(function (a, b) { return a - b; });
+      function stepTo(dir) {
+        var t = null;
+        if (qs.length) { qs.forEach(function (q) { if (dir > 0 && q > it.qty && t === null) t = q; if (dir < 0 && q < it.qty) t = q; }); }
+        else t = it.qty + dir;
+        return t;
+      }
+      minus.disabled = stepTo(-1) === null || it.qty <= 1;
+      plus.disabled = stepTo(1) === null;
+      minus.addEventListener("click", function () { var t = stepTo(-1); if (t) cart.update(i, t); });
+      plus.addEventListener("click", function () { var t = stepTo(1); if (t) cart.update(i, t); });
+      var rm = el("button", { type: "button", class: "cp-remove", "aria-label": "Remove " + it.name + " from cart", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' });
+      rm.addEventListener("click", function () { cart.remove(i); });
+      ul.appendChild(el("li", { class: "cp-item" }, [
+        el("img", { class: "cp-thumb", src: it.img || "", alt: "", width: "56", height: "56" }),
+        el("div", { class: "cp-info" }, [
+          el("p", { class: "cp-name", text: it.name }),
+          optLine(it) ? el("p", { class: "cp-opts", text: optLine(it) }) : null,
+          notes.length ? el("p", { class: "cp-note slug", text: notes.join(" · ") }) : null,
+          el("div", { class: "cp-row" }, [
+            el("div", { class: "cp-qty", role: "group", "aria-label": "Quantity" }, [minus, qtyEl, plus]),
+            el("strong", { class: "cp-total", text: money(it.total) })
+          ])
+        ]),
+        rm
+      ]));
+    });
+    body.appendChild(ul);
+    foot.appendChild(el("p", { class: "cp-sub" }, [el("span", { class: "slug", text: "Subtotal" }), el("strong", { text: money(cart.subtotal()) })]));
+    foot.appendChild(el("p", { class: "cp-note-d", text: "Delivery chosen at checkout · Free courier over LKR 15,000 (sample)" }));
+    foot.appendChild(el("a", { class: "btn-mp btn-mp-primary w-100", href: "checkout.html", text: "Checkout" }));
+    foot.appendChild(el("a", { class: "btn-mp btn-mp-outline w-100", href: "cart.html", text: "View cart" }));
+    foot.appendChild(el("button", { type: "button", class: "text-link cp-continue", "data-bs-dismiss": "offcanvas", text: "Continue shopping" }));
+  }
+  function openCart() {
+    if (!cartPanel || !window.bootstrap) { window.location.href = "cart.html"; return; }
+    var nav = window.bootstrap.Offcanvas.getInstance($("#mobileNav"));
+    if (nav) nav.hide();
+    window.bootstrap.Offcanvas.getOrCreateInstance(cartPanel).show();
+  }
+  if ($("#mobileNav")) {
+    cartPanel = el("div", { class: "offcanvas offcanvas-end mobile-nav cart-panel", tabindex: "-1", id: "cartPanel", "aria-labelledby": "cartPanelLabel" }, [
+      el("div", { class: "mn-inkbar", "aria-hidden": "true" }, [el("span"), el("span"), el("span"), el("span"), el("span")]),
+      el("span", { class: "crop tl", "aria-hidden": "true" }), el("span", { class: "crop tr", "aria-hidden": "true" }),
+      el("span", { class: "crop bl", "aria-hidden": "true" }), el("span", { class: "crop br", "aria-hidden": "true" }),
+      el("div", { class: "cp-head" }, [
+        el("p", { class: "mn-slug slug cp-slug", id: "cartPanelLabel" }, [el("span", { class: "js-target", "aria-hidden": "true" }), document.createTextNode("Your cart")]),
+        el("button", { type: "button", class: "mn-close", "data-bs-dismiss": "offcanvas", "aria-label": "Close cart", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' })
+      ]),
+      el("div", { class: "offcanvas-body cp-body", id: "cartPanelBody" }),
+      el("div", { class: "cp-foot", id: "cartPanelFoot" })
+    ]);
+    document.body.appendChild(cartPanel);
+    renderCartPanel();
+    document.addEventListener("mp:cart-change", renderCartPanel);
+    window.addEventListener("storage", function (e) { if (e.key === CART_KEY) renderCartPanel(); });
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest && e.target.closest(".header-actions a[href='cart.html']");
+      if (!a || page === "cart" || page === "checkout") return;
+      e.preventDefault(); openCart();
+    });
+  }
+
   quote.render(); cart.render();
   window.addEventListener("storage", function (e) { if (e.key === CART_KEY) cart.render(); });
   window.addEventListener("storage", function (e) { if (e.key === KEY) quote.render(); });
 
   window.MP = {
     D: D, $: $, $$: $$, el: el, ink: ink, slugify: slugify, waLink: waLink, param: param, ARROW: ARROW,
-    quote: quote, cart: cart, price: price, money: money, fromPrice: fromPrice, defaults: defaults, productBySlug: productBySlug, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
+    quote: quote, cart: cart, openCart: openCart, price: price, money: money, fromPrice: fromPrice, defaults: defaults, productBySlug: productBySlug, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
   };
 
   // Page scripts register via MP_PAGE; run them, then observe whatever they built
