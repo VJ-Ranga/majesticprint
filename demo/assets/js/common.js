@@ -123,6 +123,7 @@
           ]),
           el("nav", { class: "main-nav d-none d-lg-flex", "aria-label": "Primary" }, navLinks()),
           el("div", { class: "header-actions" }, [
+            el("button", { type: "button", class: "ql-link search-open", "aria-label": "Search products and services", "aria-haspopup": "dialog", html: '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>' }),
             el("a", { class: "ql-link", href: "contact.html#quote", "aria-label": "Quote list", html: '<i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span class="ql-count" hidden>0</span>' }),
             el("a", { class: "btn-mp btn-mp-accent d-none d-sm-inline-flex", href: "contact.html#quote", text: "Request a quote" }),
             el("button", { class: "menu-toggle d-lg-none", type: "button", "data-bs-toggle": "offcanvas", "data-bs-target": "#mobileNav", "aria-controls": "mobileNav", "aria-label": "Open menu", html: '<i class="fa-solid fa-bars" aria-hidden="true"></i>' })
@@ -325,6 +326,119 @@
     });
   }
 
+
+  /* ---------- Filter bar: one row of square-cut category buttons + a search button ---------- */
+  function filterBar(opts) {
+    var scroll = el("div", { class: "fb-scroll", role: "group", "aria-label": opts.label || "Filter" });
+    var buttons = opts.items.map(function (it) {
+      var chip = it.id === "all"
+        ? el("span", { class: "fb-ink fb-ink-all", "aria-hidden": "true" }, [el("i"), el("i"), el("i"), el("i")])
+        : el("span", { class: "fb-ink", "aria-hidden": "true", style: "background:" + ink(it.ink) });
+      var b = el("button", { type: "button", class: "fb-btn", "data-id": it.id, "aria-pressed": "false" }, [
+        chip, el("span", { class: "fb-label", text: it.title }), el("span", { class: "fb-count", text: String(it.count) })
+      ]);
+      b.setAttribute("aria-label", it.title + ", " + it.count + (it.count === 1 ? " product" : " products"));
+      b.addEventListener("click", function () { set(it.id); opts.onChange(it.id); });
+      scroll.appendChild(b);
+      return b;
+    });
+    var searchBtn = el("button", { type: "button", class: "fb-search search-open", "aria-haspopup": "dialog", html: '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span>Search</span>' });
+    var bar = el("div", { class: "filter-bar" }, [scroll, searchBtn]);
+    function set(id) {
+      buttons.forEach(function (b) {
+        var on = b.getAttribute("data-id") === id;
+        b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on ? "true" : "false");
+        // on narrow screens bring the active button into view, only if it is hidden
+        if (on && scroll.scrollWidth > scroll.clientWidth) {
+          var l = b.offsetLeft - scroll.offsetLeft, r = l + b.offsetWidth;
+          if (l < scroll.scrollLeft || r > scroll.scrollLeft + scroll.clientWidth) scroll.scrollLeft = l - 8;
+        }
+      });
+    }
+    set(opts.active || "all");
+    bar.setActive = set;
+    return bar;
+  }
+
+  /* ---------- Search pop-up: products and services ---------- */
+  var searchDialog = null;
+  function buildSearch() {
+    var input = el("input", { type: "search", class: "sd-input", id: "siteSearch", placeholder: "Search visiting cards, banners, labels…", autocomplete: "off", "aria-label": "Search products and services", "aria-controls": "sdResults" });
+    var results = el("div", { class: "sd-results", id: "sdResults", "aria-live": "polite" });
+    var close = el("button", { type: "button", class: "sd-close", "aria-label": "Close search", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' });
+    var dlg = el("dialog", { class: "search-dialog", "aria-label": "Search" }, [
+      el("div", { class: "sd-sheet" }, [
+        el("span", { class: "crop tl", "aria-hidden": "true" }), el("span", { class: "crop tr", "aria-hidden": "true" }),
+        el("span", { class: "crop bl", "aria-hidden": "true" }), el("span", { class: "crop br", "aria-hidden": "true" }),
+        el("div", { class: "sd-head" }, [el("p", { class: "slug", text: "Search · products and services" }), close]),
+        el("form", { class: "sd-form", role: "search" }, [el("i", { class: "fa-solid fa-magnifying-glass", "aria-hidden": "true" }), input]),
+        results
+      ])
+    ]);
+    var index = D.catalogue.map(function (p) {
+      var c = catById(p.cat);
+      return { type: "Product", title: p.name, sub: c.title, img: p.img, ink: c.ink, href: "product.html?p=" + p.slug,
+        text: (p.name + " " + c.title + " " + p.service + " " + p.blurb).toLowerCase() };
+    }).concat(D.services.map(function (sv) {
+      return { type: "Service", title: sv.name, sub: sv.tagline, icon: (window.MP_ICONS || {})[sv.name], ink: sv.ink, href: "service.html?s=" + sv.slug,
+        text: (sv.name + " " + sv.tagline + " " + sv.items.join(" ")).toLowerCase() };
+    }));
+    var suggestions = ["Visiting cards", "Banners", "Labels", "Mugs", "Wedding cards", "Vehicle branding"];
+
+    function row(r) {
+      var media = r.img ? el("span", { class: "sd-thumb" }, [el("img", { src: r.img, alt: "", loading: "lazy" })])
+                        : el("span", { class: "sd-thumb sd-icon", style: "--ink:" + ink(r.ink), html: r.icon || "" });
+      return el("a", { class: "sd-row", href: r.href }, [media, el("span", { class: "sd-text" }, [el("strong", { text: r.title }), el("span", { text: r.sub })]),
+        el("span", { class: "slug sd-type", text: r.type })]);
+    }
+    function render(q) {
+      results.textContent = "";
+      q = q.trim().toLowerCase();
+      if (!q) {
+        results.appendChild(el("p", { class: "slug sd-cap", text: "Popular searches" }));
+        results.appendChild(el("div", { class: "sd-chips" }, suggestions.map(function (t) {
+          var b = el("button", { type: "button", class: "sd-chip", text: t });
+          b.addEventListener("click", function () { input.value = t; render(t); input.focus(); });
+          return b;
+        })));
+        return;
+      }
+      var words = q.split(/\s+/);
+      var hits = index.filter(function (r) { return words.every(function (w) { return r.text.indexOf(w) !== -1; }); });
+      var prods = hits.filter(function (r) { return r.type === "Product"; }).slice(0, 6);
+      var svcs = hits.filter(function (r) { return r.type === "Service"; }).slice(0, 4);
+      if (!prods.length && !svcs.length) {
+        results.appendChild(el("div", { class: "sd-empty" }, [
+          el("p", null, [document.createTextNode("No products match “"), el("strong", { text: q }), document.createTextNode("”.")]),
+          el("a", { class: "btn-mp btn-mp-primary", href: "contact.html#quote", text: "Ask us to quote it" })
+        ]));
+        return;
+      }
+      if (prods.length) { results.appendChild(el("p", { class: "slug sd-cap", text: "Products" })); prods.forEach(function (r) { results.appendChild(row(r)); }); }
+      if (svcs.length) { results.appendChild(el("p", { class: "slug sd-cap", text: "Services" })); svcs.forEach(function (r) { results.appendChild(row(r)); }); }
+      results.appendChild(el("a", { class: "text-link sd-all", href: "shop.html?q=" + encodeURIComponent(q), html: "See all results in the shop" + ARROW }));
+    }
+    input.addEventListener("input", function () { render(input.value); });
+    dlg.querySelector("form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var first = results.querySelector(".sd-row");
+      if (first) location.href = first.getAttribute("href");
+    });
+    close.addEventListener("click", function () { dlg.close(); });
+    dlg.addEventListener("click", function (e) { if (e.target === dlg) dlg.close(); });
+    document.body.appendChild(dlg);
+    dlg._open = function () { render(input.value); if (!dlg.open) dlg.showModal(); input.focus(); input.select(); };
+    return dlg;
+  }
+  function openSearch() { if (!searchDialog) searchDialog = buildSearch(); searchDialog._open(); }
+  document.addEventListener("click", function (e) {
+    if (e.target.closest && e.target.closest(".search-open")) { e.preventDefault(); openSearch(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (e.key === "/" && tag !== "input" && tag !== "textarea" && tag !== "select" && !e.target.isContentEditable) { e.preventDefault(); openSearch(); }
+  });
+
   /* ---------- Shared builders ---------- */
   // Spec-sheet product card (used by home and shop)
   function specCard(p, href) {
@@ -376,7 +490,7 @@
 
   window.MP = {
     D: D, $: $, $$: $$, el: el, ink: ink, slugify: slugify, waLink: waLink, param: param, ARROW: ARROW,
-    quote: quote, prefillQuote: prefillQuote, catById: catById, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
+    quote: quote, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
   };
 
   // Page scripts register via MP_PAGE; run them, then observe whatever they built

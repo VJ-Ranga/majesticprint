@@ -144,17 +144,15 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Products as spec sheets + filter ---------- */
   var productGrid = $("#productGrid");
   D.products.forEach(function (p) { productGrid.appendChild(MP.specCard(p, "product.html?p=" + p.slug)); });
-  // Category tabs, built from the categories that have products on the homepage
-  var tabWrap = $("#productTabs"), used = {};
-  D.products.forEach(function (p) { used[p.cat] = true; });
-  [{ id: "all", title: "All" }].concat(D.categories.filter(function (c) { return used[c.id]; })).forEach(function (c) {
-    var b = el("button", { type: "button", class: "tab" + (c.id === "all" ? " is-active" : ""), "aria-pressed": c.id === "all" ? "true" : "false", text: c.title });
-    b.addEventListener("click", function () {
-      $$(".tab", tabWrap).forEach(function (t) { var on = t === b; t.classList.toggle("is-active", on); t.setAttribute("aria-pressed", on ? "true" : "false"); });
-      $$(".spec-card", productGrid).forEach(function (card) { card.hidden = !(c.id === "all" || card.getAttribute("data-cat") === c.id); });
-    });
-    tabWrap.appendChild(b);
+  // Category filter bar (only categories that have products on the homepage)
+  var counts = { all: D.products.length };
+  D.products.forEach(function (p) { counts[p.cat] = (counts[p.cat] || 0) + 1; });
+  var bar = MP.filterBar({
+    label: "Filter products",
+    items: [{ id: "all", title: "All", count: counts.all }].concat(D.categories.filter(function (c) { return counts[c.id]; }).map(function (c) { return { id: c.id, title: c.title, ink: c.ink, count: counts[c.id] }; })),
+    onChange: function (id) { $$(".spec-card", productGrid).forEach(function (card) { card.hidden = !(id === "all" || card.getAttribute("data-cat") === id); }); }
   });
+  $("#productTabs").replaceWith(bar);
 
   /* ---------- Capability index ---------- */
   initCapIndex(MP, $("#capIndex"), $("#capProof"), narrow, false);

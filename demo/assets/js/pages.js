@@ -28,15 +28,16 @@ window.MP_PAGES = window.MP_PAGES || {};
     MP.pageHead({ kicker: "Shop", title: "Shop", crumbs: [["Shop"]], ink: MP.ink("bright"),
       lead: "Cards, marketing print, banners, printed packaging and gifts. Choose your options, add them to a quote list, and send it in one go." });
 
-    var state = { cat: MP.param("cat") || "all", q: "" };
-    var routeTabs = el("div", { class: "filter-tabs", role: "group", "aria-label": "Product category" },
-      [{ id: "all", title: "All products" }].concat(D.categories).map(function (c) {
-        var b = el("button", { type: "button", class: "tab", "data-cat": c.id, "aria-pressed": "false", text: c.title });
-        b.addEventListener("click", function () { state.cat = c.id; render(); });
-        return b;
-      }));
-    var search = el("input", { type: "search", class: "form-control", id: "shopSearch", placeholder: "Search products", "aria-label": "Search products" });
-    search.addEventListener("input", function () { state.q = search.value.trim().toLowerCase(); render(); });
+    var state = { cat: MP.param("cat") || "all", q: (MP.param("q") || "").trim().toLowerCase() };
+    var counts = { all: D.catalogue.length };
+    D.catalogue.forEach(function (p) { counts[p.cat] = (counts[p.cat] || 0) + 1; });
+    var bar = MP.filterBar({
+      label: "Product category", active: state.cat,
+      items: [{ id: "all", title: "All products", count: counts.all }].concat(D.categories.map(function (c) { return { id: c.id, title: c.title, ink: c.ink, count: counts[c.id] || 0 }; })),
+      onChange: function (id) { state.cat = id; render(); }
+    });
+    // A search coming from the search pop-up ("See all results") shows as a removable chip
+    var qChip = el("div", { class: "q-chip-row" });
     var count = el("p", { class: "slug result-count", "aria-live": "polite" });
     var grid = el("div", { class: "spec-grid" });
     var empty = el("div", { class: "empty-sheet", hidden: "" }, [
@@ -54,7 +55,8 @@ window.MP_PAGES = window.MP_PAGES || {};
 
     mount(MP, el("section", { class: "section section-tight" }, [
       el("div", { class: "container-xl" }, [
-        el("div", { class: "shop-bar" }, [routeTabs, el("div", { class: "shop-search" }, [el("i", { class: "fa-solid fa-magnifying-glass", "aria-hidden": "true" }), search])]),
+        bar,
+        qChip,
         count,
         grid,
         empty
@@ -63,7 +65,15 @@ window.MP_PAGES = window.MP_PAGES || {};
     mount(MP, cta(MP, "Can't see it here?", "Most of what we print is made to order. Tell us what you need and we'll put a quote together.", "contact.html#quote", "Plan a custom project"));
 
     function render() {
-      $$("[data-cat]", routeTabs).forEach(function (b) { var on = b.getAttribute("data-cat") === state.cat; b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on); });
+      bar.setActive(state.cat);
+      qChip.textContent = "";
+      if (state.q) {
+        var x = el("button", { type: "button", class: "q-chip", "aria-label": "Clear search " + state.q }, [
+          el("span", { class: "slug", text: "Search" }), el("strong", { text: "“" + state.q + "”" }), el("i", { class: "fa-solid fa-xmark", "aria-hidden": "true" })
+        ]);
+        x.addEventListener("click", function () { state.q = ""; render(); });
+        qChip.appendChild(x);
+      }
       var n = 0;
       $$(".spec-card", grid).forEach(function (c) {
         var show = (state.cat === "all" || c.getAttribute("data-cat") === state.cat) &&
@@ -73,7 +83,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       count.textContent = n + (n === 1 ? " product" : " products") + "  ·  sheet 01";
       empty.hidden = n > 0;
       var url = new URL(location.href);
-      ["cat"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
+      ["cat", "q"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
       history.replaceState(null, "", url);
     }
     render();
