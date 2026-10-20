@@ -1146,3 +1146,12 @@ button.ql-link { background: none; border: 1.5px solid transparent; padding: 0; 
 .occ-chip.is-active { background: var(--ink, var(--mp-ink)); border-color: var(--ink, var(--mp-ink)); color: #fff; }
 .occ-chip.is-active[style*="EAA123"] { color: var(--mp-ink); }
 @media (max-width: 575px) { .cat-chips { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } .occ-chip { flex: none; } }
+
+/* ---------- Shop commerce additions ---------- */
+.btn-mp-sm { min-height: 40px; padding: .55rem 1.1rem; font-size: .9rem; }
+.spec-price { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .15rem; }
+.spec-price strong { font-size: 1.25rem; font-weight: 800; color: var(--mp-deep); }
+.spec-meta { margin: 0 0 var(--s3); font-size: .86rem; color: var(--mp-muted); }
+.spec-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin-top: auto; padding-top: var(--s2); }
+.mn-cart { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.4rem; font-weight: 600; }
+.mn-cart .ql-count { position: static; }

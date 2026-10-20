@@ -26,65 +26,258 @@ window.MP_PAGES = window.MP_PAGES || {};
   P.shop = function (MP) {
     var D = MP.D, el = MP.el, $ = MP.$, $$ = MP.$$;
     MP.pageHead({ kicker: "Shop", title: "Shop", crumbs: [["Shop"]], ink: MP.ink("bright"),
-      lead: "Cards, marketing print, banners, printed packaging and gifts. Choose your options, add them to a quote list, and send it in one go." });
+      lead: "Cards, marketing print, banners, printed packaging and gifts. Choose your options, add them to your cart, or send a quote request." });
 
-    var state = { cat: MP.param("cat") || "all", q: (MP.param("q") || "").trim().toLowerCase() };
-    var counts = { all: D.catalogue.length };
-    D.catalogue.forEach(function (p) { counts[p.cat] = (counts[p.cat] || 0) + 1; });
+    function num(v) { var n = parseInt(v, 10); return isNaN(n) || n < 0 ? "" : n; }
+    var state = {
+      cat: MP.param("cat") || "all",
+      subs: (MP.param("sub") || "").split(",").filter(Boolean),
+      min: num(MP.param("min")), max: num(MP.param("max")),
+      days: [2, 5].indexOf(parseInt(MP.param("days"), 10)) !== -1 ? parseInt(MP.param("days"), 10) : 0,
+      pers: MP.param("pers") === "1",
+      sort: ["price-asc", "price-desc", "fastest"].indexOf(MP.param("sort")) !== -1 ? MP.param("sort") : "popular",
+      q: (MP.param("q") || "").trim().toLowerCase()
+    };
+    var info = {}; // slug -> {p, from}
+    D.catalogue.forEach(function (p) { info[p.slug] = { p: p, from: MP.fromPrice(p).total }; });
+    var subParent = {}, subTitle = {};
+    D.categories.forEach(function (c) { (c.subs || []).forEach(function (sb) { subParent[sb.id] = c.id; subTitle[sb.id] = sb.title; }); });
+    function countWhere(fn) { return D.catalogue.filter(fn).length; }
+
+    /* top: category chips */
     var bar = MP.filterBar({
       label: "Product category", active: state.cat,
-      items: [{ id: "all", title: "All products", count: counts.all }].concat(D.categories.map(function (c) { return { id: c.id, title: c.title, ink: c.ink, count: counts[c.id] || 0 }; })),
-      onChange: function (id) { state.cat = id; render(); }
+      items: [{ id: "all", title: "All products" }].concat(D.categories.map(function (c) { return { id: c.id, title: c.title, ink: c.ink }; })),
+      onChange: function (id) { state.cat = id; state.subs = []; render(); }
     });
-    // A search coming from the search pop-up ("See all results") shows as a removable chip
-    var qChip = el("div", { class: "q-chip-row" });
-    var count = el("p", { class: "slug result-count", "aria-live": "polite" });
+
+    /* sidebar */
+    var catBoxes = {}, subBoxes = {}, daysRadios = [];
+    function checkRow(id, label, count, cls) {
+      var input = el("input", { type: "checkbox", id: id, class: "ck-input" });
+      return { input: input, row: el("label", { class: "ck-row " + (cls || ""), for: id }, [input, el("span", { class: "ck-box", "aria-hidden": "true" }), el("span", { class: "ck-label", text: label }), el("span", { class: "ck-count", text: String(count) })]) };
+    }
+    var tree = el("div", { class: "sf-tree" });
+    D.categories.forEach(function (c) {
+      var cr = checkRow("sf-c-" + c.id, c.title, countWhere(function (p) { return p.cat === c.id; }), "ck-cat");
+      cr.row.style.setProperty("--ink", MP.ink(c.ink));
+      catBoxes[c.id] = cr.input;
+      cr.input.addEventListener("change", function () {
+        if (cr.input.checked) { state.cat = c.id; state.subs = state.subs.filter(function (x) { return subParent[x] === c.id; }); } else { state.cat = "all"; }
+        render();
+      });
+      var grp = el("div", { class: "sf-group" }, [cr.row]);
+      (c.subs || []).forEach(function (sb) {
+        var sr = checkRow("sf-s-" + sb.id, sb.title, countWhere(function (p) { return p.sub === sb.id; }), "ck-sub");
+        sr.row.style.setProperty("--ink", MP.ink(c.ink));
+        subBoxes[sb.id] = sr.input;
+        sr.input.addEventListener("change", function () {
+          var i = state.subs.indexOf(sb.id);
+          if (sr.input.checked && i === -1) { if (state.cat !== "all" && state.cat !== c.id) state.cat = "all"; state.subs.push(sb.id); }
+          if (!sr.input.checked && i !== -1) state.subs.splice(i, 1);
+          render();
+        });
+        grp.appendChild(sr.row);
+      });
+      tree.appendChild(grp);
+    });
+
+    var minIn = el("input", { type: "number", min: "0", step: "100", class: "form-control", id: "sf-min", placeholder: "Min", "aria-label": "Minimum price in LKR" });
+    var maxIn = el("input", { type: "number", min: "0", step: "100", class: "form-control", id: "sf-max", placeholder: "Max", "aria-label": "Maximum price in LKR" });
+    var applyBtn = el("button", { type: "button", class: "btn-mp btn-mp-outline btn-mp-sm", text: "Apply" });
+    function applyPrice() { state.min = num(minIn.value); state.max = num(maxIn.value); render(); }
+    applyBtn.addEventListener("click", applyPrice);
+    [minIn, maxIn].forEach(function (i) { i.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); applyPrice(); } }); });
+
+    var daysList = el("div", { class: "sf-radios", role: "radiogroup", "aria-label": "Turnaround" });
+    [[0, "Any"], [2, "Ready in 2 days or less"], [5, "Ready in 5 days or less"]].forEach(function (d, i) {
+      var input = el("input", { type: "radio", name: "sf-days", id: "sf-d-" + i, class: "ck-input" });
+      input.addEventListener("change", function () { state.days = d[0]; render(); });
+      daysRadios.push([d[0], input]);
+      daysList.appendChild(el("label", { class: "ck-row ck-radio", for: "sf-d-" + i }, [input, el("span", { class: "ck-box", "aria-hidden": "true" }), el("span", { class: "ck-label", text: d[1] })]));
+    });
+
+    var pr = checkRow("sf-pers", "Personalised products only", countWhere(function (p) { return p.personalise; }), "");
+    pr.input.addEventListener("change", function () { state.pers = pr.input.checked; render(); });
+    var clearAll = el("button", { type: "button", class: "text-link sf-clear", text: "Clear all" });
+    clearAll.addEventListener("click", function () { state.cat = "all"; state.subs = []; state.min = state.max = ""; state.days = 0; state.pers = false; state.q = ""; render(); });
+
+    function section(title, body) { return el("section", { class: "sf-section" }, [el("h2", { class: "slug sf-title", text: title }), body]); }
+    var panel = el("aside", { class: "offcanvas-lg offcanvas-start shop-filters", tabindex: "-1", id: "shopFilters", "aria-labelledby": "shopFiltersLabel" }, [
+      el("div", { class: "offcanvas-header sf-mobile-head" }, [
+        el("h2", { class: "slug", id: "shopFiltersLabel", text: "Filters" }),
+        el("button", { type: "button", class: "mn-close", "data-bs-dismiss": "offcanvas", "data-bs-target": "#shopFilters", "aria-label": "Close filters", html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' })
+      ]),
+      el("div", { class: "offcanvas-body sf-body" }, [
+        el("div", { class: "sf-head d-none d-lg-flex" }, [el("h2", { class: "slug sf-title", text: "Filters" }), clearAll]),
+        section("Category", tree),
+        section("Price (LKR)", el("div", { class: "sf-price" }, [minIn, el("span", { text: "–", "aria-hidden": "true" }), maxIn, applyBtn])),
+        section("Turnaround", daysList),
+        section("Personalise", pr.row)
+      ])
+    ]);
+    // On small screens the Clear all link also sits at the foot of the offcanvas
+    var clearMobile = el("button", { type: "button", class: "text-link sf-clear d-lg-none", text: "Clear all" });
+    clearMobile.addEventListener("click", function () { clearAll.click(); });
+    $(".sf-body", panel).appendChild(clearMobile);
+
+    /* results */
+    var filterBtn = el("button", { type: "button", class: "btn-mp btn-mp-outline btn-mp-sm d-lg-none", "data-bs-toggle": "offcanvas", "data-bs-target": "#shopFilters", "aria-controls": "shopFilters", html: '<i class="fa-solid fa-sliders" aria-hidden="true"></i> Filters' });
+    var count = el("p", { class: "slug result-count-text", "aria-live": "polite" });
+    var sortSel = el("select", { class: "form-select sort-select", id: "shopSort", "aria-label": "Sort products" });
+    [["popular", "Popular"], ["price-asc", "Price: low to high"], ["price-desc", "Price: high to low"], ["fastest", "Fastest"]].forEach(function (o) { sortSel.appendChild(el("option", { value: o[0], text: o[1] })); });
+    sortSel.addEventListener("change", function () { state.sort = sortSel.value; render(); });
+    var toolbar = el("div", { class: "shop-toolbar" }, [
+      el("div", { class: "shop-toolbar-l" }, [filterBtn, count]),
+      el("label", { class: "sort-wrap" }, [el("span", { class: "slug", text: "Sort" }), sortSel])
+    ]);
+    var active = el("div", { class: "active-filters", "aria-label": "Active filters" });
     var grid = el("div", { class: "spec-grid" });
     var empty = el("div", { class: "empty-sheet", hidden: "" }, [
       el("p", { class: "slug", text: "No match" }),
       el("h3", { text: "Nothing on this sheet yet." }),
-      el("p", { text: "Try another filter — or describe what you need and we'll quote it." }),
+      el("p", { text: "Try removing a filter — or describe what you need and we'll quote it." }),
       el("a", { class: "btn-mp btn-mp-primary", href: "contact.html#quote", text: "Plan a custom project" })
     ]);
-
+    var cards = {};
     D.catalogue.forEach(function (p) {
       var card = MP.specCard(specsFor(p), "product.html?p=" + p.slug);
-      card.setAttribute("data-name", (p.name + " " + p.service + " " + p.blurb).toLowerCase());
+      card.classList.add("is-in");
+      cards[p.slug] = card;
       grid.appendChild(card);
     });
 
     mount(MP, el("section", { class: "section section-tight" }, [
       el("div", { class: "container-xl" }, [
         bar,
-        qChip,
-        count,
-        grid,
-        empty
+        el("div", { class: "shop-layout" }, [panel, el("div", { class: "shop-results" }, [toolbar, active, grid, empty])])
       ])
     ]));
     mount(MP, cta(MP, "Can't see it here?", "Most of what we print is made to order. Tell us what you need and we'll put a quote together.", "contact.html#quote", "Plan a custom project"));
 
+    // Parent sections create stacking contexts; lift the panel to <body> while it is open as an offcanvas
+    var panelHome = panel.parentNode, panelNext = panel.nextSibling;
+    panel.addEventListener("show.bs.offcanvas", function () { document.body.appendChild(panel); });
+    panel.addEventListener("hidden.bs.offcanvas", function () { panelHome.insertBefore(panel, panelNext); });
+
+    function chip(label, kind, onRemove, ink) {
+      var b = el("button", { type: "button", class: "occ-chip af-chip", style: "--ink:" + (ink || MP.ink("deep")), "aria-label": "Remove filter: " + label }, [
+        el("span", { text: label }), el("i", { class: "fa-solid fa-xmark", "aria-hidden": "true" })
+      ]);
+      b.addEventListener("click", onRemove);
+      return b;
+    }
+    function matches(p) {
+      var f = info[p.slug].from;
+      if (state.cat !== "all" && p.cat !== state.cat) return false;
+      if (state.subs.length && state.subs.indexOf(p.sub) === -1) return false;
+      if (state.min !== "" && f < state.min) return false;
+      if (state.max !== "" && f > state.max) return false;
+      if (state.days && p.days > state.days) return false;
+      if (state.pers && !p.personalise) return false;
+      if (state.q && (p.name + " " + p.service + " " + p.blurb + " " + (subTitle[p.sub] || "")).toLowerCase().indexOf(state.q) === -1) return false;
+      return true;
+    }
+
     function render() {
       bar.setActive(state.cat);
-      qChip.textContent = "";
-      if (state.q) {
-        var x = el("button", { type: "button", class: "q-chip", "aria-label": "Clear search " + state.q }, [
-          el("span", { class: "slug", text: "Search" }), el("strong", { text: "“" + state.q + "”" }), el("i", { class: "fa-solid fa-xmark", "aria-hidden": "true" })
-        ]);
-        x.addEventListener("click", function () { state.q = ""; render(); });
-        qChip.appendChild(x);
-      }
-      var n = 0;
-      $$(".spec-card", grid).forEach(function (c) {
-        var show = (state.cat === "all" || c.getAttribute("data-cat") === state.cat) &&
-          (!state.q || c.getAttribute("data-name").indexOf(state.q) !== -1);
-        c.hidden = !show; if (show) { n++; c.classList.add("is-in"); }
+      D.categories.forEach(function (c) { catBoxes[c.id].checked = state.cat === c.id; });
+      Object.keys(subBoxes).forEach(function (id) { subBoxes[id].checked = state.subs.indexOf(id) !== -1; });
+      minIn.value = state.min; maxIn.value = state.max;
+      daysRadios.forEach(function (d) { d[1].checked = d[0] === state.days; });
+      pr.input.checked = state.pers; sortSel.value = state.sort;
+
+      active.textContent = "";
+      var cat = state.cat !== "all" ? MP.catById(state.cat) : null;
+      if (cat) active.appendChild(chip(cat.title, "cat", function () { state.cat = "all"; state.subs = []; render(); }, MP.ink(cat.ink)));
+      state.subs.forEach(function (id) {
+        var c = MP.catById(subParent[id]);
+        active.appendChild(chip(subTitle[id], "sub", function () { state.subs.splice(state.subs.indexOf(id), 1); render(); }, MP.ink(c.ink)));
       });
-      count.textContent = n + (n === 1 ? " product" : " products") + "  ·  sheet 01";
+      if (state.min !== "" || state.max !== "") {
+        var lbl = state.min !== "" && state.max !== "" ? MP.money(state.min) + " – " + MP.money(state.max).replace("LKR ", "") : state.min !== "" ? "From " + MP.money(state.min) : "Up to " + MP.money(state.max);
+        active.appendChild(chip(lbl, "price", function () { state.min = state.max = ""; render(); }));
+      }
+      if (state.days) active.appendChild(chip("Ready in " + state.days + " days or less", "days", function () { state.days = 0; render(); }));
+      if (state.pers) active.appendChild(chip("Personalised", "pers", function () { state.pers = false; render(); }));
+      if (state.q) active.appendChild(chip("Search: “" + state.q + "”", "q", function () { state.q = ""; render(); }));
+      if (active.children.length) {
+        var ca = el("button", { type: "button", class: "text-link", text: "Clear all" });
+        ca.addEventListener("click", function () { clearAll.click(); });
+        active.appendChild(ca);
+      }
+
+      var list = D.catalogue.filter(matches);
+      list.sort(function (a, b) {
+        if (state.sort === "price-asc") return info[a.slug].from - info[b.slug].from;
+        if (state.sort === "price-desc") return info[b.slug].from - info[a.slug].from;
+        if (state.sort === "fastest") return a.days - b.days;
+        return D.catalogue.indexOf(a) - D.catalogue.indexOf(b);
+      });
+      var shown = {};
+      list.forEach(function (p) { shown[p.slug] = 1; grid.appendChild(cards[p.slug]); });
+      D.catalogue.forEach(function (p) { cards[p.slug].hidden = !shown[p.slug]; });
+      var n = list.length;
+      count.textContent = n + (n === 1 ? " product" : " products");
       empty.hidden = n > 0;
-      var url = new URL(location.href);
-      ["cat", "q"].forEach(function (k) { if (state[k] && state[k] !== "all") url.searchParams.set(k, state[k]); else url.searchParams.delete(k); });
+
+      var url = new URL(location.href), sp = url.searchParams;
+      function put(k, v, skip) { if (v !== skip && v !== "" && v !== false && v != null) sp.set(k, v); else sp.delete(k); }
+      put("cat", state.cat, "all"); put("sub", state.subs.join(","), ""); put("min", state.min, ""); put("max", state.max, "");
+      put("days", state.days, 0); put("pers", state.pers ? "1" : "", ""); put("sort", state.sort, "popular"); put("q", state.q, "");
       history.replaceState(null, "", url);
+    }
+    render();
+  };
+
+  /* ================================================================== CART */
+  P.cart = function (MP) {
+    var el = MP.el;
+    MP.pageHead({ kicker: "Cart", title: "Your cart", crumbs: [["Shop", "shop.html"], ["Cart"]], ink: MP.ink("bright") });
+    var box = el("div", { class: "container-xl cart-wrap" });
+    mount(MP, el("section", { class: "section section-tight" }, [box]));
+
+    function render() {
+      box.textContent = "";
+      var items = MP.cart.list();
+      if (!items.length) {
+        box.appendChild(el("div", { class: "empty-sheet" }, [
+          el("p", { class: "slug", text: "Empty" }),
+          el("h3", { text: "Your cart is empty." }),
+          el("p", { text: "Add a product from the shop and it will appear here." }),
+          el("a", { class: "btn-mp btn-mp-primary", href: "shop.html", text: "Continue shopping" })
+        ]));
+        return;
+      }
+      var list = el("ul", { class: "cart-items" });
+      items.forEach(function (it, i) {
+        var opts = Object.keys(it.options || {}).map(function (k) { return k + ": " + it.options[k]; }).join(" · ");
+        var q = el("input", { type: "number", min: "1", class: "form-control cart-qty", value: String(it.qty), id: "cq-" + i, "aria-label": "Quantity for " + it.name });
+        q.addEventListener("change", function () { MP.cart.update(i, q.value); render(); });
+        var rm = el("button", { type: "button", class: "ql-remove", "aria-label": "Remove " + it.name, html: '<i class="fa-solid fa-xmark" aria-hidden="true"></i>' });
+        rm.addEventListener("click", function () { MP.cart.remove(i); render(); });
+        list.appendChild(el("li", null, [
+          el("a", { href: "product.html?p=" + it.slug, class: "cart-thumb" }, [el("img", { src: it.img, alt: "", width: "96", height: "72" })]),
+          el("div", { class: "cart-info" }, [
+            el("a", { href: "product.html?p=" + it.slug, class: "cart-name", text: it.name }),
+            el("p", { text: opts }),
+            it.personal ? el("p", { text: "Personalisation: " + it.personal }) : null,
+            el("p", { class: "slug", text: MP.money(it.unit) + " each" })
+          ]),
+          el("label", { class: "cart-qty-wrap", for: "cq-" + i }, [el("span", { class: "slug", text: "Qty" }), q]),
+          el("strong", { class: "cart-line", text: MP.money(it.total) }),
+          rm
+        ]));
+      });
+      box.appendChild(list);
+      box.appendChild(el("div", { class: "cart-summary" }, [
+        el("p", { class: "cart-subtotal" }, [el("span", { class: "slug", text: "Subtotal" }), el("strong", { text: MP.money(MP.cart.subtotal()) })]),
+        el("p", { class: "cart-note", text: "Sample prices. Delivery and final price are confirmed with your proof." }),
+        el("div", { class: "cap-actions" }, [
+          el("a", { class: "text-link", href: "shop.html", text: "Continue shopping" }),
+          el("a", { class: "btn-mp btn-mp-primary", href: "checkout.html", html: "Checkout" + MP.ARROW })
+        ])
+      ]));
     }
     render();
   };

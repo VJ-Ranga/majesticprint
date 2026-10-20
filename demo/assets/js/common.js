@@ -96,6 +96,70 @@
     }
   };
 
+
+  /* ---------- Price + cart (SAMPLE prices from data.js — replace with the client's rate card) ---------- */
+  function money(n) {
+    n = Math.round(n || 0);
+    return "LKR " + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  function productBySlug(slug) { return D.catalogue.filter(function (x) { return x.slug === slug; })[0]; }
+  // total + per-unit price for chosen options at a quantity (add-ons are LKR per unit)
+  function price(p, chosen, qty) {
+    var pr = p && p.price; qty = Math.max(1, parseInt(qty, 10) || 1);
+    if (!pr) return { total: 0, unit: 0 };
+    var steps = Object.keys(pr.base).map(Number).sort(function (a, b) { return a - b; });
+    var baseTotal;
+    if (pr.base[String(qty)] != null) baseTotal = pr.base[String(qty)];
+    else {
+      var lower = steps[0];
+      steps.forEach(function (st) { if (st <= qty) lower = st; });
+      baseTotal = (pr.base[String(lower)] / lower) * qty; // per-unit rate of the nearest lower step
+    }
+    var extra = 0;
+    Object.keys(pr.add || {}).forEach(function (g) {
+      var v = chosen && chosen[g];
+      if (v != null && pr.add[g][v]) extra += pr.add[g][v];
+    });
+    var total = Math.max(0, Math.round(baseTotal + extra * qty));
+    return { total: total, unit: Math.round(total / qty) };
+  }
+  function defaults(p) { var o = {}; Object.keys(p.options).forEach(function (g) { o[g] = p.options[g][0]; }); return o; }
+  function fromPrice(p) {
+    var q = p.quantities[0];
+    return { total: price(p, defaults(p), q).total, qty: q };
+  }
+
+  var CART_KEY = "mp-cart";
+  var cart = {
+    list: function () { try { return JSON.parse(localStorage.getItem(CART_KEY) || "[]"); } catch (e) { return []; } },
+    save: function (items) {
+      try { localStorage.setItem(CART_KEY, JSON.stringify(items)); } catch (e) {}
+      cart.render();
+      document.dispatchEvent(new CustomEvent("mp:cart-change"));
+    },
+    add: function (item) {
+      var l = cart.list();
+      l.push({ slug: item.slug, name: item.name, img: item.img, options: item.options || {}, qty: item.qty, unit: item.unit, total: item.total,
+        artwork: item.artwork || "", personal: item.personal || "", notes: item.notes || "" });
+      cart.save(l);
+    },
+    update: function (i, qty) {
+      var l = cart.list(), it = l[i]; if (!it) return;
+      qty = Math.max(1, parseInt(qty, 10) || 1);
+      var p = productBySlug(it.slug);
+      if (p) { var r = price(p, it.options, qty); it.unit = r.unit; it.total = r.total; } else { it.total = it.unit * qty; }
+      it.qty = qty; cart.save(l);
+    },
+    remove: function (i) { var l = cart.list(); l.splice(i, 1); cart.save(l); },
+    clear: function () { cart.save([]); },
+    count: function () { return cart.list().reduce(function (n, it) { return n + 1 * (it.qty > 0 ? 1 : 0); }, 0); },
+    subtotal: function () { return cart.list().reduce(function (n, it) { return n + (it.total || 0); }, 0); },
+    render: function () {
+      var n = cart.count();
+      $$(".cart-count").forEach(function (c) { c.textContent = n; c.hidden = n === 0; });
+    }
+  };
+
   /* ---------- Header + footer ---------- */
   var NAV = [
     ["shop", "shop.html", "Shop"],
@@ -124,6 +188,7 @@
           el("nav", { class: "main-nav d-none d-lg-flex", "aria-label": "Primary" }, navLinks()),
           el("div", { class: "header-actions" }, [
             el("button", { type: "button", class: "ql-link search-open", "aria-label": "Search products and services", "aria-haspopup": "dialog", html: '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>' }),
+            el("a", { class: "ql-link", href: "cart.html", "aria-label": "Cart", html: '<i class="fa-solid fa-bag-shopping" aria-hidden="true"></i><span class="ql-count cart-count" hidden>0</span>' }),
             el("a", { class: "ql-link", href: "contact.html#quote", "aria-label": "Quote list", html: '<i class="fa-solid fa-clipboard-list" aria-hidden="true"></i><span class="ql-count" hidden>0</span>' }),
             el("a", { class: "btn-mp btn-mp-accent d-none d-sm-inline-flex", href: "contact.html#quote", text: "Request a quote" }),
             el("button", { class: "menu-toggle d-lg-none", type: "button", "data-bs-toggle": "offcanvas", "data-bs-target": "#mobileNav", "aria-controls": "mobileNav", "aria-label": "Open menu", html: '<i class="fa-solid fa-bars" aria-hidden="true"></i>' })
@@ -151,6 +216,7 @@
             a.appendChild(el("i", { class: "fa-solid fa-arrow-right mn-arrow", "aria-hidden": "true" }));
             return a;
           })),
+          el("a", { class: "mn-cart text-link", href: "cart.html", html: '<i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Cart <span class="ql-count cart-count" hidden>0</span>' }),
           el("div", { class: "mn-block" }, [
             el("p", { class: "slug mn-cap", text: "Shop by" }),
             el("div", { class: "mn-routes" }, D.categories.map(function (c) {
@@ -432,19 +498,39 @@
   // Spec-sheet product card (used by home and shop)
   function specCard(p, href) {
     var cat = catById(p.cat);
+    var full = productBySlug(p.slug);
     var dl = el("dl", { class: "spec" });
-    Object.keys(p.specs).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
-    return el("article", { class: "spec-card reveal", "data-cat": cat.id, style: "--ink:" + ink(cat.ink) }, [
+    Object.keys(p.specs).slice(0, 3).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
+    var kids = [
       el("a", { class: "spec-photo-link", href: href, tabindex: "-1", "aria-hidden": "true" }, [
         el("figure", { class: "print-frame spec-photo" }, [
           el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: "", loading: "lazy", width: "800", height: "600" })]),
           el("span", { class: "spec-plate", text: cat.title })
         ])
       ]),
-      el("h3", null, [el("a", { href: href, text: p.name })]),
-      dl,
-      el("a", { class: "text-link", href: href, html: "Choose options" + ARROW })
-    ]);
+      el("h3", null, [el("a", { href: href, text: p.name })])
+    ];
+    if (full && full.price) {
+      var fp = fromPrice(full);
+      kids.push(el("p", { class: "spec-price" }, [el("span", { class: "slug", text: "From" }), el("strong", { text: money(fp.total) })]));
+      kids.push(el("p", { class: "spec-meta", text: "Min " + fp.qty + " · Ready in " + full.days + " days" }));
+    }
+    kids.push(dl);
+    var actions = el("div", { class: "spec-actions" });
+    if (full && full.price) {
+      var add = el("button", { type: "button", class: "btn-mp btn-mp-primary btn-mp-sm", text: "Add to cart" });
+      add.addEventListener("click", function () {
+        var o = defaults(full), q = full.quantities[0], r = price(full, o, q);
+        cart.add({ slug: full.slug, name: full.name, img: full.img, options: o, qty: q, unit: r.unit, total: r.total });
+        add.innerHTML = 'Added <i class="fa-solid fa-check" aria-hidden="true"></i>';
+        add.disabled = true;
+        setTimeout(function () { add.textContent = "Add to cart"; add.disabled = false; }, 1600);
+      });
+      actions.appendChild(add);
+    }
+    actions.appendChild(el("a", { class: "text-link", href: href, html: "Choose options" + ARROW }));
+    kids.push(actions);
+    return el("article", { class: "spec-card reveal", "data-cat": cat.id, style: "--ink:" + ink(cat.ink) }, kids);
   }
   // Page head: a small press sheet with a breadcrumb slug
   function pageHead(opts) {
@@ -474,12 +560,13 @@
     if (opts.title) document.title = opts.title + " — Majestic Print Solutions";
   }
 
-  quote.render();
+  quote.render(); cart.render();
+  window.addEventListener("storage", function (e) { if (e.key === CART_KEY) cart.render(); });
   window.addEventListener("storage", function (e) { if (e.key === KEY) quote.render(); });
 
   window.MP = {
     D: D, $: $, $$: $$, el: el, ink: ink, slugify: slugify, waLink: waLink, param: param, ARROW: ARROW,
-    quote: quote, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
+    quote: quote, cart: cart, price: price, money: money, fromPrice: fromPrice, defaults: defaults, productBySlug: productBySlug, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
   };
 
   // Page scripts register via MP_PAGE; run them, then observe whatever they built
