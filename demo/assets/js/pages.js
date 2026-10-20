@@ -99,7 +99,7 @@ window.MP_PAGES = window.MP_PAGES || {};
 
     var pr = checkRow("sf-pers", "Personalised products only", countWhere(function (p) { return p.personalise; }), "");
     pr.input.addEventListener("change", function () { state.pers = pr.input.checked; render(); });
-    var clearAll = el("button", { type: "button", class: "text-link sf-clear", text: "Clear all" });
+    var clearAll = el("button", { type: "button", class: "sf-clear", text: "Clear all" });
     clearAll.addEventListener("click", function () { state.cat = "all"; state.subs = []; state.min = state.max = ""; state.days = 0; state.pers = false; state.q = ""; render(); });
 
     function section(title, body) { return el("section", { class: "sf-section" }, [el("h2", { class: "slug sf-title", text: title }), body]); }
@@ -117,7 +117,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       ])
     ]);
     // On small screens the Clear all link also sits at the foot of the offcanvas
-    var clearMobile = el("button", { type: "button", class: "text-link sf-clear d-lg-none", text: "Clear all" });
+    var clearMobile = el("button", { type: "button", class: "sf-clear d-lg-none", text: "Clear all" });
     clearMobile.addEventListener("click", function () { clearAll.click(); });
     $(".sf-body", panel).appendChild(clearMobile);
 
@@ -202,7 +202,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       if (state.pers) active.appendChild(chip("Personalised", "pers", function () { state.pers = false; render(); }));
       if (state.q) active.appendChild(chip("Search: “" + state.q + "”", "q", function () { state.q = ""; render(); }));
       if (active.children.length) {
-        var ca = el("button", { type: "button", class: "text-link", text: "Clear all" });
+        var ca = el("button", { type: "button", class: "af-clear", text: "Clear all" });
         ca.addEventListener("click", function () { clearAll.click(); });
         active.appendChild(ca);
       }

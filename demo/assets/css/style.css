@@ -338,7 +338,7 @@ img, svg { max-width: 100%; }
 .spec-card { display: flex; flex-direction: column; }
 .spec-card[hidden] { display: none; }
 .spec-photo { margin-bottom: var(--s4); }
-.spec-img { aspect-ratio: 4 / 3; overflow: hidden; background: #fff; }
+.spec-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #fff; }
 .spec-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease-out); }
 .spec-card:hover .spec-img img { transform: scale(1.05); }
 .spec-plate {
@@ -347,7 +347,7 @@ img, svg { max-width: 100%; }
   font-family: var(--font-mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mp-ink);
 }
 .spec-plate::before { content: ""; width: 9px; height: 9px; background: var(--ink); }
-.spec-card h3 { font-size: 1.55rem; font-weight: 800; letter-spacing: -.025em; margin-bottom: var(--s2); }
+.spec-card h3 { font-size: 1.3rem; font-weight: 800; letter-spacing: -.02em; margin: 0 0 .6rem; }
 .spec { display: grid; grid-template-columns: 5.5rem 1fr; margin: 0 0 var(--s3); border-top: 1.5px solid var(--mp-ink); }
 .spec dt, .spec dd { padding: .55rem 0; border-bottom: 1px solid var(--mp-line); margin: 0; }
 .spec dt { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .12em; text-transform: uppercase; color: var(--mp-muted); font-weight: 500; padding-top: .7rem; }
@@ -1149,9 +1149,26 @@ button.ql-link { background: none; border: 1.5px solid transparent; padding: 0; 
 
 /* ---------- Shop commerce additions ---------- */
 .btn-mp-sm { min-height: 40px; padding: .55rem 1.1rem; font-size: .9rem; }
-.spec-price { display: flex; align-items: baseline; gap: .6rem; margin: 0 0 .15rem; }
-.spec-price strong { font-size: 1.25rem; font-weight: 800; color: var(--mp-deep); }
-.spec-meta { margin: 0 0 var(--s3); font-size: .86rem; color: var(--mp-muted); }
-.spec-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); margin-top: auto; padding-top: var(--s2); }
+.spec-card { position: relative; }
+.spec-body { display: flex; flex-direction: column; flex: 1; padding-top: .25rem; }
+.spec-link::after { content: ""; position: absolute; inset: -8px; z-index: 1; }
+.spec-link:focus-visible { outline: none; }
+.spec-link:focus-visible::after { outline: 3px solid var(--mp-bright); outline-offset: 4px; }
+.spec-buy { display: flex; align-items: center; justify-content: space-between; gap: var(--s3); margin-top: auto; padding-top: .8rem; border-top: 1.5px solid var(--mp-ink); }
+.spec-price { display: flex; flex-wrap: wrap; align-items: baseline; gap: .15rem .5rem; margin: 0; }
+.spec-price strong { font-size: 1.3rem; font-weight: 800; color: var(--mp-deep); }
+.spec-qty { font-size: .86rem; color: var(--mp-muted); }
+.spec-meta { margin: .4rem 0 0; font-size: .86rem; color: var(--mp-muted); }
+.spec-add { position: relative; z-index: 2; flex: none; width: 44px; height: 44px; display: grid; place-items: center; background: var(--mp-deep); color: #fff; border: 2px solid var(--mp-deep); border-radius: 0; cursor: pointer; transition: box-shadow .22s var(--ease-out), background-color .2s; }
+.spec-add:hover { box-shadow: -4px -4px 0 var(--mp-bright), 4px 4px 0 var(--mp-magenta); }
+.spec-add:focus-visible { outline: 3px solid var(--mp-bright); outline-offset: 3px; }
+.spec-add.is-done, .spec-add:disabled { background: var(--mp-bright); border-color: var(--mp-bright); opacity: 1; }
+.spec-sheet { display: none; }
+@media (hover: hover) {
+  .spec-sheet { display: flex; flex-direction: column; gap: .5rem; position: absolute; inset: 0; z-index: 1; padding: 1.1rem 1.2rem; background: #fff; opacity: 0; transition: opacity .25s var(--ease-out); pointer-events: none; }
+  .spec-sheet .spec { margin: 0; grid-template-columns: 5rem 1fr; font-family: var(--font-mono); }
+  .spec-sheet .spec dd { font-size: .8rem; line-height: 1.35; }
+  .spec-card:hover .spec-sheet, .spec-card:focus-within .spec-sheet { opacity: 1; }
+}
 .mn-cart { display: inline-flex; align-items: center; gap: .6rem; margin-top: 1.4rem; font-weight: 600; }
 .mn-cart .ql-count { position: static; }

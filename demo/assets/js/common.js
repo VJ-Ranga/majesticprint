@@ -503,37 +503,35 @@
   function specCard(p, href) {
     var cat = catById(p.cat);
     var full = productBySlug(p.slug);
+    var sheet = el("div", { class: "spec-sheet", "aria-hidden": "true" }, [el("span", { class: "slug", text: "Spec sheet" })]);
     var dl = el("dl", { class: "spec" });
-    Object.keys(p.specs).slice(0, 3).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
+    Object.keys(p.specs).filter(function (k) { return k !== "From"; }).slice(0, 3).forEach(function (k) { dl.appendChild(el("dt", { text: k })); dl.appendChild(el("dd", { text: p.specs[k] })); });
+    sheet.appendChild(dl);
     var kids = [
-      el("a", { class: "spec-photo-link", href: href, tabindex: "-1", "aria-hidden": "true" }, [
-        el("figure", { class: "print-frame spec-photo" }, [
-          el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: "", loading: "lazy", width: "800", height: "600" })]),
-          el("span", { class: "spec-plate", text: cat.title })
-        ])
-      ]),
-      el("h3", null, [el("a", { href: href, text: p.name })])
+      el("figure", { class: "print-frame spec-photo" }, [
+        el("div", { class: "spec-img" }, [el("img", { src: p.img, alt: "", loading: "lazy", width: "800", height: "600" }), sheet]),
+        el("span", { class: "spec-plate", text: cat.title })
+      ])
     ];
+    var body = el("div", { class: "spec-body" }, [el("h3", null, [el("a", { class: "spec-link", href: href, text: p.name })])]);
     if (full && full.price) {
       var fp = fromPrice(full);
-      kids.push(el("p", { class: "spec-price" }, [el("span", { class: "slug", text: "From" }), el("strong", { text: money(fp.total) })]));
-      kids.push(el("p", { class: "spec-meta", text: "Min " + fp.qty + " · Ready in " + full.days + " days" }));
-    }
-    kids.push(dl);
-    var actions = el("div", { class: "spec-actions" });
-    if (full && full.price) {
-      var add = el("button", { type: "button", class: "btn-mp btn-mp-primary btn-mp-sm", text: "Add to cart" });
+      var row = el("div", { class: "spec-buy" }, [
+        el("p", { class: "spec-price" }, [el("span", { class: "slug", text: "From" }), el("strong", { text: money(fp.total) }), el("span", { class: "spec-qty", text: "· " + fp.qty + " pcs" })])
+      ]);
+      var add = el("button", { type: "button", class: "spec-add", "aria-label": "Add " + p.name + " to cart", title: "Add to cart", html: '<i class="fa-solid fa-cart-plus" aria-hidden="true"></i>' });
       add.addEventListener("click", function () {
         var o = defaults(full), q = full.quantities[0], r = price(full, o, q);
         cart.add({ slug: full.slug, name: full.name, img: full.img, options: o, qty: q, unit: r.unit, total: r.total });
-        add.innerHTML = 'Added <i class="fa-solid fa-check" aria-hidden="true"></i>';
-        add.disabled = true;
-        setTimeout(function () { add.textContent = "Add to cart"; add.disabled = false; }, 1600);
+        add.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i>';
+        add.classList.add("is-done"); add.disabled = true;
+        setTimeout(function () { add.innerHTML = '<i class="fa-solid fa-cart-plus" aria-hidden="true"></i>'; add.classList.remove("is-done"); add.disabled = false; }, 1600);
       });
-      actions.appendChild(add);
+      row.appendChild(add);
+      body.appendChild(row);
+      body.appendChild(el("p", { class: "spec-meta", text: "Ready in " + full.days + " days" }));
     }
-    actions.appendChild(el("a", { class: "text-link", href: href, html: "Choose options" + ARROW }));
-    kids.push(actions);
+    kids.push(body);
     return el("article", { class: "spec-card reveal", "data-cat": cat.id, style: "--ink:" + ink(cat.ink) }, kids);
   }
   // Page head: a small press sheet with a breadcrumb slug
