@@ -261,7 +261,9 @@ window.MP_PAGES = window.MP_PAGES || {};
           el("div", { class: "cart-info" }, [
             el("a", { href: "product.html?p=" + it.slug, class: "cart-name", text: it.name }),
             el("p", { text: opts }),
-            it.personal ? el("p", { text: "Personalisation: " + it.personal }) : null,
+            it.express ? el("p", { text: "Express — ready in 1–2 days (+25%)" }) : null,
+            it.personal && (it.personal.name || it.personal.message || typeof it.personal === "string") ? el("p", { text: "Personalisation: " + (typeof it.personal === "string" ? it.personal : [it.personal.name, it.personal.message].filter(Boolean).join(" — ")) }) : null,
+            it.ready ? el("p", { text: "Ready by " + it.ready }) : null,
             el("p", { class: "slug", text: MP.money(it.unit) + " each" })
           ]),
           el("label", { class: "cart-qty-wrap", for: "cq-" + i }, [el("span", { class: "slug", text: "Qty" }), q]),
@@ -275,7 +277,7 @@ window.MP_PAGES = window.MP_PAGES || {};
         el("p", { class: "cart-note", text: "Sample prices. Delivery and final price are confirmed with your proof." }),
         el("div", { class: "cap-actions" }, [
           el("a", { class: "text-link", href: "shop.html", text: "Continue shopping" }),
-          el("a", { class: "btn-mp btn-mp-primary", href: "checkout.html", html: "Checkout" + MP.ARROW })
+          el("a", { class: "btn-mp btn-mp-primary", href: "checkout.html", role: "button", html: "Checkout" + MP.ARROW })
         ])
       ]));
     }
@@ -305,10 +307,35 @@ window.MP_PAGES = window.MP_PAGES || {};
       });
       return b;
     }));
+    var mockKind = p.sub === "mugs" ? "mug" : (p.sub === "apparel" && /shirt/i.test(p.name)) ? "shirt" : "";
+    var mockImg = null, mockTxt = null, mock = null;
+    function setMock(url) { if (!mock) return; if (url) { mockImg.setAttributeNS("http://www.w3.org/1999/xlink", "href", url); mockImg.setAttribute("href", url); mockImg.style.display = ""; } else { mockImg.removeAttribute("href"); mockImg.style.display = "none"; } }
+    function setMockText() { if (mockTxt) mockTxt.textContent = pName ? pName.value : ""; }
+    if (mockKind) {
+      var NS = "http://www.w3.org/2000/svg";
+      var mk = function (n, a) { var e = document.createElementNS(NS, n); Object.keys(a || {}).forEach(function (k) { e.setAttribute(k, a[k]); }); return e; };
+      var svg = mk("svg", { viewBox: "0 0 400 300", role: "img", "aria-label": "Live preview of your " + (mockKind === "mug" ? "mug" : "T-shirt"), class: "pd-mock-svg" });
+      var area;
+      if (mockKind === "mug") {
+        svg.appendChild(mk("path", { d: "M300 100h30a40 40 0 0 1 0 100h-30v-16h28a24 24 0 0 0 0-68h-28z", fill: "#E6EBF1", stroke: "#13477A", "stroke-width": "3" }));
+        svg.appendChild(mk("rect", { x: "90", y: "60", width: "220", height: "180", fill: "#fff", stroke: "#13477A", "stroke-width": "3" }));
+        area = { x: 115, y: 85, w: 170, h: 130 };
+      } else {
+        svg.appendChild(mk("path", { d: "M140 40l-90 45 30 55 35-18v138h150V122l35 18 30-55-90-45c-8 18-28 28-55 28s-47-10-55-28z", fill: "#fff", stroke: "#13477A", "stroke-width": "3", "stroke-linejoin": "miter" }));
+        area = { x: 140, y: 85, w: 120, h: 120 };
+      }
+      svg.appendChild(mk("rect", { x: area.x, y: area.y, width: area.w, height: area.h, fill: "none", stroke: "#007CAC", "stroke-width": "1.5", "stroke-dasharray": "5 4" }));
+      mockImg = mk("image", { x: area.x, y: area.y, width: area.w, height: area.h - 34, preserveAspectRatio: "xMidYMid meet" });
+      mockImg.style.display = "none";
+      svg.appendChild(mockImg);
+      mockTxt = mk("text", { x: area.x + area.w / 2, y: area.y + area.h - 10, "text-anchor": "middle", "font-family": "Poppins, sans-serif", "font-weight": "700", "font-size": "17", fill: "#13477A" });
+      svg.appendChild(mockTxt);
+      mock = el("figure", { class: "print-frame pd-mock" }, [el("div", { class: "pd-mock-stage" }), el("figcaption", { class: "slug", text: "Preview — not to scale" })]);
+      mock.firstChild.appendChild(svg);
+    }
     var gallery = el("div", { class: "pd-gallery" }, [
-      el("figure", { class: "print-frame pd-main" }, [el("div", { class: "pd-main-img" }, [main]), el("figcaption", { class: "slug", text: p.name + "  ·  sample image  ·  real product photography to come" })]),
-      thumbs
-    ]);
+      el("figure", { class: "print-frame pd-main" }, [el("div", { class: "pd-main-img" }, [main]), el("figcaption", { class: "slug", text: p.name + "  ·  sample image  ·  real product photography to come" })])
+    ].concat(mock ? [mock] : [thumbs]));
 
     /* Configurator */
     var chosen = {};
@@ -322,20 +349,25 @@ window.MP_PAGES = window.MP_PAGES || {};
         var input = el("input", { type: "radio", name: "g" + gi, id: id, value: val, class: "visually-hidden" });
         if (vi === 0) input.checked = true;
         input.addEventListener("change", function () { chosen[group] = val; update(); });
-        row.appendChild(el("label", { class: "opt", for: id }, [input, el("span", { text: val })]));
+        var addon = p.price && p.price.add && p.price.add[group] && p.price.add[group][val];
+        var kids = [document.createTextNode(val)];
+        if (addon) kids.push(el("small", { class: "opt-sub", text: (addon > 0 ? "+ " : "− ") + MP.money(Math.abs(addon)).replace(/^LKR /, "LKR ") + "/unit" }));
+        row.appendChild(el("label", { class: "opt", for: id }, [input, el("span", null, kids)]));
       });
       fs.appendChild(row); form.appendChild(fs);
     });
 
     // Quantity
-    var qty = p.quantities[0];
+    var qty = p.quantities[0], qPrices = [];
     var qfs = el("fieldset", { class: "opt-group" }, [el("legend", { class: "slug", text: "Quantity" })]);
     var qrow = el("div", { class: "opt-row" });
     p.quantities.forEach(function (q, qi) {
       var input = el("input", { type: "radio", name: "qty", id: "q-" + qi, value: q, class: "visually-hidden" });
       if (qi === 0) input.checked = true;
       input.addEventListener("change", function () { qty = q; custom.value = ""; update(); });
-      qrow.appendChild(el("label", { class: "opt", for: "q-" + qi }, [input, el("span", { text: String(q) })]));
+      var qp = el("small", { class: "opt-sub" });
+      qPrices.push([q, qp]);
+      qrow.appendChild(el("label", { class: "opt", for: "q-" + qi }, [input, el("span", null, [document.createTextNode(String(q)), qp])]));
     });
     var custom = el("input", { type: "number", min: "1", max: "100000", inputmode: "numeric", class: "form-control opt-custom", placeholder: "Other", "aria-label": "Other quantity" });
     custom.addEventListener("input", function () {
@@ -379,45 +411,178 @@ window.MP_PAGES = window.MP_PAGES || {};
     afs.appendChild(arow); afs.appendChild(file); afs.appendChild(dropzone); afs.appendChild(fileInfo);
     form.appendChild(afs);
 
+    var lowRes = el("p", { class: "file-info is-warn", hidden: "", role: "status", text: "Low resolution for print — we'll check it before printing." });
+    afs.insertBefore(lowRes, fileInfo.nextSibling);
+    var artURL = "";
+    file.addEventListener("change", function () {
+      lowRes.hidden = true;
+      if (artURL) { try { URL.revokeObjectURL(artURL); } catch (e) {} artURL = ""; }
+      var f = file.files[0];
+      if (!artFile || !f) { setMock(""); return; }
+      if (/\.(jpe?g|png|svg)$/i.test(f.name)) {
+        try { artURL = URL.createObjectURL(f); } catch (e) { artURL = ""; }
+        var im = new Image();
+        im.onload = function () { if (/\.(jpe?g|png)$/i.test(f.name) && im.naturalWidth < 1000) lowRes.hidden = false; setMock(artURL); };
+        im.onerror = function () { setMock(""); };
+        im.src = artURL;
+      } else setMock("");
+    });
+
+    // Personalisation
+    var pName = null, pMsg = null;
+    if (p.personalise) {
+      var pfs = el("fieldset", { class: "opt-group" }, [el("legend", { class: "slug", text: "Personalise" })]);
+      pName = el("input", { type: "text", class: "form-control", id: "pdName", maxlength: "40", placeholder: "e.g. Nimal's Hardware" });
+      pName.addEventListener("input", function () { setMockText(); update(); });
+      pfs.appendChild(el("label", { class: "pd-field-label", for: "pdName", text: "Name / text to print (max 40 characters)" }));
+      pfs.appendChild(pName);
+      if (p.cat === "stationery" && p.sub === "invitations") {
+        pMsg = el("textarea", { class: "form-control", rows: "3", maxlength: "200", id: "pdMsg", placeholder: "Message printed inside the card" });
+        pMsg.addEventListener("input", update);
+        pfs.appendChild(el("label", { class: "pd-field-label mt-3", for: "pdMsg", text: "Inside message (max 200 characters)" }));
+        pfs.appendChild(pMsg);
+      }
+      form.appendChild(pfs);
+    }
+
     var notes = el("textarea", { class: "form-control", rows: "3", maxlength: "500", id: "pdNotes", placeholder: "Anything else — colours, wording, deadline…" });
     notes.addEventListener("input", update);
     form.appendChild(el("div", { class: "opt-group" }, [el("label", { class: "slug", for: "pdNotes", text: "Notes (optional)" }), notes]));
 
     /* Live job ticket */
+    var NODAYS = 0;
+    var express = false;
     var tRows = el("dl", { class: "ticket-spec" });
     var stamp = el("span", { class: "stamp stamp-added", "aria-hidden": "true", text: "Added" });
-    var addBtn = el("button", { type: "button", class: "btn-mp btn-mp-primary w-100", html: '<i class="fa-solid fa-clipboard-list" aria-hidden="true"></i> Add to quote list' });
-    var waBtn = el("a", { class: "btn-mp btn-mp-whatsapp w-100", target: "_blank", rel: "noopener", html: '<i class="fa-brands fa-whatsapp" aria-hidden="true"></i> Order on WhatsApp' });
+    var priceEl = el("strong", { class: "pd-total", "aria-live": "polite" });
+    var unitEl = el("span", { class: "pd-unit" });
+    var kokoLine = el("span", { class: "bnpl-text" }), mintLine = el("span", { class: "bnpl-text" });
+    function info(title, brand) {
+      var b = el("button", { type: "button", class: "bnpl-info", "aria-label": "About " + brand + " instalments", "aria-expanded": "false", html: '<i class="fa-solid fa-circle-info" aria-hidden="true"></i>' });
+      var pop = el("span", { class: "bnpl-pop", role: "note", hidden: "", text: "Pay in 3 interest-free instalments. 1st today, the rest over the next 2 months. Requires a " + brand + " account." });
+      b.addEventListener("click", function (e) { e.stopPropagation(); var open = pop.hidden; closePops(); pop.hidden = !open; b.setAttribute("aria-expanded", String(open)); });
+      return [b, pop];
+    }
+    function closePops() { $$(".bnpl-pop").forEach(function (x) { x.hidden = true; }); $$(".bnpl-info").forEach(function (x) { x.setAttribute("aria-expanded", "false"); }); }
+    document.addEventListener("click", closePops);
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePops(); });
+    var kokoRow = el("li", { class: "bnpl-row" }, [kokoLine, el("img", { class: "bnpl-koko", src: "assets/img/pay/koko-alt.png", alt: "Koko", width: "215", height: "98" })].concat(info("", "Koko")));
+    var mintRow = el("li", { class: "bnpl-row" }, [mintLine, el("span", { class: "bnpl-chip" }, [el("img", { src: "assets/img/pay/mintpay.png", alt: "Mintpay", width: "3348", height: "1228" })])].concat(info("", "Mintpay")));
+
+    var expChk = el("input", { type: "checkbox", id: "pdExpress" });
+    expChk.addEventListener("change", function () { express = expChk.checked; update(); });
+    var delivBox = el("div", { class: "pd-deliv" }, [
+      el("span", { class: "slug", text: "Delivery" }),
+      el("p", { class: "pd-deliv-note", text: "Delivery is chosen at checkout: collect free in Pannala or island-wide courier LKR 450 (sample)." })
+    ]);
+    if (p.days > 2) delivBox.appendChild(el("label", { class: "pd-express", for: "pdExpress" }, [expChk, el("span", { text: "Express — ready in 1–2 days, +25%" })]));
+    var readyEl = el("p", { class: "pd-ready" });
+
+    var cartBtn = el("button", { type: "button", class: "btn-mp btn-mp-primary w-100", html: '<i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Add to cart' });
+    var buyBtn = el("button", { type: "button", class: "btn-mp btn-mp-outline w-100", text: "Buy now" });
+    var quoteBtn = el("button", { type: "button", class: "text-link pd-link", text: "Request a quote" });
+    var waBtn = el("a", { class: "text-link pd-link", target: "_blank", rel: "noopener", text: "Ask on WhatsApp" });
     var status = el("p", { class: "ticket-status", "aria-live": "polite" });
-    var ticket = el("aside", { class: "ticket pd-ticket", "aria-label": "Your order summary" }, [
+    var trust = el("ul", { class: "pd-trust" }, [
+      el("li", { html: '<i class="fa-solid fa-circle-check" aria-hidden="true"></i><span class="slug">Proof before print</span>' }),
+      el("li", { class: "pd-trust-pay" }, [el("i", { class: "fa-solid fa-lock", "aria-hidden": "true" }), el("span", { class: "slug", text: "Secure payment" }),
+        el("span", { class: "pd-cards", html: '<i class="fa-brands fa-cc-visa" aria-hidden="true"></i><i class="fa-brands fa-cc-mastercard" aria-hidden="true"></i><i class="fa-brands fa-cc-amex" aria-hidden="true"></i>' }),
+        el("img", { src: "assets/img/pay/payhere.png", alt: "PayHere", width: "500", height: "200", class: "pd-payhere" })]),
+      el("li", { html: '<i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span class="slug">Pay later with Koko &amp; Mintpay</span>' })
+    ]);
+    var ticket = el("aside", { class: "ticket pd-ticket", id: "pdTicket", "aria-label": "Your order summary" }, [
       el("div", { class: "ticket-head" }, [el("span", { class: "ticket-title", text: "Job ticket" }), el("span", { class: "slug", text: p.service })]),
       tRows,
-      el("div", { class: "ticket-price" }, [el("span", { class: "slug", text: "Price" }), el("strong", { text: "Confirmed with your proof" })]),
-      el("div", { class: "ticket-actions" }, [addBtn, waBtn]),
-      status,
+      el("div", { class: "ticket-price pd-price" }, [el("span", { class: "slug", text: "Total" }), el("span", { class: "pd-price-r" }, [priceEl, unitEl])]),
+      el("p", { class: "pd-sample slug", text: "Sample prices — final price confirmed with your proof" }),
+      el("ul", { class: "bnpl" }, [kokoRow, mintRow]),
+      delivBox, readyEl,
+      el("div", { class: "ticket-actions" }, [cartBtn, buyBtn]),
+      el("p", { class: "pd-or slug", text: "or" }),
+      el("p", { class: "pd-links" }, [quoteBtn, waBtn]),
+      status, trust,
       stamp
     ]);
+
+    function readyDate() {
+      var d = new Date(), n = express && p.days > 2 ? 2 : p.days;
+      while (n > 0) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) n--; }
+      return d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" }).replace(",", "");
+    }
+    function current() {
+      var r = MP.price(p, chosen, qty), t = r.total, unit = r.unit;
+      if (express && p.days > 2) { t = Math.round(t * 1.25); unit = Math.round(t / qty); }
+      return { total: t, unit: unit };
+    }
     function item() {
-      return { slug: p.slug, name: p.name, options: JSON.parse(JSON.stringify(chosen)), qty: qty,
+      var c = current();
+      var opts = JSON.parse(JSON.stringify(chosen));
+      if (express && p.days > 2) opts.Turnaround = "Express (1–2 days)";
+      var it = { slug: p.slug, name: p.name, img: p.img, options: opts, qty: qty, unit: c.unit, total: c.total,
         artwork: artMode === "upload" ? (artFile || "file to follow") : artMode === "design" ? "design requested" : "to follow on WhatsApp",
-        notes: notes.value.trim() };
+        notes: notes.value.trim(), express: !!(express && p.days > 2), ready: readyDate() };
+      if (pName && (pName.value.trim() || (pMsg && pMsg.value.trim()))) it.personal = { name: pName.value.trim(), message: pMsg ? pMsg.value.trim() : "" };
+      return it;
     }
     function update() {
+      var c = current(), third = Math.ceil(c.total / 3);
+      priceEl.textContent = MP.money(c.total);
+      unitEl.textContent = MP.money(c.unit) + " per unit";
+      kokoLine.textContent = "or 3 × " + MP.money(third) + " with";
+      mintLine.textContent = "or 3 interest-free payments of " + MP.money(third) + " with";
+      qPrices.forEach(function (q) { q[1].textContent = MP.money(MP.price(p, chosen, q[0]).total); });
+      readyEl.textContent = "";
+      readyEl.appendChild(el("span", { class: "slug", text: "Ready by" }));
+      readyEl.appendChild(document.createTextNode(" " + readyDate()));
       tRows.textContent = "";
+      var it = item();
       var rows = Object.keys(chosen).map(function (k) { return [k, chosen[k]]; });
       rows.push(["Quantity", String(qty)]);
-      rows.push(["Artwork", item().artwork]);
+      rows.push(["Artwork", it.artwork]);
+      if (it.personal && it.personal.name) rows.push(["Print text", it.personal.name]);
       rows.forEach(function (r) { tRows.appendChild(el("dt", { text: r[0] })); tRows.appendChild(el("dd", { text: r[1] })); });
-      waBtn.href = MP.waLink("Hi Majestic Print, I'd like to order:\n\n" + MP.quote.describe(item()));
+      var msg = "Hi Majestic Print, I'd like to order:\n\n" + MP.quote.describe(it) + "\nTotal (sample price): " + MP.money(c.total);
+      if (it.personal) msg += "\nPrint text: " + it.personal.name + (it.personal.message ? "\nInside message: " + it.personal.message : "");
+      waBtn.href = MP.waLink(msg);
+      var tot = $("#pdBarTotal"); if (tot) tot.textContent = MP.money(c.total);
     }
-    addBtn.addEventListener("click", function () {
-      MP.quote.add(item());
+    function addToCart() { MP.cart.add(item()); }
+    cartBtn.addEventListener("click", function () {
+      addToCart();
       ticket.classList.remove("is-added"); void ticket.offsetWidth; ticket.classList.add("is-added");
       status.textContent = "";
-      status.appendChild(document.createTextNode("Added. "));
-      status.appendChild(el("a", { href: "contact.html#quote", text: "View quote list (" + MP.quote.list().length + ")" }));
+      status.appendChild(el("strong", { text: "Added to cart" }));
+      status.appendChild(document.createTextNode("  ·  "));
+      status.appendChild(el("a", { class: "text-link", href: "cart.html", text: "View cart" }));
+      status.appendChild(document.createTextNode("  ·  "));
+      status.appendChild(el("a", { class: "text-link", href: "checkout.html", text: "Checkout" }));
+    });
+    buyBtn.addEventListener("click", function () { addToCart(); window.location.href = "checkout.html"; });
+    quoteBtn.addEventListener("click", function () {
+      var it = item(); MP.quote.add({ slug: it.slug, name: it.name, options: it.options, qty: it.qty, artwork: it.artwork, notes: it.notes });
+      status.textContent = "";
+      status.appendChild(document.createTextNode("Added to quote list. "));
+      status.appendChild(el("a", { class: "text-link", href: "contact.html#quote", text: "View quote list (" + MP.quote.list().length + ")" }));
     });
     update();
+
+    /* Mobile sticky buy bar */
+    var bar = el("div", { class: "pd-bar", id: "pdBar", hidden: "" }, [
+      el("div", null, [el("span", { class: "slug", text: "Total" }), el("strong", { id: "pdBarTotal" })]),
+      el("button", { type: "button", class: "btn-mp btn-mp-primary", html: '<i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> Add to cart' })
+    ]);
+    bar.querySelector("button").addEventListener("click", function () { cartBtn.click(); ticket.scrollIntoView({ behavior: "smooth", block: "center" }); });
+    document.body.appendChild(bar);
+    update();
+    function barCheck() {
+      var narrow = window.innerWidth < 992, r = ticket.getBoundingClientRect();
+      var show = narrow && (r.bottom < 0 || r.top > window.innerHeight);
+      bar.hidden = !show;
+      document.body.classList.toggle("has-pd-bar", show);
+    }
+    window.addEventListener("scroll", barCheck, { passive: true });
+    window.addEventListener("resize", barCheck);
+    barCheck();
 
     var plate = el("p", { class: "pd-plate", style: "--ink:" + inkHex }, [el("span", { text: cat.title }), document.createTextNode("  ·  " + p.service)]);
     var title = el("h1", { class: "pd-title" }, [document.createTextNode(p.name), el("span", { class: "dot", style: "color:" + inkHex, text: "." })]);

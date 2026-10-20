@@ -140,14 +140,18 @@
     add: function (item) {
       var l = cart.list();
       l.push({ slug: item.slug, name: item.name, img: item.img, options: item.options || {}, qty: item.qty, unit: item.unit, total: item.total,
-        artwork: item.artwork || "", personal: item.personal || "", notes: item.notes || "" });
+        artwork: item.artwork || "", personal: item.personal || "", notes: item.notes || "", express: !!item.express, ready: item.ready || "" });
       cart.save(l);
     },
     update: function (i, qty) {
       var l = cart.list(), it = l[i]; if (!it) return;
       qty = Math.max(1, parseInt(qty, 10) || 1);
       var p = productBySlug(it.slug);
-      if (p) { var r = price(p, it.options, qty); it.unit = r.unit; it.total = r.total; } else { it.total = it.unit * qty; }
+      if (p) {
+        var r = price(p, it.options, qty), t = r.total;
+        if (it.express) t = Math.round(t * 1.25); // keep the +25% express surcharge
+        it.total = t; it.unit = Math.round(t / qty);
+      } else { it.total = it.unit * qty; }
       it.qty = qty; cart.save(l);
     },
     remove: function (i) { var l = cart.list(); l.splice(i, 1); cart.save(l); },
