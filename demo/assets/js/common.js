@@ -327,32 +327,21 @@
   }
 
 
-  /* ---------- Filter bar: one row of square-cut category buttons + a search button ---------- */
+  /* ---------- Category chips: one row of simple text chips ---------- */
   function filterBar(opts) {
-    var scroll = el("div", { class: "fb-scroll", role: "group", "aria-label": opts.label || "Filter" });
+    var bar = el("div", { class: "cat-chips", role: "group", "aria-label": opts.label || "Filter" });
     var buttons = opts.items.map(function (it) {
-      var chip = it.id === "all"
-        ? el("span", { class: "fb-ink fb-ink-all", "aria-hidden": "true" }, [el("i"), el("i"), el("i"), el("i")])
-        : el("span", { class: "fb-ink", "aria-hidden": "true", style: "background:" + ink(it.ink) });
-      var b = el("button", { type: "button", class: "fb-btn", "data-id": it.id, "aria-pressed": "false" }, [
-        chip, el("span", { class: "fb-label", text: it.title }), el("span", { class: "fb-count", text: String(it.count) })
-      ]);
-      b.setAttribute("aria-label", it.title + ", " + it.count + (it.count === 1 ? " product" : " products"));
+      var attrs = { type: "button", class: "occ-chip", "data-id": it.id, "aria-pressed": "false", text: it.title };
+      if (it.id !== "all") attrs.style = "--ink:" + ink(it.ink);
+      var b = el("button", attrs);
       b.addEventListener("click", function () { set(it.id); opts.onChange(it.id); });
-      scroll.appendChild(b);
+      bar.appendChild(b);
       return b;
     });
-    var searchBtn = el("button", { type: "button", class: "fb-search search-open", "aria-haspopup": "dialog", html: '<i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span>Search</span>' });
-    var bar = el("div", { class: "filter-bar" }, [scroll, searchBtn]);
     function set(id) {
       buttons.forEach(function (b) {
         var on = b.getAttribute("data-id") === id;
         b.classList.toggle("is-active", on); b.setAttribute("aria-pressed", on ? "true" : "false");
-        // on narrow screens bring the active button into view, only if it is hidden
-        if (on && scroll.scrollWidth > scroll.clientWidth) {
-          var l = b.offsetLeft - scroll.offsetLeft, r = l + b.offsetWidth;
-          if (l < scroll.scrollLeft || r > scroll.scrollLeft + scroll.clientWidth) scroll.scrollLeft = l - 8;
-        }
       });
     }
     set(opts.active || "all");
