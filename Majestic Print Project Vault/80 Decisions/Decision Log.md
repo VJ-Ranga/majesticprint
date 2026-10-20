@@ -57,4 +57,5 @@ D06 remains a historical initial scan, superseded for current asset status by D0
 | D23 | 2026-10-20 | Hero control strip reduced to ruler marks only (job, sheet, density and clock removed) | User feedback: too complicated | Done |
 | D24 | 2026-10-20 | Shop occasion filter (Avurudu, Vesak…) removed: customers do not shop for print by festival | User feedback on practicality | Done |
 | D25 | 2026-10-20 | "Print. Pack. Promote." used only as the tagline (hero headline, footer). Categories everywhere are practical: Cards & stationery, Marketing print, Signs & banners, Printed packaging, Gifts & apparel | User feedback: tagline is not a category; packaging is printed product | Done |
+| D26 | 2026-10-20 | Homepage second section restored to the three Print / Pack / Promote cards (no shop filtering); confirm with the owner whether to keep using the tagline words here | User instruction | Done; awaiting owner feedback |
 

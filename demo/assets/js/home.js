@@ -113,21 +113,21 @@ window.MP_PAGES.home = function (MP) {
     });
   })();
 
-  /* ---------- Product categories (duotone plates) ---------- */
+  /* ---------- Print / Pack / Promote (duotone plates) ---------- */
   var routeGrid = $("#routeGrid");
-  D.categories.forEach(function (c) {
-    routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(c.ink) }, [
+  D.routes.forEach(function (r) {
+    routeGrid.appendChild(el("article", { class: "route reveal", style: "--ink:" + ink(r.ink) }, [
       el("figure", { class: "print-frame duo" }, [
         el("div", { class: "duo-img" }, [
-          el("img", { class: "duo-base", src: c.img, alt: "", loading: "lazy", width: "900", height: "1125" }),
-          el("img", { class: "duo-color", src: c.img, alt: "", loading: "lazy", width: "900", height: "1125" })
+          el("img", { class: "duo-base", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" }),
+          el("img", { class: "duo-color", src: r.img, alt: "", loading: "lazy", width: "900", height: "1125" })
         ]),
-        el("figcaption", { class: "slug", text: D.inks[c.ink].name + " · duotone" })
+        el("figcaption", { class: "slug", text: D.inks[r.ink].name + " plate · duotone" })
       ]),
-      el("h3", null, [document.createTextNode(c.title), el("span", { text: "." })]),
-      el("p", { text: c.text }),
-      el("p", { class: "route-items", text: c.items.join("  /  ") }),
-      el("a", { class: "text-link", href: "shop.html?cat=" + c.id, html: "Browse" + ARROW })
+      el("h3", null, [document.createTextNode(r.title), el("span", { text: "." })]),
+      el("p", { text: r.text }),
+      el("p", { class: "route-items", text: r.items.join("  /  ") }),
+      el("a", { class: "text-link", href: r.href, html: "Explore " + r.title + ARROW })
     ]));
   });
 

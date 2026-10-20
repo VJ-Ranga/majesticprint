@@ -1087,10 +1087,5 @@ html.pl-skip .preloader { display: none; }
 .job-strip .js-ruler { height: 10px; }
 .hero .sheet { min-height: calc(100svh - var(--header-h) - 22px); }
 
-/* Five practical product categories on the homepage */
-@media (min-width: 768px) { .routes { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1200px) { .routes { grid-template-columns: repeat(5, 1fr); gap: var(--s5); } }
-.route h3 { font-size: clamp(1.45rem, 1.9vw, 1.75rem); letter-spacing: -.03em; }
-.route .duo-img { aspect-ratio: 3 / 4; }
 .mn-routes { grid-template-columns: repeat(2, 1fr); }
 .mn-route { font-size: .95rem; }

@@ -47,6 +47,8 @@ Confirm budget range, target date, hosting/staging access, existing editor prefe
 8. Should the quote list become a real cart with prices at launch, or stay a quote request?
 9. Are the typical "Materials" listed on each service page correct? (Not in the brand guide.)
 
+10. Owner feedback: keep the homepage Print / Pack / Promote cards, or change that section?
+
 ## Answered
 
 Audience: a mix of business print orders and personal gifts. Recorded on 5 October 2026 in [[Decision Log]].

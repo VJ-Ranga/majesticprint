@@ -41,6 +41,20 @@ window.MP_DATA = {
       cta: ["Shop gifts & apparel", "shop.html?cat=gifts"], cta2: ["Corporate gift ideas", "service.html?s=promotional-and-corporate-gifts"] }
   ],
 
+  // Homepage second section: Print / Pack / Promote cards (kept as before; awaiting owner feedback).
+  // Links open pages, not shop filters.
+  routes: [
+    { id: "print",   title: "Print",   ink: "bright",  img: "assets/img/photos/flyers.jpg",
+      text: "Cards, brochures, labels and calendars — everything your business hands out.",
+      items: ["Visiting cards", "Brochures", "Letterheads", "Calendars"], href: "shop.html" },
+    { id: "pack",    title: "Pack",    ink: "gold",    img: "assets/img/photos/boxes.jpg",
+      text: "Boxes, bags, sleeves and stickers that make a product shelf-ready.",
+      items: ["Custom boxes", "Paper bags", "Sleeves", "Labels"], href: "service.html?s=packaging-and-branding" },
+    { id: "promote", title: "Promote", ink: "magenta", img: "assets/img/photos/signage.jpg",
+      text: "Signs, vehicle graphics and branded gifts that keep your name in sight.",
+      items: ["Shop signs", "Vehicle wraps", "Corporate gifts", "Apparel"], href: "services.html" }
+  ],
+
   // Practical product categories — named the way customers ask for things (the tagline is not a category)
   categories: [
     { id: "stationery", title: "Cards & stationery", ink: "bright",  img: "assets/img/photos/business-cards.jpg",
