@@ -1089,3 +1089,14 @@ html.pl-skip .preloader { display: none; }
 
 .mn-routes { grid-template-columns: repeat(2, 1fr); }
 .mn-route { font-size: .95rem; }
+
+/* Ruler flipped: it hangs from the header's bottom border and measures down into the hero */
+.job-strip { height: 12px; border-top: 1px solid var(--mp-ink); background: var(--mp-paper); position: relative; }
+.job-strip .js-ruler {
+  top: 0; bottom: auto; height: 11px;
+  background:
+    linear-gradient(90deg, var(--mp-ink) 1px, transparent 1px) 0 0 / 50px 11px repeat-x,
+    linear-gradient(90deg, rgba(13, 36, 64, .55) 1px, transparent 1px) 0 0 / 25px 7px repeat-x,
+    linear-gradient(90deg, rgba(13, 36, 64, .35) 1px, transparent 1px) 0 0 / 5px 4px repeat-x;
+}
+.site-header.is-scrolled { border-bottom-color: transparent; }
