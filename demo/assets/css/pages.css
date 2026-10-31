@@ -438,8 +438,14 @@ body.has-pd-bar .wa-float, body.has-pd-bar .to-top { bottom: calc(82px + env(saf
 .about-story strong { color: var(--mp-deep); font-weight: 700; }
 .vision-statement { font-family: var(--font-display); font-weight: 800; font-size: clamp(1.6rem, 3.4vw, 2.8rem); line-height: 1.15; letter-spacing: -.03em; color: var(--mp-deep); max-width: 52rem; margin: var(--s4) 0 0; }
 .awards-grid { display: grid; gap: var(--s6); align-items: center; }
-@media (min-width: 992px) { .awards-grid { grid-template-columns: 1.4fr .6fr; gap: var(--s12); } }
+@media (min-width: 992px) { .awards-grid { grid-template-columns: 2fr 3fr; gap: var(--s12); } }
 .awards-text { font-size: var(--fs-lead); line-height: 1.7; color: var(--mp-ink); margin: 0; max-width: 40rem; }
-.medals { display: grid; gap: var(--s3); }
-.medal-row { display: flex; gap: var(--s3); }
-.medal-chip { width: 44px; height: 44px; display: block; }
+.trophies { min-width: 0; }
+.trophy-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s4); }
+@media (max-width: 575.98px) { .trophy-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.trophy { margin: 0; }
+.trophy img { display: block; width: 100%; height: auto; background: #fff; border: 1px solid var(--mp-line, #e3e6ec); }
+.trophy figcaption { margin-top: var(--s2); display: grid; gap: 4px; }
+.trophy-year { font-family: var(--font-display); font-weight: 800; font-size: 1.5rem; line-height: 1; letter-spacing: -.02em; color: var(--mp-deep); }
+.trophy .slug { line-height: 1.4; }
+.trophy-credit { margin: var(--s4) 0 0; color: var(--mp-muted); }

@@ -772,14 +772,23 @@ window.MP_PAGES = window.MP_PAGES || {};
       el("p", { class: "vision-statement", text: "To be customer’s obvious choice by Providing total Print solutions through innovative and reliable service and to become the iconic printing company in Sri Lanka" })
     ])]));
 
-    var medals = [["Gold", "#EAA123"], ["Silver", "#9AA3AD"], ["Bronze", "#CF6428"]];
+    var trophies = [
+      ["awards1.png", "2015", "Office Calendars \u00b7 Letter Heads", "SLAP Regional Print Awards 2015 trophies \u2014 Office Calendars and Letter Heads"],
+      ["awards2.png", "2017", "Winner \u2014 Books \u00b7 1st Runner-up \u2014 Visiting Cards", "SLAP Regional Print Awards 2017 trophies \u2014 Winner Books, 1st Runner-up Visiting Cards"],
+      ["awards3.png", "2019", "1st Runner-up \u2014 Posters \u00b7 Runner-up \u2014 Calendars (Single Sheet)", "SLAP Regional Print Awards 2019 trophies \u2014 1st Runner-up Posters, Runner-up Calendars (Single Sheet)"]
+    ];
     body.appendChild(el("section", { class: "section about-awards" }, [el("div", { class: "container-xl" }, [
       el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Our Awards" })]),
       el("div", { class: "awards-grid" }, [
         el("p", { class: "awards-text", text: "Majestic Print Solutions (Pvt) Ltd have achieved Several GOLD, Silver & BRONZE awards in the field of high quality printing (islandwide, non-Colombo printers), at the Regional Print Awards 2015, 2017 @ 2019 organized by the Sri Lanka Association of Printers (SLAP)." }),
-        el("div", { class: "medals", "aria-hidden": "true" }, [
-          el("div", { class: "medal-row" }, medals.map(function (m) { return el("span", { class: "medal-chip", style: "background:" + m[1] }); })),
-          el("span", { class: "slug", text: "2015 · 2017 · 2019" })
+        el("div", { class: "trophies" }, [
+          el("div", { class: "trophy-row" }, trophies.map(function (t) {
+            return el("figure", { class: "trophy" }, [
+              el("img", { src: "assets/img/awards/" + t[0], alt: t[3], width: "500", height: "500", loading: "lazy" }),
+              el("figcaption", {}, [el("span", { class: "trophy-year", text: t[1] }), el("span", { class: "slug", text: t[2] })])
+            ]);
+          })),
+          el("p", { class: "slug trophy-credit", text: "SLAP Regional Print Awards \u00b7 photos from majesticprint.lk" })
         ])
       ])
     ])]));
