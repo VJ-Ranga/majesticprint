@@ -751,6 +751,9 @@ window.MP_PAGES = window.MP_PAGES || {};
     var D = MP.D, el = MP.el;
     MP.pageHead({ kicker: "About Majestic", title: "One partner. Every printing solution", crumbs: [["About"]], ink: MP.ink("magenta") });
     var body = MP.$("#pageBody");
+    function rich(t) {
+      return t.split("**").map(function (seg, i) { return i % 2 ? el("strong", { text: seg }) : document.createTextNode(seg); });
+    }
     body.appendChild(el("section", { class: "section section-tight" }, [el("div", { class: "container-xl" }, [
       el("div", { class: "about-grid" }, [
         el("figure", { class: "print-frame about-photo reveal" }, [
@@ -758,9 +761,25 @@ window.MP_PAGES = window.MP_PAGES || {};
           el("figcaption", { class: "slug", text: "Sample image · Majestic workshop photography to come" })
         ]),
         el("div", { class: "about-copy reveal" }, [
-          el("p", { class: "statement", text: "Majestic Print Solutions brings printing, packaging, signage and promotional work together in one workshop in Pannala." }),
-          el("p", { class: "lead-text", text: "One team handles your job from file to finish — so colours match across your cards, boxes and shop sign, and you only explain your brand once." }),
-          el("p", { class: "fine-print", text: "Waiting on client: founding year, company story, team and verified milestones." })
+          el("p", { class: "kicker", text: "Our Story" }),
+          el("p", { class: "about-story" }, rich("**Majestic Print Solutions** is a leading printing and advertising company specializing in providing **customized printing & Advertising services** across the Sri Lanka & Globally. With over 21 years’ experience in the industry, we are at the forefront of **Offset & Digital printing** and continuously invest in state of the art technology to ensure that we can offer the highest quality printed products at low prices. As well as focusing on **innovation**, we are also constantly researching the **best materials** for our products to adapt to global changes and the latest trends."))
+        ])
+      ])
+    ])]));
+
+    body.appendChild(el("section", { class: "section section-tint about-vision" }, [el("div", { class: "container-xl" }, [
+      el("p", { class: "kicker", text: "Our Vision" }),
+      el("p", { class: "vision-statement", text: "To be customer’s obvious choice by Providing total Print solutions through innovative and reliable service and to become the iconic printing company in Sri Lanka" })
+    ])]));
+
+    var medals = [["Gold", "#EAA123"], ["Silver", "#9AA3AD"], ["Bronze", "#CF6428"]];
+    body.appendChild(el("section", { class: "section about-awards" }, [el("div", { class: "container-xl" }, [
+      el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Our Awards" })]),
+      el("div", { class: "awards-grid" }, [
+        el("p", { class: "awards-text", text: "Majestic Print Solutions (Pvt) Ltd have achieved Several GOLD, Silver & BRONZE awards in the field of high quality printing (islandwide, non-Colombo printers), at the Regional Print Awards 2015, 2017 @ 2019 organized by the Sri Lanka Association of Printers (SLAP)." }),
+        el("div", { class: "medals", "aria-hidden": "true" }, [
+          el("div", { class: "medal-row" }, medals.map(function (m) { return el("span", { class: "medal-chip", style: "background:" + m[1] }); })),
+          el("span", { class: "slug", text: "2015 · 2017 · 2019" })
         ])
       ])
     ])]));
