@@ -749,7 +749,8 @@ window.MP_PAGES = window.MP_PAGES || {};
   /* ================================================================== ABOUT */
   P.about = function (MP) {
     var D = MP.D, el = MP.el;
-    MP.pageHead({ kicker: "About Majestic", title: "One partner. Every printing solution", crumbs: [["About"]], ink: MP.ink("magenta") });
+    MP.pageHead({ kicker: "About Majestic", title: "One partner. Every printing solution", crumbs: [["About"]], ink: MP.ink("magenta"),
+      facts: [["21+", "Years’ experience"], ["3", "SLAP award years"], ["12", "Services in-house"]] });
     var body = MP.$("#pageBody");
     function rich(t) {
       return t.split("**").map(function (seg, i) { return i % 2 ? el("strong", { text: seg }) : document.createTextNode(seg); });
@@ -767,45 +768,48 @@ window.MP_PAGES = window.MP_PAGES || {};
       ])
     ])]));
 
+    var vText = "To be customer\u2019s obvious choice by Providing total Print solutions through innovative and reliable service and to become the iconic printing company in Sri Lanka";
+    var vKey = "the iconic printing company in Sri Lanka", vi = vText.indexOf(vKey);
+    var targetSvg = '<svg viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".8"><circle cx="100" cy="100" r="70"/><circle cx="100" cy="100" r="46"/><circle cx="100" cy="100" r="22"/><path d="M100 0v200M0 100h200"/><path d="M100 30a70 70 0 0 1 70 70H100z" fill="currentColor" fill-opacity=".08" stroke="none"/><path d="M100 170a70 70 0 0 1-70-70h70z" fill="currentColor" fill-opacity=".08" stroke="none"/></svg>';
     body.appendChild(el("section", { class: "section section-tint about-vision" }, [el("div", { class: "container-xl" }, [
-      el("p", { class: "kicker", text: "Our Vision" }),
-      el("p", { class: "vision-statement", text: "To be customer’s obvious choice by Providing total Print solutions through innovative and reliable service and to become the iconic printing company in Sri Lanka" })
-    ])]));
-
-    var trophies = [
-      ["awards1.png", "2015", "Office Calendars \u00b7 Letter Heads", "SLAP Regional Print Awards 2015 trophies \u2014 Office Calendars and Letter Heads"],
-      ["awards2.png", "2017", "Winner \u2014 Books \u00b7 1st Runner-up \u2014 Visiting Cards", "SLAP Regional Print Awards 2017 trophies \u2014 Winner Books, 1st Runner-up Visiting Cards"],
-      ["awards3.png", "2019", "1st Runner-up \u2014 Posters \u00b7 Runner-up \u2014 Calendars (Single Sheet)", "SLAP Regional Print Awards 2019 trophies \u2014 1st Runner-up Posters, Runner-up Calendars (Single Sheet)"]
-    ];
-    body.appendChild(el("section", { class: "section about-awards" }, [el("div", { class: "container-xl" }, [
-      el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Our Awards" })]),
-      el("div", { class: "awards-grid" }, [
-        el("p", { class: "awards-text", text: "Majestic Print Solutions (Pvt) Ltd have achieved Several GOLD, Silver & BRONZE awards in the field of high quality printing (islandwide, non-Colombo printers), at the Regional Print Awards 2015, 2017 @ 2019 organized by the Sri Lanka Association of Printers (SLAP)." }),
-        el("div", { class: "trophies" }, [
-          el("div", { class: "trophy-row" }, trophies.map(function (t) {
-            return el("figure", { class: "trophy" }, [
-              el("img", { src: "assets/img/awards/" + t[0], alt: t[3], width: "500", height: "500", loading: "lazy" }),
-              el("figcaption", {}, [el("span", { class: "trophy-year", text: t[1] }), el("span", { class: "slug", text: t[2] })])
-            ]);
-          })),
-          el("p", { class: "slug trophy-credit", text: "SLAP Regional Print Awards \u00b7 photos from majesticprint.lk" })
-        ])
+      el("span", { class: "vision-target", "aria-hidden": "true", html: targetSvg }),
+      el("p", { class: "kicker", html: '<i class="fa-regular fa-eye" aria-hidden="true"></i> Our Vision' }),
+      el("div", { class: "vision-wrap" }, [
+        el("span", { class: "vision-quote", "aria-hidden": "true", text: "\u201C" }),
+        el("p", { class: "vision-statement" }, [document.createTextNode(vText.slice(0, vi)), el("span", { class: "vision-key", text: vKey }), document.createTextNode(vText.slice(vi + vKey.length))])
       ])
     ])]));
 
+    var trophies = [
+      ["awards1.png", "2015", ["Office Calendars \u00b7 Letter Heads"], "SLAP Regional Print Awards 2015 trophies \u2014 Office Calendars and Letter Heads"],
+      ["awards2.png", "2017", ["Winner \u2014 Books", "1st Runner-up \u2014 Visiting Cards"], "SLAP Regional Print Awards 2017 trophies \u2014 Winner Books, 1st Runner-up Visiting Cards"],
+      ["awards3.png", "2019", ["1st Runner-up \u2014 Posters", "Runner-up \u2014 Calendars (Single Sheet)"], "SLAP Regional Print Awards 2019 trophies \u2014 1st Runner-up Posters, Runner-up Calendars (Single Sheet)"]
+    ];
+    body.appendChild(el("section", { class: "section about-awards" }, [el("div", { class: "container-xl" }, [
+      el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "Our Awards" })]),
+      el("p", { class: "awards-text", text: "Majestic Print Solutions (Pvt) Ltd have achieved Several GOLD, Silver & BRONZE awards in the field of high quality printing (islandwide, non-Colombo printers), at the Regional Print Awards 2015, 2017 @ 2019 organized by the Sri Lanka Association of Printers (SLAP)." }),
+      el("div", { class: "trophy-row" }, trophies.map(function (t) {
+        return el("figure", { class: "trophy" }, [
+          el("div", { class: "trophy-stand" }, [el("img", { src: "assets/img/awards/" + t[0], alt: t[3], width: "500", height: "500", loading: "lazy" })]),
+          el("figcaption", {}, [el("span", { class: "trophy-year", text: t[1] })].concat(t[2].map(function (c) { return el("span", { class: "slug", text: c }); })))
+        ]);
+      })),
+      el("p", { class: "slug trophy-credit", text: "SLAP Regional Print Awards \u00b7 photos from majesticprint.lk" })
+    ])]));
+
     var pillars = [
-      ["Printing", "bright", "Visiting cards, stationery, marketing print and publications — offset for volume, digital for speed."],
-      ["Packaging", "gold", "Printed boxes, sleeves, bags and labels that make a product ready for the shelf."],
-      ["Signage & branding", "magenta", "Signs, vehicle graphics, large format and branded gifts that keep a name in sight."]
+      ["Printing", "bright", "Offset Printing", "Visiting cards, stationery, marketing print and publications \u2014 offset for volume, digital for speed."],
+      ["Packaging", "gold", "Packaging & Branding", "Printed boxes, sleeves, bags and labels that make a product ready for the shelf."],
+      ["Signage & branding", "magenta", "Signage & 3D Signage", "Signs, vehicle graphics, large format and branded gifts that keep a name in sight."]
     ];
     body.appendChild(el("section", { class: "section section-tint" }, [el("div", { class: "container-xl" }, [
       el("div", { class: "section-head" }, [el("p", { class: "kicker", text: "What we do" }), el("h2", { text: "Everything under one roof" }),
         el("p", { text: "Printing, packaging and signage from one team, so your brand looks the same everywhere it appears." })]),
       el("div", { class: "pillars" }, pillars.map(function (p) {
         return el("div", { class: "pillar reveal", style: "--ink:" + MP.ink(p[1]) }, [
-          el("span", { class: "pillar-plate", "aria-hidden": "true" }),
+          el("span", { class: "pillar-plate", "aria-hidden": "true", html: (window.MP_ICONS || {})[p[2]] || "" }),
           el("h3", null, [document.createTextNode(p[0]), el("span", { text: "." })]),
-          el("p", { text: p[2] })
+          el("p", { text: p[3] })
         ]);
       }))
     ])]));

@@ -551,7 +551,11 @@
         crumbs,
         h1 ? el("div", { class: "page-head-grid" }, [
           el("div", null, [opts.kicker ? el("p", { class: "kicker", text: opts.kicker }) : null, h1]),
-          el("div", { class: "page-head-side" }, [
+          opts.facts ? el("div", { class: "page-facts" }, opts.facts.map(function (f, k) {
+            return el("div", { class: "page-fact", style: "--ink:" + ink(["deep", "magenta", "gold"][k % 3]) }, [
+              el("span", { class: "page-fact-num" }, [document.createTextNode(f[0]), el("span", { class: "dot", text: "." })]),
+              el("span", { class: "slug", text: f[1] })]);
+          })) : el("div", { class: "page-head-side" }, [
             opts.icon ? el("span", { class: "page-icon", style: "--ink:" + (opts.ink || ink("magenta")), "aria-hidden": "true", html: opts.icon }) : null,
             opts.lead ? el("p", { class: "lead-text", text: opts.lead }) : null
           ])
