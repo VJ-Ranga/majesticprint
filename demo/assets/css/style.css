@@ -1201,3 +1201,20 @@ button.ql-link { background: none; border: 1.5px solid transparent; padding: 0; 
 .cp-empty { text-align: center; padding: 3.5rem 0; display: flex; flex-direction: column; align-items: center; gap: 1rem; color: var(--mp-deep); }
 .cp-empty > i { font-size: 2.2rem; color: var(--mp-magenta); }
 .cp-empty-t { margin: 0; font-weight: 600; font-size: 1.1rem; }
+
+/* Years-in-print mark (home, Why Majestic) */
+.years-mark { display: flex; align-items: center; gap: var(--s3); margin: 0 0 var(--s3); padding: var(--s2) 0; border-top: 1px solid var(--mp-line, #d9dee5); border-bottom: 1px solid var(--mp-line, #d9dee5); }
+.years-num { font-family: var(--font-display); font-weight: 800; font-size: clamp(3.5rem, 7vw, 5rem); line-height: .9; letter-spacing: -.05em; color: var(--mp-magenta); }
+.years-label { display: flex; flex-direction: column; gap: .3rem; font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--mp-deep); line-height: 1.1; }
+.years-label small { font-size: .62rem; font-weight: 500; }
+
+/* Key clients: contact-sheet grid with hairline rules */
+.client-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--mp-line, #d9dee5); border-left: 1px solid var(--mp-line, #d9dee5); }
+@media (min-width: 640px) { .client-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1100px) { .client-grid { grid-template-columns: repeat(7, 1fr); } }
+.client { position: relative; display: flex; align-items: center; justify-content: center; min-height: 6.5rem; padding: 1.75rem 1rem 1.25rem; border-right: 1px solid var(--mp-line, #d9dee5); border-bottom: 1px solid var(--mp-line, #d9dee5); outline-offset: -2px; }
+.client-idx { position: absolute; left: .5rem; top: .4rem; font-size: .5rem; opacity: .7; }
+.client img { max-height: 44px; max-width: 140px; width: auto; height: auto; object-fit: contain; filter: grayscale(1); opacity: .6; transition: filter .3s, opacity .3s; }
+.client:hover img, .client:focus-visible img, .client:focus-within img { filter: none; opacity: 1; }
+.client-word { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; letter-spacing: -.01em; color: var(--mp-muted); text-align: center; line-height: 1.1; }
+@media (prefers-reduced-motion: reduce) { .client img { transition: none; } }

@@ -186,6 +186,10 @@ window.MP_PAGES.home = function (MP) {
   /* ---------- Capability icons in "Why Majestic" ---------- */
   $$("[data-icon]").forEach(function (n) { n.innerHTML = (window.MP_ICONS || {})[n.getAttribute("data-icon")] || ""; });
 
+  /* ---------- Years in print + key clients ---------- */
+  var yrs = $("#yearsInPrint"); if (yrs) yrs.textContent = D.yearsInPrint;
+  var quoteSec = $("#quote"); if (quoteSec) quoteSec.parentNode.insertBefore(MP.clientsSection(), quoteSec);
+
   /* ---------- Job ticket + press run ---------- */
   buildTicket(MP, $("#stepList"));
   var run = $("#pressRun");
@@ -224,9 +228,9 @@ function initCapIndex(MP, capIndex, capProof, narrow, linkToPage) {
     if (i !== current) {
       var img = $("img", capProof);
       capProof.classList.remove("is-swapping"); void capProof.offsetWidth; capProof.classList.add("is-swapping");
-      img.src = s.img; img.alt = s.name + " (sample image)";
+      img.src = s.img; img.alt = s.name;
       capProof.style.setProperty("--ink", ink(s.ink));
-      $(".cp-slug", capProof).textContent = s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  sample image";
+      $(".cp-slug", capProof).textContent = s.name + "  ·  " + D.inks[s.ink].name + " plate";
       var tg = $(".cp-tagline", capProof); if (tg) tg.textContent = s.tagline;
       $(".cp-name", capProof).textContent = s.name;
       var cpi = $(".cp-icon", capProof); if (cpi) cpi.innerHTML = (window.MP_ICONS || {})[s.name] || "";

@@ -34,7 +34,7 @@ Design concept: **the website is a print job.**
 - Buttons misregister (cyan/magenta offset) on hover. All motion off under `prefers-reduced-motion`.
 
 ## Photos
-Temporary Unsplash/Pexels stock images in `assets/img/photos/` (credits in `CREDITS.md`). Each is captioned
+Client-supplied photos in `assets/img/work/`; a few temporary stock images remain in `assets/img/photos/` (credits in `CREDITS.md`). Each is captioned
 as a sample. Replace with Majestic's own product, project and workshop photography.
 
 ## Waiting on client

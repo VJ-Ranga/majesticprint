@@ -474,3 +474,8 @@ body.has-pd-bar .wa-float, body.has-pd-bar .to-top { bottom: calc(82px + env(saf
 @media (max-width: 479.98px) { .trophy-row { grid-template-columns: 1fr; } }
 .about-awards .section-head { margin-bottom: var(--s2); }
 .vision-quote { font-size: clamp(7rem, 12vw, 11rem); top: -.1em; line-height: .8; }
+
+/* About: mission, paired with vision */
+.mission-block { position: relative; margin-top: clamp(2.5rem, 5vw, 4rem); padding-top: var(--s4); border-top: 1px solid rgba(19,71,122,.25); max-width: 56rem; }
+.mission-block .kicker i { color: var(--mp-magenta); margin-right: .35rem; }
+.mission-statement { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.15rem, 2vw, 1.6rem); line-height: 1.35; letter-spacing: -.015em; color: var(--mp-deep); margin: 0; }

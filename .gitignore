@@ -3,3 +3,7 @@
 .remember/
 .claude/
 .obsidian/workspace*.json
+
+# Raw client photo drops (optimised copies live in demo/assets/img/work/)
+/ Photos/
+Photos-*.zip

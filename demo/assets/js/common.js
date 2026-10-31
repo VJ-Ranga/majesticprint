@@ -662,9 +662,28 @@
   window.addEventListener("storage", function (e) { if (e.key === CART_KEY) cart.render(); });
   window.addEventListener("storage", function (e) { if (e.key === KEY) quote.render(); });
 
+  /* ---------- Key clients: imposition-sheet grid of logos ---------- */
+  function clientsSection() {
+    var items = D.clients.map(function (c, i) {
+      var cell = el("li", { class: "client" }, [el("span", { class: "client-idx slug", "aria-hidden": "true", text: (i < 9 ? "0" : "") + (i + 1) })]);
+      cell.appendChild(c.logo
+        ? el("img", { src: c.logo, alt: c.name + " logo", loading: "lazy", decoding: "async" })
+        : el("span", { class: "client-word", text: c.name }));
+      if (c.logo) cell.setAttribute("tabindex", "0");
+      return cell;
+    });
+    return el("section", { class: "section section-tight clients", "aria-labelledby": "clients-title" }, [el("div", { class: "container-xl" }, [
+      el("div", { class: "section-head reveal" }, [
+        el("p", { class: "kicker", text: "Our key clients" }),
+        el("h2", { id: "clients-title", text: "Brands that trust Majestic with their print." })
+      ]),
+      el("ul", { class: "client-grid reveal", "aria-label": "Key clients" }, items)
+    ])]);
+  }
+
   window.MP = {
     D: D, $: $, $$: $$, el: el, ink: ink, slugify: slugify, waLink: waLink, param: param, ARROW: ARROW,
-    quote: quote, cart: cart, openCart: openCart, price: price, money: money, fromPrice: fromPrice, defaults: defaults, productBySlug: productBySlug, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, serviceByName: serviceByName
+    quote: quote, cart: cart, openCart: openCart, price: price, money: money, fromPrice: fromPrice, defaults: defaults, productBySlug: productBySlug, prefillQuote: prefillQuote, catById: catById, filterBar: filterBar, openSearch: openSearch, observe: observe, specCard: specCard, pageHead: pageHead, clientsSection: clientsSection, serviceByName: serviceByName
   };
 
   // Page scripts register via MP_PAGE; run them, then observe whatever they built

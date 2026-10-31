@@ -294,7 +294,7 @@ window.MP_PAGES = window.MP_PAGES || {};
     $("#pageHead").classList.add("page-head-slim");
 
     /* Gallery: one sample photo, with detail crops a press operator would inspect */
-    var main = el("img", { src: p.img, alt: p.name + " (sample image)", width: "1200", height: "900" });
+    var main = el("img", { src: p.img, alt: p.name, width: "1200", height: "900" });
     var views = [["Full sheet", "50% 50%", 1], ["Detail", "30% 40%", 1.9], ["Edge", "70% 65%", 2.4]];
     var thumbs = el("div", { class: "pd-thumbs", role: "group", "aria-label": "Image views" }, views.map(function (v, i) {
       var b = el("button", { type: "button", class: "pd-thumb", "aria-pressed": i === 0 ? "true" : "false", "aria-label": v[0] }, [
@@ -334,7 +334,7 @@ window.MP_PAGES = window.MP_PAGES || {};
       mock.firstChild.appendChild(svg);
     }
     var gallery = el("div", { class: "pd-gallery" }, [
-      el("figure", { class: "print-frame pd-main" }, [el("div", { class: "pd-main-img" }, [main]), el("figcaption", { class: "slug", text: p.name + "  ·  sample image  ·  real product photography to come" })])
+      el("figure", { class: "print-frame pd-main" }, [el("div", { class: "pd-main-img" }, [main]), el("figcaption", { class: "slug", text: p.name })])
     ].concat(mock ? [mock] : [thumbs]));
 
     /* Configurator */
@@ -703,8 +703,8 @@ window.MP_PAGES = window.MP_PAGES || {};
     body.appendChild(el("section", { class: "section section-tight" }, [
       el("div", { class: "container-xl" }, [
         el("figure", { class: "print-frame svc-hero reveal" }, [
-          el("div", { class: "svc-hero-img" }, [el("img", { src: s.img, alt: s.name + " (sample image)", width: "1600", height: "1067" })]),
-          el("figcaption", { class: "slug", text: s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  sample image — Majestic workshop photography to come" })
+          el("div", { class: "svc-hero-img" }, [el("img", { src: s.img, alt: s.name, width: "1600", height: "1067" })]),
+          el("figcaption", { class: "slug", text: s.name + "  ·  " + D.inks[s.ink].name + " plate  ·  Majestic client work" })
         ]),
         el("div", { class: "svc-grid", style: "--ink:" + inkHex }, [
           el("div", { class: "reveal" }, [
@@ -750,7 +750,7 @@ window.MP_PAGES = window.MP_PAGES || {};
   P.about = function (MP) {
     var D = MP.D, el = MP.el;
     MP.pageHead({ kicker: "About Majestic", title: "One partner. Every printing solution", crumbs: [["About"]], ink: MP.ink("magenta"),
-      facts: [["21+", "Years’ experience"], ["3", "SLAP award years"], ["12", "Services in-house"]] });
+      facts: [[D.yearsInPrint + "", "Years in printing"], ["3", "SLAP award years"], ["12", "Services in-house"]] });
     var body = MP.$("#pageBody");
     function rich(t) {
       return t.split("**").map(function (seg, i) { return i % 2 ? el("strong", { text: seg }) : document.createTextNode(seg); });
@@ -763,7 +763,7 @@ window.MP_PAGES = window.MP_PAGES || {};
         ]),
         el("div", { class: "about-copy reveal" }, [
           el("p", { class: "kicker", text: "Our Story" }),
-          el("p", { class: "about-story" }, rich("**Majestic Print Solutions** is a leading printing and advertising company specializing in providing **customized printing & Advertising services** across the Sri Lanka & Globally. With over 21 years’ experience in the industry, we are at the forefront of **Offset & Digital printing** and continuously invest in state of the art technology to ensure that we can offer the highest quality printed products at low prices. As well as focusing on **innovation**, we are also constantly researching the **best materials** for our products to adapt to global changes and the latest trends."))
+          el("p", { class: "about-story" }, rich("**Majestic Print Solutions** is a leading printing and advertising company specializing in providing **customized printing & Advertising services** across the Sri Lanka & Globally. With over " + D.yearsInPrint + " years’ experience in the industry, we are at the forefront of **Offset & Digital printing** and continuously invest in state of the art technology to ensure that we can offer the highest quality printed products at low prices. As well as focusing on **innovation**, we are also constantly researching the **best materials** for our products to adapt to global changes and the latest trends."))
         ])
       ])
     ])]));
@@ -777,6 +777,10 @@ window.MP_PAGES = window.MP_PAGES || {};
       el("div", { class: "vision-wrap" }, [
         el("span", { class: "vision-quote", "aria-hidden": "true", text: "\u201C" }),
         el("p", { class: "vision-statement" }, [document.createTextNode(vText.slice(0, vi)), el("span", { class: "vision-key", text: vKey }), document.createTextNode(vText.slice(vi + vKey.length))])
+      ]),
+      el("div", { class: "mission-block" }, [
+        el("p", { class: "kicker", html: '<i class="fa-solid fa-bullseye" aria-hidden="true"></i> Our Mission' }),
+        el("p", { class: "mission-statement", text: D.mission })
       ])
     ])]));
 
@@ -796,6 +800,8 @@ window.MP_PAGES = window.MP_PAGES || {};
       })),
       el("p", { class: "slug trophy-credit", text: "SLAP Regional Print Awards \u00b7 photos from majesticprint.lk" })
     ])]));
+
+    body.appendChild(MP.clientsSection());
 
     var pillars = [
       ["Printing", "bright", "Offset Printing", "Visiting cards, stationery, marketing print and publications \u2014 offset for volume, digital for speed."],
