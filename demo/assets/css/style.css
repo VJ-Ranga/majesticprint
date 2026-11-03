@@ -115,6 +115,7 @@ img, svg { max-width: 100%; }
   text-decoration: none; cursor: pointer; white-space: nowrap;
   transition: box-shadow .22s var(--ease-out), background-color .2s, color .2s, border-color .2s;
 }
+.ticket .btn-mp, .btn-mp.w-100 { white-space: normal; line-height: 1.25; text-align: center; }
 .btn-mp:disabled, .btn-mp[aria-disabled="true"] { opacity: .5; pointer-events: none; }
 .btn-mp i { transition: transform .25s var(--ease-out); }
 .btn-mp:hover i.fa-arrow-right { transform: translateX(4px); }
@@ -299,6 +300,7 @@ img, svg { max-width: 100%; }
 .section-deep .kicker { color: #fff; }
 .section-deep .lead-text { color: #B9CBE0; }
 .section-deep .slug { color: #9FB6D0; }
+.section-deep .ticket .slug { color: var(--mp-muted); }
 
 .section-head { max-width: 46rem; margin-bottom: clamp(3.5rem, 6vw, 5rem); }
 .section-head p:not(.kicker) { color: var(--mp-muted); font-size: var(--fs-lead); margin: 0; max-width: 38rem; }
@@ -392,7 +394,7 @@ img, svg { max-width: 100%; }
 .cap-ink { width: 14px; height: 14px; background: var(--ink); flex: none; }
 
 /* ---------- 16. Process — job ticket ---------- */
-.process-grid { display: grid; gap: var(--s8); align-items: center; }
+.process-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s8); align-items: center; }
 @media (min-width: 992px) { .process-grid { grid-template-columns: 1fr 1fr; gap: var(--s12); } }
 .process-photo { margin-top: var(--s6); }
 .process-photo img { aspect-ratio: 16 / 10; }
@@ -464,6 +466,7 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
 .site-footer h3 { color: #fff; font-family: var(--font-mono); font-size: .75rem; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; margin-bottom: var(--s3); }
 .footer-cols a { display: block; color: #B9CBE0; text-decoration: none; padding: .35rem 0; }
 .footer-cols a:hover { color: #fff; }
+@media (max-width: 1399.98px) { .row.footer-cols { --bs-gutter-x: 2.5rem; } }
 .footer-logo { background: #fff; padding: 10px 12px; width: auto; height: 96px; }
 .footer-tag { margin: var(--s3) 0 var(--s1); color: #fff; font-weight: 600; font-size: 1.1rem; }
 .footer-about { max-width: 22rem; }

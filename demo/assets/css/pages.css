@@ -408,6 +408,7 @@ body.has-pd-bar .wa-float, body.has-pd-bar .to-top { bottom: calc(82px + env(saf
 .cart-items li { display: grid; grid-template-columns: 6rem 1fr auto auto 44px; gap: var(--s3); align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--mp-line); }
 .cart-thumb img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
 .cart-name { font-weight: 700; color: var(--mp-deep); text-decoration: none; }
+.cart-info { min-width: 0; overflow-wrap: anywhere; }
 .cart-info p { margin: .15rem 0 0; font-size: .88rem; color: var(--mp-muted); }
 .cart-qty-wrap { display: flex; flex-direction: column; gap: .2rem; margin: 0; }
 .cart-qty { width: 5.5rem; min-height: 40px; border-radius: 0; }
@@ -430,7 +431,7 @@ body.has-pd-bar .wa-float, body.has-pd-bar .to-top { bottom: calc(82px + env(saf
 .sf-clear:focus-visible, .af-clear:focus-visible, .occ-chip:focus-visible, .sort-select:focus-visible, .sf-price .form-control:focus-visible, .mn-close:focus-visible, .btn-mp:focus-visible { outline: 3px solid var(--mp-bright); outline-offset: 2px; }
 .sf-price .btn-mp { min-height: 40px; padding: .4rem 1rem; }
 .shop-toolbar .btn-mp { min-height: 40px; }
-@media (max-width: 991.98px) { .shop-filters { z-index: 1100; } .offcanvas-backdrop { z-index: 1090; } }
+@media (max-width: 991.98px) { .shop-filters, .offcanvas { z-index: 1100; } .offcanvas-backdrop { z-index: 1090; } }
 .pd-deliv-note { margin: 0; font-size: .88rem; color: var(--mp-muted); }
 
 /* About: story, vision, awards */

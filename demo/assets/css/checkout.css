@@ -118,5 +118,5 @@ body.gw { background: #f3f4f7; min-height: 100vh; font-family: var(--font-body);
 .mt-sched, .mt-now { margin-bottom: 1rem; }
 .mt-login { margin: 1rem 0 .5rem; }
 .gw-mintpay .gw-btn { color: #0F3D3E; }
-.gw-mintpay .gw-btn-main { background: #1fb58a; border-color: #1fb58a; color: #fff; }
+.gw-mintpay .gw-btn-main { background: #1fb58a; border-color: #1fb58a; color: #0F3D3E; }
 .gw-mintpay .co-hint { color: #0F3D3E; }
