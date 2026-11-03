@@ -11,12 +11,12 @@ window.MP_DATA = {
   // Logos: client's key clients. logo:null renders a typeset wordmark (official file not yet supplied). See assets/img/clients/SOURCES.md
   clients: [
     { name: "Nestl\u00e9", logo: "assets/img/clients/nestle.svg" },
-    { name: "DAMRO", logo: null },
+    { name: "DAMRO", logo: "assets/img/clients/damro.png" },
     { name: "Piyestra", logo: "assets/img/clients/piyestra.png" },
     { name: "Barista", logo: "assets/img/clients/barista.png" },
     { name: "Best Pacific", logo: null },
     { name: "Alliance Finance", logo: "assets/img/clients/alliance-finance.png" },
-    { name: "S-lon", logo: null },
+    { name: "S-lon", logo: "assets/img/clients/s-lon.svg" },
     { name: "Phoenix", logo: "assets/img/clients/phoenix.png" },
     { name: "MAS Holdings", logo: "assets/img/clients/mas-holdings.png" },
     { name: "Omega Line", logo: null },
