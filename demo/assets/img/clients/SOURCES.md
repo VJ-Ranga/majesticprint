@@ -11,6 +11,7 @@
 | Browns | browns.png | https://www.brownsgroup.com/images/site-specific/logo.png (white background made transparent, trimmed) |
 | DAMRO | damro.png | https://en.wikipedia.org/wiki/File:DAMRO_logo.png (495x101, teal banner as published; damro.lk blocks automated access via Cloudflare) |
 | S-lon | s-lon.svg | https://www.s-lon.lk/themes/s-lon/assets/images/logo/brand-logo.svg (official site header logo; tagline "Water for Life" is white, so invisible on light grid) |
-| Best Pacific, Omega Line, Sirio, Ramco, GTB | none | official logo not retrievable; typeset wordmark fallback (logo: null). Tried: guessed domains unreachable from this network, web search found no official sites for Omega Line/Sirio (Calzedonia group) or Ramco Lanka |
+| Best Pacific, Omega Line, Sirio, Ramco | none | official logo not retrievable; typeset wordmark fallback (logo: null). Tried: guessed domains unreachable from this network, web search found no official sites for Omega Line/Sirio (Calzedonia group) or Ramco Lanka |
+| GTB Steel | gtb.png | https://www.gtbsteel.lk/wp-content/uploads/2026/05/cropped-Web-Logo-New-Replace.jpg (official site, URL supplied by VJ; low-res source, downsized, white background removed) |
 
 Logos are trademarks of their owners; shown with client's permission — client to confirm and supply official files.

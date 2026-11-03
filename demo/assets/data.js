@@ -23,7 +23,7 @@ window.MP_DATA = {
     { name: "Sirio", logo: null },
     { name: "Browns", logo: "assets/img/clients/browns.png" },
     { name: "Ramco", logo: null },
-    { name: "GTB", logo: null }
+    { name: "GTB Steel", logo: "assets/img/clients/gtb.png" }
   ],
   contact: {
     // WAITING ON CLIENT: real WhatsApp number (international format, digits only)
