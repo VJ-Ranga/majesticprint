@@ -1110,7 +1110,8 @@ html.pl-skip .preloader { display: none; }
     linear-gradient(90deg, rgba(13, 36, 64, .55) 1px, transparent 1px) 0 0 / 25px 7px repeat-x,
     linear-gradient(90deg, rgba(13, 36, 64, .35) 1px, transparent 1px) 0 0 / 5px 4px repeat-x;
 }
-.site-header.is-scrolled { border-bottom-color: transparent; }
+/* Same ink as the ruler's top line, so the home page keeps one line when the ruler scrolls away */
+.site-header.is-scrolled { border-bottom-color: var(--mp-ink); }
 
 .q-chip-row:empty { display: none; }
 .q-chip-row { margin: -1.5rem 0 var(--s4); }
