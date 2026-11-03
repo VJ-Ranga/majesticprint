@@ -303,7 +303,7 @@ body.has-pd-bar .wa-float, body.has-pd-bar .to-top { bottom: calc(82px + env(saf
     linear-gradient(90deg, rgba(19, 71, 122, .03) 1px, transparent 1px);
   background-size: 80px 80px, 80px 80px, 16px 16px, 16px 16px;
 }
-.page-head-slim { background-image: none; }
+.page-head-slim { background-color: var(--mp-paper); background-image: none; }
 .page-sheet { overflow: visible; }
 .page-sheet::after {
   content: ""; position: absolute; right: 0; top: 0; width: 45%; height: 100%; pointer-events: none;

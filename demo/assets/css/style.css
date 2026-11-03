@@ -777,14 +777,15 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
 
 /* Hero stamp badge */
 .hero-media-wrap { position: relative; }
-.hero-stamp { position: absolute; z-index: 4; width: clamp(96px, 9vw, 132px); left: clamp(-56px, -4vw, -36px); bottom: 2.5rem; overflow: visible;
+.hero-stamp { position: absolute; z-index: 4; width: clamp(104px, 9vw, 132px); transform: rotate(-9deg); left: clamp(-56px, -4vw, -36px); bottom: 2.5rem; overflow: visible;
   filter: drop-shadow(0 6px 14px rgba(13, 36, 64, .18)); }
 .hs-ring { fill: none; stroke: var(--mp-magenta); stroke-width: 2.5; }
 .hero-stamp circle:first-of-type { fill: #fff; }
 .hs-text text { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 1.47px; fill: var(--mp-magenta); font-weight: 500; }
 .hs-text { transform-origin: 70px 70px; }
-.hs-num { font-family: var(--font-display, inherit); font-size: 36px; font-weight: 700; letter-spacing: -1px; fill: var(--mp-magenta); }
-.hs-unit { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: 2px; font-weight: 500; fill: var(--mp-ink); }
+.hs-num { font-family: var(--font-mono); font-size: 25px; font-weight: 500; letter-spacing: 0; fill: var(--mp-magenta); }
+.hs-unit { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 1.4px; font-weight: 500; fill: var(--mp-magenta); }
+.hs-rule { fill: none; stroke: var(--mp-magenta); stroke-width: 1; }
 @media (prefers-reduced-motion: no-preference) {
   .hs-text { animation: hs-turn 24s linear infinite; }
   @keyframes hs-turn { to { transform: rotate(360deg); } }
