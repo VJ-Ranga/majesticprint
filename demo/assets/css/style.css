@@ -169,7 +169,7 @@ img, svg { max-width: 100%; }
 .site-header.is-scrolled .brand img { height: 60px; }
 
 .main-nav { gap: clamp(1.25rem, 2.4vw, 2.25rem); }
-.main-nav a { color: var(--mp-ink); text-decoration: none; font-weight: 500; position: relative; padding: .5rem 0; }
+.main-nav a { color: var(--mp-ink); text-decoration: none; font-weight: 500; position: relative; padding: .5rem 0; white-space: nowrap; }
 .main-nav a::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--mp-magenta);
   transform: scaleX(0); transform-origin: left; transition: transform .3s var(--ease-out);
@@ -177,6 +177,12 @@ img, svg { max-width: 100%; }
 .main-nav a:hover::after, .main-nav a.is-current::after { transform: scaleX(1); }
 
 .header-actions { display: flex; align-items: center; gap: var(--s1); }
+@media (min-width: 768px) { .header-actions .btn-mp { margin-left: var(--s2); } }
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .header-row { gap: var(--s2); }
+  .main-nav { gap: 1rem; }
+  .header-actions .btn-mp { padding-left: 1.1rem; padding-right: 1.1rem; }
+}
 .menu-toggle {
   width: 48px; height: 48px; border: 1.5px solid var(--mp-ink);
   background: #fff; color: var(--mp-deep); font-size: 1.1rem;
@@ -548,7 +554,7 @@ textarea.form-control:focus { border-color: var(--mp-magenta); }
 }
 
 /* ---------- 20. Small screens ---------- */
-@media (max-width: 991px) {
+@media (max-width: 1399.98px) {
   .reg-mark { display: none; }
 }
 @media (max-width: 767px) {
