@@ -188,6 +188,8 @@ window.MP_PAGES.home = function (MP) {
 
   /* ---------- Years in print + key clients ---------- */
   var yrs = $("#yearsInPrint"); if (yrs) yrs.textContent = D.yearsInPrint;
+  var stampYrs = $("#stampYears"); if (stampYrs) stampYrs.textContent = D.yearsInPrint;
+  var stamp = $("#heroStamp"); if (stamp) stamp.setAttribute("aria-label", D.yearsInPrint + " years in print. Proof before print. Pannala, Sri Lanka.");
   var quoteSec = $("#quote"); if (quoteSec) quoteSec.parentNode.insertBefore(MP.clientsSection(), quoteSec);
 
   /* ---------- Job ticket + press run ---------- */
